@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import scheduleRouter from "./routes/schedule.js";
+import nextSessionRouter from './routes/nextSession.js'; // Corrected import name
 
 // Load environment variables from .env file
 dotenv.config();
@@ -16,6 +17,7 @@ app.get("/api/ping", (req, res) => {
 });
 
 app.use("/api/schedule", scheduleRouter);
+app.use('/api/next-session', nextSessionRouter); 
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
