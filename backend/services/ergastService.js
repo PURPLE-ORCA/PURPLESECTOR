@@ -85,3 +85,25 @@ export async function getSpecificRaceInfo(year, round) {
     // Fetches general race info, not just results
     return fetchFromErgast(`${year}/${round}`, 'RaceTable.Races[0]');
 }
+
+/**
+ * Fetches Circuit Information for a given year or 'current'.
+ * @param {string|number} year The season year or 'current'.
+ * @returns {Promise<Array|null>} Array of Circuit objects or null on error.
+ */
+export async function getCircuitInfo(year = 'current') {
+  // The /circuits endpoint lists circuits used in a given season.
+  // Response path is CircuitTable.Circuits
+  return fetchFromErgast(`${year}/circuits`, 'CircuitTable.Circuits');
+}
+
+// --- Optional: Get specific circuit details ---
+/**
+ * Fetches details for a specific circuit by its ID.
+ * @param {string} circuitId The Ergast circuit ID (e.g., 'monaco', 'silverstone').
+ * @returns {Promise<object|null>} Circuit object or null on error.
+ */
+export async function getSpecificCircuitInfo(circuitId) {
+    // Note: Ergast might still return an array, even for a specific ID.
+    return fetchFromErgast(`circuits/${circuitId}`, 'CircuitTable.Circuits[0]');
+}
