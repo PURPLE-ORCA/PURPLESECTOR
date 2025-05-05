@@ -1,6 +1,10 @@
 import express from "express";
 import dotenv from "dotenv";
 import scheduleRouter from "./routes/schedule.js";
+import nextSessionRouter from "./routes/nextSession.js";
+import standingsRouter from "./routes/standings.js";
+import resultsRouter from './routes/results.js';
+import circuitsRouter from "./routes/circuits.js";
 
 // Load environment variables from .env file
 dotenv.config();
@@ -14,8 +18,11 @@ const PORT = process.env.PORT || 3001;
 app.get("/api/ping", (req, res) => {
   res.json({ message: "pong" });
 });
-
 app.use("/api/schedule", scheduleRouter);
+app.use("/api/next-session", nextSessionRouter);
+app.use("/api/standings", standingsRouter);
+app.use('/api/results', resultsRouter);
+app.use("/api/circuits", circuitsRouter);
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
