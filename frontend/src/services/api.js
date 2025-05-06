@@ -48,42 +48,77 @@ export const getSchedule = async () => {
   }
 };
 
-
+// --- Function for CURRENT Driver Standings (using f1api.dev via backend) ---
 /**
- * Fetches Driver Standings for a given year (or current).
- * @param {string|number} year The season year or 'current'. Defaults to 'current'.
- * @returns {Promise<object|null>} StandingsList object or null on error.
+ * Fetches CURRENT Driver Standings from the backend (which uses f1api.dev).
+ * @returns {Promise<object|null>} Standings data object or null on error.
  */
-export const getDriverStandings = async (year = 'current') => {
+export const getCurrentDriverStandingsF1Api = async () => { // Correct function name
   try {
-    // Backend route is /api/standings/drivers/:year or /api/standings/drivers
-    const endpoint = year === 'current' ? '/standings/drivers' : `/standings/drivers/${year}`;
-    const response = await axios.get(`${API_BASE_URL}${endpoint}`);
-    return response.data; // Backend sends the StandingsList object
+    // Hits GET /api/standings/drivers on the backend
+    const response = await axios.get(`${API_BASE_URL}/standings/drivers`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching CURRENT driver standings:`, error.response?.data?.message || error.message);
+    return null;
+  }
+};
+
+// --- Function for CURRENT Constructor Standings (using f1api.dev via backend) ---
+/**
+ * Fetches CURRENT Constructor Standings from the backend (which uses f1api.dev).
+ * @returns {Promise<object|null>} Standings data object or null on error.
+ */
+export const getConstructorStandings = async (/* year = 'current' - Removed year param for consistency */) => { // Renamed for consistency maybe? Or keep old name if preferred
+  try {
+     // Hits GET /api/standings/constructors on the backend
+    const response = await axios.get(`${API_BASE_URL}/standings/constructors`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching CURRENT constructor standings:`, error.response?.data?.message || error.message);
+    return null;
+  }
+};
+
+
+// --- Function for HISTORICAL Driver Standings (using Ergast via backend) ---
+/**
+ * Fetches HISTORICAL Driver Standings for a specific year via backend (using Ergast).
+ * @param {string|number} year The specific season year (e.g., 2023).
+ * @returns {Promise<object|null>} Standings data object or null on error.
+ */
+export const getHistoricalDriverStandings = async (year) => { // Renamed to avoid conflict
+  if (!year || year === 'current') {
+      console.error("Must provide a specific year for historical standings");
+      return null;
+  }
+  try {
+    // Hits GET /api/standings/drivers/:year on the backend
+    const response = await axios.get(`${API_BASE_URL}/standings/drivers/${year}`);
+    return response.data;
   } catch (error) {
     console.error(`Error fetching driver standings for ${year}:`, error.response?.data?.message || error.message);
     return null;
   }
 };
 
+// --- Function for HISTORICAL Constructor Standings (using Ergast via backend) ---
 /**
- * Fetches Constructor Standings for a given year (or current).
- * @param {string|number} year The season year or 'current'. Defaults to 'current'.
- * @returns {Promise<object|null>} StandingsList object or null on error.
+ * Fetches HISTORICAL Constructor Standings for a specific year via backend (using Ergast).
+ * @param {string|number} year The specific season year (e.g., 2023).
+ * @returns {Promise<object|null>} Standings data object or null on error.
  */
-export const getConstructorStandings = async (year = 'current') => {
+export const getHistoricalConstructorStandings = async (year) => { // Renamed to avoid conflict
+  if (!year || year === 'current') {
+      console.error("Must provide a specific year for historical standings");
+      return null;
+  }
   try {
-    const endpoint = year === 'current' ? '/standings/constructors' : `/standings/constructors/${year}`;
-    const response = await axios.get(`${API_BASE_URL}${endpoint}`);
-    return response.data; // Backend sends the StandingsList object
+    // Hits GET /api/standings/constructors/:year on the backend
+    const response = await axios.get(`${API_BASE_URL}/standings/constructors/${year}`);
+    return response.data;
   } catch (error) {
     console.error(`Error fetching constructor standings for ${year}:`, error.response?.data?.message || error.message);
     return null;
   }
 };
-
-// Add functions for other endpoints later as needed
-// export const getDriverStandings = async (year = 'current') => { ... }
-// export const getConstructorStandings = async (year = 'current') => { ... }
-// export const getRaceResults = async (year, round) => { ... }
-// export const getCircuits = async (year = 'current') => { ... }
