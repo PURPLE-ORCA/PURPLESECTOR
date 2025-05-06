@@ -1,267 +1,1503 @@
 [
   {
-    "race": "Australian Grand Prix",
-    "date": "2025-03-16",
-    "sessions": {
-      "FP1": "2025-03-14T01:30:00Z",
-      "FP2": "2025-03-14T05:00:00Z",
-      "FP3": "2025-03-15T01:30:00Z",
-      "Qualifying": "2025-03-15T05:00:00Z",
-      "Race": "2025-03-16T04:00:00Z"
+    "raceId": "australian_2025",
+    "championshipId": "f1_2025",
+    "raceName": "Louis Vuitton Australian Grand Prix 2025",
+    "schedule": {
+      "race": {
+        "date": "2025-03-16",
+        "time": "04:00:00Z"
+      },
+      "qualy": {
+        "date": "2025-03-15",
+        "time": "05:00:00Z"
+      },
+      "fp1": {
+        "date": "2025-03-14",
+        "time": "01:30:00Z"
+      },
+      "fp2": {
+        "date": "2025-03-14",
+        "time": "05:00:00Z"
+      },
+      "fp3": {
+        "date": "2025-03-15",
+        "time": "01:30:00Z"
+      },
+      "sprintQualy": {
+        "date": null,
+        "time": null
+      },
+      "sprintRace": {
+        "date": null,
+        "time": null
+      }
+    },
+    "laps": 58,
+    "round": 1,
+    "url": "https://en.wikipedia.org/wiki/2025_Australian_Grand_Prix",
+    "fast_lap": {
+      "fast_lap": "1:22.167",
+      "fast_lap_driver_id": "norris",
+      "fast_lap_team_id": "mclaren"
+    },
+    "circuit": {
+      "circuitId": "albert_park",
+      "circuitName": "Albert Park Circuit",
+      "country": "Australia",
+      "city": "Melbourne",
+      "circuitLength": "5278km",
+      "lapRecord": "1:19:813",
+      "firstParticipationYear": 1996,
+      "corners": 14,
+      "fastestLapDriverId": "leclerc",
+      "fastestLapTeamId": "ferrari",
+      "fastestLapYear": 2024,
+      "url": "https://en.wikipedia.org/wiki/Albert_Park_Circuit"
+    },
+    "winner": {
+      "driverId": "norris",
+      "name": "Lando",
+      "surname": "Norris",
+      "country": "Great Britain",
+      "birthday": "13/11/1999",
+      "number": 4,
+      "shortName": "NOR",
+      "url": "https://en.wikipedia.org/wiki/Lando_Norris"
+    },
+    "teamWinner": {
+      "teamId": "mclaren",
+      "teamName": "McLaren Formula 1 Team",
+      "country": "Great Britain",
+      "firstAppearance": 1966,
+      "constructorsChampionships": 9,
+      "driversChampionships": 12,
+      "url": "https://en.wikipedia.org/wiki/McLaren"
     }
   },
   {
-    "race": "Chinese Grand Prix",
-    "date": "2025-03-23",
-    "sessions": {
-      "FP1": "2025-03-21T03:30:00Z",
-      "FP2": "2025-03-21T07:00:00Z",
-      "FP3": "2025-03-22T03:30:00Z",
-      "Qualifying": "2025-03-22T07:00:00Z",
-      "Race": "2025-03-23T07:00:00Z"
+    "raceId": "chinese_2025",
+    "championshipId": "f1_2025",
+    "raceName": "Heineken Chinese Grand Prix 2025",
+    "schedule": {
+      "race": {
+        "date": "2025-03-23",
+        "time": "07:00:00Z"
+      },
+      "qualy": {
+        "date": "2025-03-22",
+        "time": "07:00:00Z"
+      },
+      "fp1": {
+        "date": "2025-03-21",
+        "time": "03:30:00Z"
+      },
+      "fp2": {
+        "date": null,
+        "time": null
+      },
+      "fp3": {
+        "date": null,
+        "time": null
+      },
+      "sprintQualy": {
+        "date": "2025-03-21",
+        "time": "07:30:00Z"
+      },
+      "sprintRace": {
+        "date": "2025-03-22",
+        "time": "03:00:00Z"
+      }
+    },
+    "laps": 56,
+    "round": 2,
+    "url": "https://en.wikipedia.org/wiki/2025_Chinese_Grand_Prix",
+    "fast_lap": {
+      "fast_lap": "1:35.069",
+      "fast_lap_driver_id": "hamilton",
+      "fast_lap_team_id": "ferrari"
+    },
+    "circuit": {
+      "circuitId": "shangai",
+      "circuitName": "Shangai International Circuit",
+      "country": "China",
+      "city": "Shangai",
+      "circuitLength": "5451km",
+      "lapRecord": "1:32:238",
+      "firstParticipationYear": 2004,
+      "corners": 16,
+      "fastestLapDriverId": "michael_schumacher",
+      "fastestLapTeamId": "ferrari",
+      "fastestLapYear": 2004,
+      "url": "https://en.wikipedia.org/wiki/Shanghai_International_Circuit"
+    },
+    "winner": {
+      "driverId": "piastri",
+      "name": "Oscar",
+      "surname": "Piastri",
+      "country": "Australia",
+      "birthday": "06/04/2001",
+      "number": 81,
+      "shortName": "PIA",
+      "url": "https://en.wikipedia.org/wiki/Oscar_Piastri"
+    },
+    "teamWinner": {
+      "teamId": "mclaren",
+      "teamName": "McLaren Formula 1 Team",
+      "country": "Great Britain",
+      "firstAppearance": 1966,
+      "constructorsChampionships": 9,
+      "driversChampionships": 12,
+      "url": "https://en.wikipedia.org/wiki/McLaren"
     }
   },
   {
-    "race": "Japanese Grand Prix",
-    "date": "2025-04-06",
-    "sessions": {
-      "FP1": "2025-04-04T03:00:00Z",
-      "FP2": "2025-04-04T07:00:00Z",
-      "FP3": "2025-04-05T03:00:00Z",
-      "Qualifying": "2025-04-05T07:00:00Z",
-      "Race": "2025-04-06T06:00:00Z"
+    "raceId": "japanese_2025",
+    "championshipId": "f1_2025",
+    "raceName": "Lenovo Japanese Grand Prix 2025",
+    "schedule": {
+      "race": {
+        "date": "2025-04-06",
+        "time": "05:00:00Z"
+      },
+      "qualy": {
+        "date": "2025-04-05",
+        "time": "06:00:00Z"
+      },
+      "fp1": {
+        "date": "2025-04-04",
+        "time": "02:30:00Z"
+      },
+      "fp2": {
+        "date": "2025-04-04",
+        "time": "06:00:00Z"
+      },
+      "fp3": {
+        "date": "2025-04-05",
+        "time": "02:30:00Z"
+      },
+      "sprintQualy": {
+        "date": null,
+        "time": null
+      },
+      "sprintRace": {
+        "date": null,
+        "time": null
+      }
+    },
+    "laps": 53,
+    "round": 3,
+    "url": "https://en.wikipedia.org/wiki/2025_Japanese_Grand_Prix",
+    "fast_lap": {
+      "fast_lap": "1:30.965",
+      "fast_lap_driver_id": "antonelli",
+      "fast_lap_team_id": "mercedes"
+    },
+    "circuit": {
+      "circuitId": "suzuka",
+      "circuitName": "Suzuka International Circuit",
+      "country": "Japan",
+      "city": "Suzuka",
+      "circuitLength": "5807km",
+      "lapRecord": "1:30:983",
+      "firstParticipationYear": 1987,
+      "corners": 18,
+      "fastestLapDriverId": "hamilton",
+      "fastestLapTeamId": "mercedes",
+      "fastestLapYear": 2019,
+      "url": "https://en.wikipedia.org/wiki/Suzuka_International_Racing_Course"
+    },
+    "winner": {
+      "driverId": "max_verstappen",
+      "name": "Max",
+      "surname": "Verstappen",
+      "country": "Netherlands",
+      "birthday": "30/09/1997",
+      "number": 33,
+      "shortName": "VER",
+      "url": "https://en.wikipedia.org/wiki/Max_Verstappen"
+    },
+    "teamWinner": {
+      "teamId": "red_bull",
+      "teamName": "Red Bull Racing",
+      "country": "Austria",
+      "firstAppearance": 2005,
+      "constructorsChampionships": 6,
+      "driversChampionships": 8,
+      "url": "https://en.wikipedia.org/wiki/Red_Bull_Racing"
     }
   },
   {
-    "race": "Bahrain Grand Prix",
-    "date": "2025-04-13",
-    "sessions": {
-      "FP1": "2025-04-11T13:30:00Z",
-      "FP2": "2025-04-11T17:00:00Z",
-      "FP3": "2025-04-12T13:30:00Z",
-      "Qualifying": "2025-04-12T17:00:00Z",
-      "Race": "2025-04-13T16:00:00Z"
+    "raceId": "bahrain_2025",
+    "championshipId": "f1_2025",
+    "raceName": "Bahrain Grand Prix 2025",
+    "schedule": {
+      "race": {
+        "date": "2025-04-13",
+        "time": "15:00:00Z"
+      },
+      "qualy": {
+        "date": "2025-04-12",
+        "time": "16:00:00Z"
+      },
+      "fp1": {
+        "date": "2025-04-11",
+        "time": "11:30:00Z"
+      },
+      "fp2": {
+        "date": "2025-04-11",
+        "time": "15:00:00Z"
+      },
+      "fp3": {
+        "date": "2025-04-12",
+        "time": "12:30:00Z"
+      },
+      "sprintQualy": {
+        "date": null,
+        "time": null
+      },
+      "sprintRace": {
+        "date": null,
+        "time": null
+      }
+    },
+    "laps": 57,
+    "round": 4,
+    "url": "https://en.wikipedia.org/wiki/2025_Bahrain_Grand_Prix",
+    "fast_lap": {
+      "fast_lap": "1:35.140",
+      "fast_lap_driver_id": "piastri",
+      "fast_lap_team_id": "mclaren"
+    },
+    "circuit": {
+      "circuitId": "bahrain",
+      "circuitName": "Bahrain International Circuit",
+      "country": "Bahrain",
+      "city": "Sakhir",
+      "circuitLength": "5412km",
+      "lapRecord": "1:31:447",
+      "firstParticipationYear": 2004,
+      "corners": 15,
+      "fastestLapDriverId": "de_la_rosa",
+      "fastestLapTeamId": "mclaren",
+      "fastestLapYear": 2005,
+      "url": "http://en.wikipedia.org/wiki/Bahrain_International_Circuit"
+    },
+    "winner": {
+      "driverId": "piastri",
+      "name": "Oscar",
+      "surname": "Piastri",
+      "country": "Australia",
+      "birthday": "06/04/2001",
+      "number": 81,
+      "shortName": "PIA",
+      "url": "https://en.wikipedia.org/wiki/Oscar_Piastri"
+    },
+    "teamWinner": {
+      "teamId": "mclaren",
+      "teamName": "McLaren Formula 1 Team",
+      "country": "Great Britain",
+      "firstAppearance": 1966,
+      "constructorsChampionships": 9,
+      "driversChampionships": 12,
+      "url": "https://en.wikipedia.org/wiki/McLaren"
     }
   },
   {
-    "race": "Saudi Arabian Grand Prix",
-    "date": "2025-04-20",
-    "sessions": {
-      "FP1": "2025-04-18T16:30:00Z",
-      "FP2": "2025-04-18T20:00:00Z",
-      "FP3": "2025-04-19T16:30:00Z",
-      "Qualifying": "2025-04-19T20:00:00Z",
-      "Race": "2025-04-20T20:00:00Z"
+    "raceId": "saudi_arabia_2025",
+    "championshipId": "f1_2025",
+    "raceName": "STC Saudi Arabian Grand Prix 2025",
+    "schedule": {
+      "race": {
+        "date": "2025-04-20",
+        "time": "17:00:00Z"
+      },
+      "qualy": {
+        "date": "2025-04-19",
+        "time": "17:00:00Z"
+      },
+      "fp1": {
+        "date": "2025-04-18",
+        "time": "13:30:00Z"
+      },
+      "fp2": {
+        "date": "2025-04-18",
+        "time": "17:00:00Z"
+      },
+      "fp3": {
+        "date": "2025-04-19",
+        "time": "13:30:00Z"
+      },
+      "sprintQualy": {
+        "date": null,
+        "time": null
+      },
+      "sprintRace": {
+        "date": null,
+        "time": null
+      }
+    },
+    "laps": 50,
+    "round": 5,
+    "url": "https://en.wikipedia.org/wiki/2025_Saudi_Arabian_Grand_Prix",
+    "fast_lap": {
+      "fast_lap": "1:29.746",
+      "fast_lap_driver_id": "norris",
+      "fast_lap_team_id": "mclaren"
+    },
+    "circuit": {
+      "circuitId": "jeddah",
+      "circuitName": "Jeddah Corniche Circuit",
+      "country": "Saudi Arabia",
+      "city": "Jedda",
+      "circuitLength": "6174km",
+      "lapRecord": "1:30:734",
+      "firstParticipationYear": 2021,
+      "corners": 27,
+      "fastestLapDriverId": "hamilton",
+      "fastestLapTeamId": "mercedes",
+      "fastestLapYear": 2021,
+      "url": "https://en.wikipedia.org/wiki/Jeddah_Corniche_Circuit"
+    },
+    "winner": {
+      "driverId": "piastri",
+      "name": "Oscar",
+      "surname": "Piastri",
+      "country": "Australia",
+      "birthday": "06/04/2001",
+      "number": 81,
+      "shortName": "PIA",
+      "url": "https://en.wikipedia.org/wiki/Oscar_Piastri"
+    },
+    "teamWinner": {
+      "teamId": "mclaren",
+      "teamName": "McLaren Formula 1 Team",
+      "country": "Great Britain",
+      "firstAppearance": 1966,
+      "constructorsChampionships": 9,
+      "driversChampionships": 12,
+      "url": "https://en.wikipedia.org/wiki/McLaren"
     }
   },
   {
-    "race": "Miami Grand Prix",
-    "date": "2025-05-04",
-    "sessions": {
-      "FP1": "2025-05-02T12:30:00Z",
-      "Sprint Qualifying": "2025-05-02T15:30:00Z",
-      "Sprint": "2025-05-03T11:00:00Z",
-      "Qualifying": "2025-05-03T16:00:00Z",
-      "Race": "2025-05-04T16:00:00Z"
-    }
+    "raceId": "miami_2025",
+    "championshipId": "f1_2025",
+    "raceName": "CRYPTO.COM Miami Grand Prix 2025",
+    "schedule": {
+      "race": {
+        "date": "2025-05-04",
+        "time": "20:00:00Z"
+      },
+      "qualy": {
+        "date": "2025-05-03",
+        "time": "20:00:00Z"
+      },
+      "fp1": {
+        "date": "2025-05-02",
+        "time": "16:30:00Z"
+      },
+      "fp2": {
+        "date": null,
+        "time": null
+      },
+      "fp3": {
+        "date": null,
+        "time": null
+      },
+      "sprintQualy": {
+        "date": "2025-05-02",
+        "time": "20:30:00Z"
+      },
+      "sprintRace": {
+        "date": "2025-05-03",
+        "time": "16:00:00Z"
+      }
+    },
+    "laps": 57,
+    "round": 6,
+    "url": "https://en.wikipedia.org/wiki/Miami_Grand_Prix",
+    "fast_lap": {
+      "fast_lap": null,
+      "fast_lap_driver_id": null,
+      "fast_lap_team_id": null
+    },
+    "circuit": {
+      "circuitId": "miami",
+      "circuitName": "Miami International Autodrome",
+      "country": "United States",
+      "city": "Miami",
+      "circuitLength": "5412km",
+      "lapRecord": "1:29:708",
+      "firstParticipationYear": 2022,
+      "corners": 19,
+      "fastestLapDriverId": "max_verstappen",
+      "fastestLapTeamId": "red_bull",
+      "fastestLapYear": 2023,
+      "url": "https://en.wikipedia.org/wiki/Miami_International_Autodrome"
+    },
+    "winner": null,
+    "teamWinner": null
   },
   {
-    "race": "Emilia Romagna Grand Prix",
-    "date": "2025-05-18",
-    "sessions": {
-      "FP1": "2025-05-16T13:30:00Z",
-      "FP2": "2025-05-16T17:00:00Z",
-      "FP3": "2025-05-17T12:30:00Z",
-      "Qualifying": "2025-05-17T16:00:00Z",
-      "Race": "2025-05-18T15:00:00Z"
-    }
+    "raceId": "emilia_romagna_2025",
+    "championshipId": "f1_2025",
+    "raceName": "AWS Gran Premio del Made in Italy e Dell Emilia-Romagna 2025",
+    "schedule": {
+      "race": {
+        "date": "2025-05-18",
+        "time": "13:00:00Z"
+      },
+      "qualy": {
+        "date": "2025-05-17",
+        "time": "14:00:00Z"
+      },
+      "fp1": {
+        "date": "2025-05-16",
+        "time": "11:30:00Z"
+      },
+      "fp2": {
+        "date": "2025-05-16",
+        "time": "15:00:00Z"
+      },
+      "fp3": {
+        "date": "2025-05-17",
+        "time": "10:30:00Z"
+      },
+      "sprintQualy": {
+        "date": null,
+        "time": null
+      },
+      "sprintRace": {
+        "date": null,
+        "time": null
+      }
+    },
+    "laps": 63,
+    "round": 7,
+    "url": "https://en.wikipedia.org/wiki/2025_Emilia_Romagna_Grand_Prix",
+    "fast_lap": {
+      "fast_lap": null,
+      "fast_lap_driver_id": null,
+      "fast_lap_team_id": null
+    },
+    "circuit": {
+      "circuitId": "imola",
+      "circuitName": "Imola Autodromo Internazionale Enzo e Dino Ferrari",
+      "country": "Italy",
+      "city": "Imola",
+      "circuitLength": "4909km",
+      "lapRecord": "1:15:484",
+      "firstParticipationYear": 1980,
+      "corners": 19,
+      "fastestLapDriverId": "hamilton",
+      "fastestLapTeamId": "mercedes",
+      "fastestLapYear": 2020,
+      "url": "https://en.wikipedia.org/wiki/Imola_Circuit"
+    },
+    "winner": null,
+    "teamWinner": null
   },
   {
-    "race": "Monaco Grand Prix",
-    "date": "2025-05-25",
-    "sessions": {
-      "FP1": "2025-05-23T13:30:00Z",
-      "FP2": "2025-05-23T17:00:00Z",
-      "FP3": "2025-05-24T12:30:00Z",
-      "Qualifying": "2025-05-24T16:00:00Z",
-      "Race": "2025-05-25T15:00:00Z"
-    }
+    "raceId": "monaco_2025",
+    "championshipId": "f1_2025",
+    "raceName": "Grand Prix de Monaco 2025",
+    "schedule": {
+      "race": {
+        "date": "2025-05-25",
+        "time": "13:00:00Z"
+      },
+      "qualy": {
+        "date": "2025-05-24",
+        "time": "14:00:00Z"
+      },
+      "fp1": {
+        "date": "2025-05-23",
+        "time": "11:30:00Z"
+      },
+      "fp2": {
+        "date": "2025-05-23",
+        "time": "15:00:00Z"
+      },
+      "fp3": {
+        "date": "2025-05-24",
+        "time": "10:30:00Z"
+      },
+      "sprintQualy": {
+        "date": null,
+        "time": null
+      },
+      "sprintRace": {
+        "date": null,
+        "time": null
+      }
+    },
+    "laps": 78,
+    "round": 8,
+    "url": "https://en.wikipedia.org/wiki/2025_Monaco_Grand_Prix",
+    "fast_lap": {
+      "fast_lap": null,
+      "fast_lap_driver_id": null,
+      "fast_lap_team_id": null
+    },
+    "circuit": {
+      "circuitId": "monaco",
+      "circuitName": "Circuit de Monaco",
+      "country": "Monaco",
+      "city": "Monte Carlo",
+      "circuitLength": "3337km",
+      "lapRecord": "1:12:909",
+      "firstParticipationYear": 1950,
+      "corners": 19,
+      "fastestLapDriverId": "hamilton",
+      "fastestLapTeamId": "mercedes",
+      "fastestLapYear": 2021,
+      "url": "https://en.wikipedia.org/wiki/Circuit_de_Monaco"
+    },
+    "winner": null,
+    "teamWinner": null
   },
   {
-    "race": "Spanish Grand Prix",
-    "date": "2025-06-01",
-    "sessions": {
-      "FP1": "2025-05-30T13:30:00Z",
-      "FP2": "2025-05-30T17:00:00Z",
-      "FP3": "2025-05-31T12:30:00Z",
-      "Qualifying": "2025-05-31T16:00:00Z",
-      "Race": "2025-06-01T15:00:00Z"
-    }
+    "raceId": "spanish_2025",
+    "championshipId": "f1_2025",
+    "raceName": "Aramco Gran Premio de España 2025",
+    "schedule": {
+      "race": {
+        "date": "2025-06-01",
+        "time": "13:00:00Z"
+      },
+      "qualy": {
+        "date": "2025-05-31",
+        "time": "14:00:00Z"
+      },
+      "fp1": {
+        "date": "2025-05-30",
+        "time": "11:30:00Z"
+      },
+      "fp2": {
+        "date": "2025-05-30",
+        "time": "15:00:00Z"
+      },
+      "fp3": {
+        "date": "2025-05-31",
+        "time": "10:30:00Z"
+      },
+      "sprintQualy": {
+        "date": null,
+        "time": null
+      },
+      "sprintRace": {
+        "date": null,
+        "time": null
+      }
+    },
+    "laps": 66,
+    "round": 9,
+    "url": "https://en.wikipedia.org/wiki/2025_Spanish_Grand_Prix",
+    "fast_lap": {
+      "fast_lap": null,
+      "fast_lap_driver_id": null,
+      "fast_lap_team_id": null
+    },
+    "circuit": {
+      "circuitId": "montmelo",
+      "circuitName": "Circuit de Barcelona-Catalunya",
+      "country": "Spain",
+      "city": "Barcelona",
+      "circuitLength": "4657km",
+      "lapRecord": "1:16:330",
+      "firstParticipationYear": 1991,
+      "corners": 14,
+      "fastestLapDriverId": "max_verstappen",
+      "fastestLapTeamId": "red_bull",
+      "fastestLapYear": 2023,
+      "url": "https://en.wikipedia.org/wiki/Circuit_de_Barcelona-Catalunya"
+    },
+    "winner": null,
+    "teamWinner": null
   },
   {
-    "race": "Canadian Grand Prix",
-    "date": "2025-06-15",
-    "sessions": {
-      "FP1": "2025-06-13T13:30:00Z",
-      "FP2": "2025-06-13T17:00:00Z",
-      "FP3": "2025-06-14T12:30:00Z",
-      "Qualifying": "2025-06-14T16:00:00Z",
-      "Race": "2025-06-15T15:00:00Z"
-    }
+    "raceId": "canadian_2025",
+    "championshipId": "f1_2025",
+    "raceName": "Pirelli Grand Prix Du Canada 2025",
+    "schedule": {
+      "race": {
+        "date": "2025-06-15",
+        "time": "18:00:00Z"
+      },
+      "qualy": {
+        "date": "2025-06-14",
+        "time": "20:00:00Z"
+      },
+      "fp1": {
+        "date": "2025-06-13",
+        "time": "17:30:00Z"
+      },
+      "fp2": {
+        "date": "2025-06-13",
+        "time": "21:00:00Z"
+      },
+      "fp3": {
+        "date": "2025-06-14",
+        "time": "16:30:00Z"
+      },
+      "sprintQualy": {
+        "date": null,
+        "time": null
+      },
+      "sprintRace": {
+        "date": null,
+        "time": null
+      }
+    },
+    "laps": 70,
+    "round": 10,
+    "url": "https://en.wikipedia.org/wiki/2025_Canadian_Grand_Prix",
+    "fast_lap": {
+      "fast_lap": null,
+      "fast_lap_driver_id": null,
+      "fast_lap_team_id": null
+    },
+    "circuit": {
+      "circuitId": "gilles_villeneuve",
+      "circuitName": "Circuit Gilles Villeneuve",
+      "country": "Canada",
+      "city": "Montreal",
+      "circuitLength": "4361km",
+      "lapRecord": "1:13:078",
+      "firstParticipationYear": 1978,
+      "corners": 14,
+      "fastestLapDriverId": "bottas",
+      "fastestLapTeamId": "mercedes",
+      "fastestLapYear": 2019,
+      "url": "https://en.wikipedia.org/wiki/Circuit_Gilles_Villeneuve"
+    },
+    "winner": null,
+    "teamWinner": null
   },
   {
-    "race": "Austrian Grand Prix",
-    "date": "2025-06-29",
-    "sessions": {
-      "FP1": "2025-06-27T13:30:00Z",
-      "FP2": "2025-06-27T17:00:00Z",
-      "FP3": "2025-06-28T12:30:00Z",
-      "Qualifying": "2025-06-28T16:00:00Z",
-      "Race": "2025-06-29T15:00:00Z"
-    }
+    "raceId": "austrian_2025",
+    "championshipId": "f1_2025",
+    "raceName": "MSC Cruises Austrian Grand Prix 2025",
+    "schedule": {
+      "race": {
+        "date": "2025-06-29",
+        "time": "13:00:00Z"
+      },
+      "qualy": {
+        "date": "2025-06-28",
+        "time": "14:00:00Z"
+      },
+      "fp1": {
+        "date": "2025-06-27",
+        "time": "11:30:00Z"
+      },
+      "fp2": {
+        "date": "2025-06-27",
+        "time": "15:00:00Z"
+      },
+      "fp3": {
+        "date": "2025-06-28",
+        "time": "10:30:00Z"
+      },
+      "sprintQualy": {
+        "date": null,
+        "time": null
+      },
+      "sprintRace": {
+        "date": null,
+        "time": null
+      }
+    },
+    "laps": 71,
+    "round": 11,
+    "url": "https://en.wikipedia.org/wiki/2025_Austrian_Grand_Prix",
+    "fast_lap": {
+      "fast_lap": null,
+      "fast_lap_driver_id": null,
+      "fast_lap_team_id": null
+    },
+    "circuit": {
+      "circuitId": "red_bull_ring",
+      "circuitName": "Red Bull Ring",
+      "country": "Austria",
+      "city": "Spielberg",
+      "circuitLength": "4318km",
+      "lapRecord": "1:05:619",
+      "firstParticipationYear": 1970,
+      "corners": 10,
+      "fastestLapDriverId": "sainz",
+      "fastestLapTeamId": "mclaren",
+      "fastestLapYear": 2020,
+      "url": "https://en.wikipedia.org/wiki/Red_Bull_Ring"
+    },
+    "winner": null,
+    "teamWinner": null
   },
   {
-    "race": "British Grand Prix",
-    "date": "2025-07-06",
-    "sessions": {
-      "FP1": "2025-07-04T12:30:00Z",
-      "FP2": "2025-07-04T16:00:00Z",
-      "FP3": "2025-07-05T11:30:00Z",
-      "Qualifying": "2025-07-05T15:00:00Z",
-      "Race": "2025-07-06T15:00:00Z"
-    }
+    "raceId": "british_2025",
+    "championshipId": "f1_2025",
+    "raceName": "Qatar Airways British Grand Prix 2025",
+    "schedule": {
+      "race": {
+        "date": "2025-07-06",
+        "time": "14:00:00Z"
+      },
+      "qualy": {
+        "date": "2025-07-05",
+        "time": "14:00:00Z"
+      },
+      "fp1": {
+        "date": "2025-07-04",
+        "time": "11:30:00Z"
+      },
+      "fp2": {
+        "date": "2025-07-04",
+        "time": "15:00:00Z"
+      },
+      "fp3": {
+        "date": "2025-07-05",
+        "time": "10:30:00Z"
+      },
+      "sprintQualy": {
+        "date": null,
+        "time": null
+      },
+      "sprintRace": {
+        "date": null,
+        "time": null
+      }
+    },
+    "laps": 52,
+    "round": 12,
+    "url": "https://en.wikipedia.org/wiki/2025_British_Grand_Prix",
+    "fast_lap": {
+      "fast_lap": null,
+      "fast_lap_driver_id": null,
+      "fast_lap_team_id": null
+    },
+    "circuit": {
+      "circuitId": "silverstone",
+      "circuitName": "Silverstone Circuit",
+      "country": "Great Britain",
+      "city": "Silverstone",
+      "circuitLength": "5891km",
+      "lapRecord": "1:27:097",
+      "firstParticipationYear": 1950,
+      "corners": 18,
+      "fastestLapDriverId": "max_verstappen",
+      "fastestLapTeamId": "red_bull",
+      "fastestLapYear": 2020,
+      "url": "https://en.wikipedia.org/wiki/Silverstone_Circuit"
+    },
+    "winner": null,
+    "teamWinner": null
   },
   {
-    "race": "Belgian Grand Prix",
-    "date": "2025-07-27",
-    "sessions": {
-      "FP1": "2025-07-25T12:30:00Z",
-      "Sprint Qualifying": "2025-07-25T16:30:00Z",
-      "Sprint": "2025-07-26T12:00:00Z",
-      "Qualifying": "2025-07-26T16:00:00Z",
-      "Race": "2025-07-27T15:00:00Z"
-    }
+    "raceId": "belgian_2025",
+    "championshipId": "f1_2025",
+    "raceName": "Belgian Grand Prix 2025",
+    "schedule": {
+      "race": {
+        "date": "2025-07-27",
+        "time": "13:00:00Z"
+      },
+      "qualy": {
+        "date": "2025-07-26",
+        "time": "14:00:00Z"
+      },
+      "fp1": {
+        "date": "2025-07-25",
+        "time": "10:30:00Z"
+      },
+      "fp2": {
+        "date": null,
+        "time": null
+      },
+      "fp3": {
+        "date": null,
+        "time": null
+      },
+      "sprintQualy": {
+        "date": "2025-07-25",
+        "time": "14:30:00Z"
+      },
+      "sprintRace": {
+        "date": "2025-07-26",
+        "time": "10:00:00Z"
+      }
+    },
+    "laps": 44,
+    "round": 13,
+    "url": "https://en.wikipedia.org/wiki/2025_Belgian_Grand_Prix",
+    "fast_lap": {
+      "fast_lap": null,
+      "fast_lap_driver_id": null,
+      "fast_lap_team_id": null
+    },
+    "circuit": {
+      "circuitId": "spa",
+      "circuitName": "Circuit de Spa-Francorchamps",
+      "country": "Belgium",
+      "city": "Stavelot",
+      "circuitLength": "7004km",
+      "lapRecord": "1:46:286",
+      "firstParticipationYear": 1950,
+      "corners": 20,
+      "fastestLapDriverId": "bottas",
+      "fastestLapTeamId": "mercedes",
+      "fastestLapYear": 2018,
+      "url": "https://en.wikipedia.org/wiki/Circuit_de_Spa-Francorchamps"
+    },
+    "winner": null,
+    "teamWinner": null
   },
   {
-    "race": "Hungarian Grand Prix",
-    "date": "2025-08-03",
-    "sessions": {
-      "FP1": "2025-08-01T13:30:00Z",
-      "FP2": "2025-08-01T17:00:00Z",
-      "FP3": "2025-08-02T12:30:00Z",
-      "Qualifying": "2025-08-02T16:00:00Z",
-      "Race": "2025-08-03T15:00:00Z"
-    }
+    "raceId": "hungarian_2025",
+    "championshipId": "f1_2025",
+    "raceName": "Lenovo Hungarina Grand Prix 2025",
+    "schedule": {
+      "race": {
+        "date": "2025-08-03",
+        "time": "13:00:00Z"
+      },
+      "qualy": {
+        "date": "2025-08-02",
+        "time": "14:00:00Z"
+      },
+      "fp1": {
+        "date": "2025-08-01",
+        "time": "11:30:00Z"
+      },
+      "fp2": {
+        "date": "2025-08-01",
+        "time": "15:00:00Z"
+      },
+      "fp3": {
+        "date": "2025-08-02",
+        "time": "10:30:00Z"
+      },
+      "sprintQualy": {
+        "date": null,
+        "time": null
+      },
+      "sprintRace": {
+        "date": null,
+        "time": null
+      }
+    },
+    "laps": 70,
+    "round": 14,
+    "url": "https://en.wikipedia.org/wiki/2025_Hungarian_Grand_Prix",
+    "fast_lap": {
+      "fast_lap": null,
+      "fast_lap_driver_id": null,
+      "fast_lap_team_id": null
+    },
+    "circuit": {
+      "circuitId": "hungaroring",
+      "circuitName": "Hungaroring",
+      "country": "Hungary",
+      "city": "Mogyorod",
+      "circuitLength": "4381km",
+      "lapRecord": "1:16:627",
+      "firstParticipationYear": 1986,
+      "corners": 14,
+      "fastestLapDriverId": "hamilton",
+      "fastestLapTeamId": "mercedes",
+      "fastestLapYear": 2020,
+      "url": "https://en.wikipedia.org/wiki/Hungaroring"
+    },
+    "winner": null,
+    "teamWinner": null
   },
   {
-    "race": "Dutch Grand Prix",
-    "date": "2025-08-31",
-    "sessions": {
-      "FP1": "2025-08-29T12:30:00Z",
-      "FP2": "2025-08-29T16:00:00Z",
-      "FP3": "2025-08-30T11:30:00Z",
-      "Qualifying": "2025-08-30T15:00:00Z",
-      "Race": "2025-08-31T15:00:00Z"
-    }
+    "raceId": "dutch_2025",
+    "championshipId": "f1_2025",
+    "raceName": "Heineken Dutch Grand Prix 2025",
+    "schedule": {
+      "race": {
+        "date": "2025-08-31",
+        "time": "13:00:00Z"
+      },
+      "qualy": {
+        "date": "2025-08-30",
+        "time": "13:00:00Z"
+      },
+      "fp1": {
+        "date": "2025-08-29",
+        "time": "10:30:00Z"
+      },
+      "fp2": {
+        "date": "2025-08-29",
+        "time": "14:00:00Z"
+      },
+      "fp3": {
+        "date": "2025-08-30",
+        "time": "09:30:00Z"
+      },
+      "sprintQualy": {
+        "date": null,
+        "time": null
+      },
+      "sprintRace": {
+        "date": null,
+        "time": null
+      }
+    },
+    "laps": 72,
+    "round": 15,
+    "url": "https://en.wikipedia.org/wiki/2025_Dutch_Grand_Prix",
+    "fast_lap": {
+      "fast_lap": null,
+      "fast_lap_driver_id": null,
+      "fast_lap_team_id": null
+    },
+    "circuit": {
+      "circuitId": "zandvoort",
+      "circuitName": "Circuit Zandvoort",
+      "country": "Netherlands",
+      "city": "Zandvoort",
+      "circuitLength": "4259km",
+      "lapRecord": "1:11:097",
+      "firstParticipationYear": 1950,
+      "corners": 14,
+      "fastestLapDriverId": "hamilton",
+      "fastestLapTeamId": "mercedes",
+      "fastestLapYear": 2021,
+      "url": "https://en.wikipedia.org/wiki/Circuit_Zandvoort"
+    },
+    "winner": null,
+    "teamWinner": null
   },
   {
-    "race": "Italian Grand Prix",
-    "date": "2025-09-07",
-    "sessions": {
-      "FP1": "2025-09-05T13:30:00Z",
-      "FP2": "2025-09-05T17:00:00Z",
-      "FP3": "2025-09-06T12:30:00Z",
-      "Qualifying": "2025-09-06T16:00:00Z",
-      "Race": "2025-09-07T15:00:00Z"
-    }
+    "raceId": "italian_2025",
+    "championshipId": "f1_2025",
+    "raceName": "Pirelli Gran D'Italia 2025",
+    "schedule": {
+      "race": {
+        "date": "2025-09-07",
+        "time": "13:00:00Z"
+      },
+      "qualy": {
+        "date": "2025-09-06",
+        "time": "13:00:00Z"
+      },
+      "fp1": {
+        "date": "2025-09-05",
+        "time": "11:30:00Z"
+      },
+      "fp2": {
+        "date": "2025-09-05",
+        "time": "15:00:00Z"
+      },
+      "fp3": {
+        "date": "2025-09-06",
+        "time": "10:30:00Z"
+      },
+      "sprintQualy": {
+        "date": null,
+        "time": null
+      },
+      "sprintRace": {
+        "date": null,
+        "time": null
+      }
+    },
+    "laps": 53,
+    "round": 16,
+    "url": "https://en.wikipedia.org/wiki/2025_Italian_Grand_Prix",
+    "fast_lap": {
+      "fast_lap": null,
+      "fast_lap_driver_id": null,
+      "fast_lap_team_id": null
+    },
+    "circuit": {
+      "circuitId": "monza",
+      "circuitName": "Autodromo Nazionale Monza",
+      "country": "Italy",
+      "city": "Monza",
+      "circuitLength": "5793km",
+      "lapRecord": "1:21:046",
+      "firstParticipationYear": 1950,
+      "corners": 11,
+      "fastestLapDriverId": "barrichelo",
+      "fastestLapTeamId": "ferrari",
+      "fastestLapYear": 2004,
+      "url": "https://en.wikipedia.org/wiki/Monza_Circuit"
+    },
+    "winner": null,
+    "teamWinner": null
   },
   {
-    "race": "Azerbaijan Grand Prix",
-    "date": "2025-09-21",
-    "sessions": {
-      "FP1": "2025-09-19T12:30:00Z",
-      "FP2": "2025-09-19T16:00:00Z",
-      "FP3": "2025-09-20T12:30:00Z",
-      "Qualifying": "2025-09-20T16:00:00Z",
-      "Race": "2025-09-21T15:00:00Z"
-    }
+    "raceId": "azerbaijan_2025",
+    "championshipId": "f1_2025",
+    "raceName": "Qatar Airways Azerbaijan Grand Prix 2025",
+    "schedule": {
+      "race": {
+        "date": "2025-09-21",
+        "time": "11:00:00Z"
+      },
+      "qualy": {
+        "date": "2025-09-20",
+        "time": "12:00:00Z"
+      },
+      "fp1": {
+        "date": "2025-09-19",
+        "time": "08:30:00Z"
+      },
+      "fp2": {
+        "date": "2025-09-19",
+        "time": "12:00:00Z"
+      },
+      "fp3": {
+        "date": "2025-09-20",
+        "time": "08:30:00Z"
+      },
+      "sprintQualy": {
+        "date": null,
+        "time": null
+      },
+      "sprintRace": {
+        "date": null,
+        "time": null
+      }
+    },
+    "laps": 51,
+    "round": 17,
+    "url": "https://en.wikipedia.org/wiki/2025_Azerbaijan_Grand_Prix",
+    "fast_lap": {
+      "fast_lap": null,
+      "fast_lap_driver_id": null,
+      "fast_lap_team_id": null
+    },
+    "circuit": {
+      "circuitId": "baku",
+      "circuitName": "Baku City Circuit",
+      "country": "Azerbaijan",
+      "city": "Baku",
+      "circuitLength": "6003km",
+      "lapRecord": "1:43:009",
+      "firstParticipationYear": 2017,
+      "corners": 20,
+      "fastestLapDriverId": "leclerc",
+      "fastestLapTeamId": "ferrari",
+      "fastestLapYear": 2019,
+      "url": "https://en.wikipedia.org/wiki/Baku_City_Circuit"
+    },
+    "winner": null,
+    "teamWinner": null
   },
   {
-    "race": "Singapore Grand Prix",
-    "date": "2025-10-05",
-    "sessions": {
-      "FP1": "2025-10-03T10:30:00Z",
-      "FP2": "2025-10-03T14:00:00Z",
-      "FP3": "2025-10-04T10:30:00Z",
-      "Qualifying": "2025-10-04T14:00:00Z",
-      "Race": "2025-10-05T12:00:00Z"
-    }
+    "raceId": "singapore_2025",
+    "championshipId": "f1_2025",
+    "raceName": "Singapore Airlines Singapore Grand Prix 2025",
+    "schedule": {
+      "race": {
+        "date": "2025-10-05",
+        "time": "12:00:00Z"
+      },
+      "qualy": {
+        "date": "2025-10-04",
+        "time": "13:00:00Z"
+      },
+      "fp1": {
+        "date": "2025-10-03",
+        "time": "09:30:00Z"
+      },
+      "fp2": {
+        "date": "2025-10-03",
+        "time": "13:00:00Z"
+      },
+      "fp3": {
+        "date": "2025-10-04",
+        "time": "09:30:00Z"
+      },
+      "sprintQualy": {
+        "date": null,
+        "time": null
+      },
+      "sprintRace": {
+        "date": null,
+        "time": null
+      }
+    },
+    "laps": 62,
+    "round": 18,
+    "url": "https://en.wikipedia.org/wiki/2025_Singapore_Grand_Prix",
+    "fast_lap": {
+      "fast_lap": null,
+      "fast_lap_driver_id": null,
+      "fast_lap_team_id": null
+    },
+    "circuit": {
+      "circuitId": "marina_bay",
+      "circuitName": "Marina Bay Street Circuit",
+      "country": "Singapore",
+      "city": "Singapore",
+      "circuitLength": "4940km",
+      "lapRecord": "1:35:867",
+      "firstParticipationYear": 2008,
+      "corners": 19,
+      "fastestLapDriverId": "hamilton",
+      "fastestLapTeamId": "mercedes",
+      "fastestLapYear": 2023,
+      "url": "https://en.wikipedia.org/wiki/Marina_Bay_Street_Circuit"
+    },
+    "winner": null,
+    "teamWinner": null
   },
   {
-    "race": "United States Grand Prix",
-    "date": "2025-10-19",
-    "sessions": {
-      "FP1": "2025-10-17T15:30:00Z",
-      "Sprint Qualifying": "2025-10-17T19:30:00Z",
-      "Sprint": "2025-10-18T15:00:00Z",
-      "Qualifying": "2025-10-18T19:00:00Z",
-      "Race": "2025-10-19T19:00:00Z"
-    }
+    "raceId": "united_states_2025",
+    "championshipId": "f1_2025",
+    "raceName": "MSC Cruises United States Grand Prix 2025",
+    "schedule": {
+      "race": {
+        "date": "2025-10-19",
+        "time": "19:00:00Z"
+      },
+      "qualy": {
+        "date": "2025-10-18",
+        "time": "21:00:00Z"
+      },
+      "fp1": {
+        "date": "2025-10-17",
+        "time": "17:30:00Z"
+      },
+      "fp2": {
+        "date": null,
+        "time": null
+      },
+      "fp3": {
+        "date": null,
+        "time": null
+      },
+      "sprintQualy": {
+        "date": "2025-10-17",
+        "time": "21:30:00Z"
+      },
+      "sprintRace": {
+        "date": "2025-10-18",
+        "time": "17:00:00Z"
+      }
+    },
+    "laps": 56,
+    "round": 19,
+    "url": "https://en.wikipedia.org/wiki/2025_United_States_Grand_Prix",
+    "fast_lap": {
+      "fast_lap": null,
+      "fast_lap_driver_id": null,
+      "fast_lap_team_id": null
+    },
+    "circuit": {
+      "circuitId": "austin",
+      "circuitName": "Circuit of The Americas",
+      "country": "United States",
+      "city": "Austin",
+      "circuitLength": "3426km",
+      "lapRecord": "1:36:169",
+      "firstParticipationYear": 2012,
+      "corners": 20,
+      "fastestLapDriverId": "leclerc",
+      "fastestLapTeamId": "ferrari",
+      "fastestLapYear": 2019,
+      "url": "https://en.wikipedia.org/wiki/Circuit_of_the_Americas"
+    },
+    "winner": null,
+    "teamWinner": null
   },
   {
-    "race": "Mexican Grand Prix",
-    "date": "2025-10-26",
-    "sessions": {
-      "FP1": "2025-10-24T17:30:00Z",
-      "FP2": "2025-10-24T21:00:00Z",
-      "FP3": "2025-10-25T17:30:00Z",
-      "Qualifying": "2025-10-25T21:00:00Z",
-      "Race": "2025-10-26T20:00:00Z"
-    }
+    "raceId": "mexican_2025",
+    "championshipId": "f1_2025",
+    "raceName": "Gran Premio de La Ciudad de México 2025",
+    "schedule": {
+      "race": {
+        "date": "2025-10-26",
+        "time": "20:00:00Z"
+      },
+      "qualy": {
+        "date": "2025-10-25",
+        "time": "21:00:00Z"
+      },
+      "fp1": {
+        "date": "2025-10-24",
+        "time": "18:30:00Z"
+      },
+      "fp2": {
+        "date": "2025-10-24",
+        "time": "22:00:00Z"
+      },
+      "fp3": {
+        "date": "2025-10-25",
+        "time": "17:30:00Z"
+      },
+      "sprintQualy": {
+        "date": null,
+        "time": null
+      },
+      "sprintRace": {
+        "date": null,
+        "time": null
+      }
+    },
+    "laps": 71,
+    "round": 20,
+    "url": "https://en.wikipedia.org/wiki/2025_Mexican_Grand_Prix",
+    "fast_lap": {
+      "fast_lap": null,
+      "fast_lap_driver_id": null,
+      "fast_lap_team_id": null
+    },
+    "circuit": {
+      "circuitId": "hermanos_rodriguez",
+      "circuitName": "Autódromo Hermanos Rodríguez",
+      "country": "Mexico",
+      "city": "Mexico City",
+      "circuitLength": "4304km",
+      "lapRecord": "1:17:774",
+      "firstParticipationYear": 1962,
+      "corners": 17,
+      "fastestLapDriverId": "bottas",
+      "fastestLapTeamId": "mercedes",
+      "fastestLapYear": 2021,
+      "url": "https://en.wikipedia.org/wiki/Aut%C3%B3dromo_Hermanos_Rodr%C3%ADguez"
+    },
+    "winner": null,
+    "teamWinner": null
   },
   {
-    "race": "Brazilian Grand Prix",
-    "date": "2025-11-09",
-    "sessions": {
-      "FP1": "2025-11-07T14:30:00Z",
-      "Sprint Qualifying": "2025-11-07T18:30:00Z",
-      "Sprint": "2025-11-08T14:00:00Z",
-      "Qualifying": "2025-11-08T18:00:00Z",
-      "Race": "2025-11-09T17:00:00Z"
-    }
+    "raceId": "brazilian_2025",
+    "championshipId": "f1_2025",
+    "raceName": "MSC Cruises Grande Premio de Sao Paulo 2025",
+    "schedule": {
+      "race": {
+        "date": "2025-11-09",
+        "time": "17:00:00Z"
+      },
+      "qualy": {
+        "date": "2025-11-08",
+        "time": "18:00:00Z"
+      },
+      "fp1": {
+        "date": "2025-11-07",
+        "time": "14:30:00Z"
+      },
+      "fp2": {
+        "date": null,
+        "time": null
+      },
+      "fp3": {
+        "date": null,
+        "time": null
+      },
+      "sprintQualy": {
+        "date": "2025-11-07",
+        "time": "18:30:00Z"
+      },
+      "sprintRace": {
+        "date": "2025-11-08",
+        "time": "14:00:00Z"
+      }
+    },
+    "laps": 71,
+    "round": 21,
+    "url": "https://en.wikipedia.org/wiki/2025_Brazilian_Grand_Prix",
+    "fast_lap": {
+      "fast_lap": null,
+      "fast_lap_driver_id": null,
+      "fast_lap_team_id": null
+    },
+    "circuit": {
+      "circuitId": "interlagos",
+      "circuitName": "Autodromo José Carlos Pace | Interlagos",
+      "country": "Brazil",
+      "city": "Sao Paulo",
+      "circuitLength": "4309km",
+      "lapRecord": "1:10:540",
+      "firstParticipationYear": 1972,
+      "corners": 15,
+      "fastestLapDriverId": "bottas",
+      "fastestLapTeamId": "mercedes",
+      "fastestLapYear": 2018,
+      "url": "https://en.wikipedia.org/wiki/Interlagos_Circuit"
+    },
+    "winner": null,
+    "teamWinner": null
   },
   {
-    "race": "Las Vegas Grand Prix",
-    "date": "2025-11-22",
-    "sessions": {
-      "FP1": "2025-11-20T06:30:00Z",
-      "FP2": "2025-11-20T10:00:00Z",
-      "FP3": "2025-11-21T06:30:00Z",
-      "Qualifying": "2025-11-21T10:00:00Z",
-      "Race": "2025-11-22T09:00:00Z"
-    }
+    "raceId": "las_vegas_2025",
+    "championshipId": "f1_2025",
+    "raceName": "Heineken Las Vegas Grand Prix 2025",
+    "schedule": {
+      "race": {
+        "date": "2025-11-22",
+        "time": "04:00:00Z"
+      },
+      "qualy": {
+        "date": "2025-11-21",
+        "time": "04:00:00Z"
+      },
+      "fp1": {
+        "date": "2025-11-20",
+        "time": "00:30:00Z"
+      },
+      "fp2": {
+        "date": "2025-11-20",
+        "time": "04:00:00Z"
+      },
+      "fp3": {
+        "date": "2025-11-21",
+        "time": "00:30:00Z"
+      },
+      "sprintQualy": {
+        "date": null,
+        "time": null
+      },
+      "sprintRace": {
+        "date": null,
+        "time": null
+      }
+    },
+    "laps": 50,
+    "round": 22,
+    "url": "https://en.wikipedia.org/wiki/2025_Las_Vegas_Grand_Prix",
+    "fast_lap": {
+      "fast_lap": null,
+      "fast_lap_driver_id": null,
+      "fast_lap_team_id": null
+    },
+    "circuit": {
+      "circuitId": "vegas",
+      "circuitName": "Las Vegas Strip Circuit",
+      "country": "United States",
+      "city": "Las Vegas",
+      "circuitLength": "3853km",
+      "lapRecord": "1:35:490",
+      "firstParticipationYear": 2023,
+      "corners": 17,
+      "fastestLapDriverId": "piastri",
+      "fastestLapTeamId": "mclaren",
+      "fastestLapYear": 2023,
+      "url": "https://en.wikipedia.org/wiki/Las_Vegas_Strip_Circuit"
+    },
+    "winner": null,
+    "teamWinner": null
   },
   {
-    "race": "Qatar Grand Prix",
-    "date": "2025-11-30",
-    "sessions": {
-      "FP1": "2025-11-28T13:30:00Z",
-      "Sprint Qualifying": "2025-11-28T17:30:00Z",
-      "Sprint": "2025-11-29T13:00:00Z",
-      "Qualifying": "2025-11-29T17:00:00Z",
-      "Race": "2025-11-30T16:00:00Z"
-    }
+    "raceId": "qatar_2025",
+    "championshipId": "f1_2025",
+    "raceName": "Qatar Airways Qatar Grand Prix 2025",
+    "schedule": {
+      "race": {
+        "date": "2025-11-30",
+        "time": "16:00:00Z"
+      },
+      "qualy": {
+        "date": "2025-11-29",
+        "time": "18:00:00Z"
+      },
+      "fp1": {
+        "date": "2025-11-28",
+        "time": "13:30:00Z"
+      },
+      "fp2": {
+        "date": null,
+        "time": null
+      },
+      "fp3": {
+        "date": null,
+        "time": null
+      },
+      "sprintQualy": {
+        "date": "2025-11-28",
+        "time": "17:30:00Z"
+      },
+      "sprintRace": {
+        "date": "2025-11-29",
+        "time": "14:00:00Z"
+      }
+    },
+    "laps": 57,
+    "round": 23,
+    "url": "https://en.wikipedia.org/wiki/2025_Qatar_Grand_Prix",
+    "fast_lap": {
+      "fast_lap": null,
+      "fast_lap_driver_id": null,
+      "fast_lap_team_id": null
+    },
+    "circuit": {
+      "circuitId": "lusail",
+      "circuitName": "Lusail International Circuit",
+      "country": "Qatar",
+      "city": "Lusail",
+      "circuitLength": "5419km",
+      "lapRecord": "1:24:319",
+      "firstParticipationYear": 2021,
+      "corners": 16,
+      "fastestLapDriverId": "max_verstappen",
+      "fastestLapTeamId": "red_bull",
+      "fastestLapYear": 2023,
+      "url": "https://en.wikipedia.org/wiki/Lusail_International_Circuit"
+    },
+    "winner": null,
+    "teamWinner": null
   },
   {
-    "race": "Abu Dhabi Grand Prix",
-    "date": "2025-12-07",
-    "sessions": {
-      "FP1": "2025-12-05T09:30:00Z",
-      "FP2": "2025-12-05T13:00:00Z",
-      "FP3": "2025-12-06T10:30:00Z",
-      "Qualifying": "2025-12-06T14:00:00Z",
-      "Race": "2025-12-07T13:00:00Z"
-    }
+    "raceId": "abu_dhabi_2025",
+    "championshipId": "f1_2025",
+    "raceName": "Etihad Airways Abu Dhabi Grand Prix 2025",
+    "schedule": {
+      "race": {
+        "date": "2025-12-07",
+        "time": "13:00:00Z"
+      },
+      "qualy": {
+        "date": "2025-12-06",
+        "time": "14:00:00Z"
+      },
+      "fp1": {
+        "date": "2025-12-05",
+        "time": "09:30:00Z"
+      },
+      "fp2": {
+        "date": "2025-12-05",
+        "time": "13:00:00Z"
+      },
+      "fp3": {
+        "date": "2025-12-06",
+        "time": "10:30:00Z"
+      },
+      "sprintQualy": {
+        "date": null,
+        "time": null
+      },
+      "sprintRace": {
+        "date": null,
+        "time": null
+      }
+    },
+    "laps": 58,
+    "round": 24,
+    "url": "https://en.wikipedia.org/wiki/2025_Abu_Dhabi_Grand_Prix",
+    "fast_lap": {
+      "fast_lap": null,
+      "fast_lap_driver_id": null,
+      "fast_lap_team_id": null
+    },
+    "circuit": {
+      "circuitId": "yas_marina",
+      "circuitName": "Yas Marina Circuit",
+      "country": "United Arab Emirates",
+      "city": "Abu Dhabi",
+      "circuitLength": "5281km",
+      "lapRecord": "1:26:103",
+      "firstParticipationYear": 2009,
+      "corners": 16,
+      "fastestLapDriverId": "max_verstappen",
+      "fastestLapTeamId": "red_bull",
+      "fastestLapYear": 2021,
+      "url": "https://en.wikipedia.org/wiki/Yas_Marina_Circuit"
+    },
+    "winner": null,
+    "teamWinner": null
   }
 ]
-
