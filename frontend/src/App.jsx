@@ -1,10 +1,11 @@
-// src/App.jsx
 import React from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom"; 
+import Sidebar from "./components/layout/Sidebar";
+import TopBar from "./components/layout/TopBar"; 
 import HomePage from "./pages/HomePage";
 import SchedulePage from "./pages/SchedulePage";
-import ConstructorStandingsPage from "./pages/ConstructorStandingsPage"; // Import Constructors Page
 import DriverStandingsPage from "./pages/DriverStandingsPage";
+import ConstructorStandingsPage from "./pages/ConstructorStandingsPage";
 import RaceResultsPage from "./pages/RaceResultsPage";
 import CircuitsPage from "./pages/CircuitsPage";
 import CircuitDetailPage from "./pages/CircuitDetailPage";
@@ -12,65 +13,36 @@ import CircuitDetailPage from "./pages/CircuitDetailPage";
 function App() {
   return (
     <div className="flex h-screen bg-black text-gray-100">
-      {/* Sidebar */}
-      <div className="w-64 bg-gray-900 p-4 hidden md:block flex-shrink-0 overflow-y-auto">
-        <h1 className="text-2xl font-bold text-purple-brand mb-6">
-          Purple Sector
-        </h1>
-        <nav>
-          <ul>
-            <li className="mb-2">
-              <Link
-                to="/"
-                className="block py-1 px-2 rounded hover:bg-gray-700 hover:text-red-accent transition-colors"
-              >
-                Home
-              </Link>
-            </li>
-            <li className="mb-2">
-              <Link
-                to="/schedule"
-                className="block py-1 px-2 rounded hover:bg-gray-700 hover:text-red-accent transition-colors"
-              >
-                Schedule
-              </Link>
-            </li>
-            <li className="mb-2">
-              <Link
-                to="/standings/drivers"
-                className="block py-1 px-2 rounded hover:bg-gray-700 hover:text-red-accent transition-colors"
-              >
-                Drivers
-              </Link>
-            </li>
-            {/* Add Constructors Link */}
-            <li className="mb-2">
-              <Link
-                to="/standings/constructors"
-                className="block py-1 px-2 rounded hover:bg-gray-700 hover:text-red-accent transition-colors"
-              >
-                Constructors
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      </div>
+      {" "}
+      {/* Was bg-gray-900 */}
+      <Sidebar />
+      <div className="flex flex-col flex-1 overflow-hidden">
+        <TopBar />
 
-      {/* Main Content Area */}
-      <main className="flex-1 p-6 overflow-y-auto">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/schedule" element={<SchedulePage />} />
-          <Route path="/standings/drivers" element={<DriverStandingsPage />} />
-          <Route
-            path="/standings/constructors"
-            element={<ConstructorStandingsPage />}
-          />
-          <Route path="/results/:year/:round" element={<RaceResultsPage />} />
-          <Route path="/circuits" element={<CircuitsPage />} />
-          <Route path="/circuits/:circuitId" element={<CircuitDetailPage />} />
-        </Routes>
-      </main>
+        {/* Page Content Area - Let's make this our PURPLE BRAND */}
+        <main className="flex-1 p-6 overflow-y-auto bg-purple-brand">
+          {" "}
+          {/* Was bg-gray-800 */}
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/schedule" element={<SchedulePage />} />
+            <Route
+              path="/standings/drivers"
+              element={<DriverStandingsPage />}
+            />
+            <Route
+              path="/standings/constructors"
+              element={<ConstructorStandingsPage />}
+            />
+            <Route path="/results/:year/:round" element={<RaceResultsPage />} />
+            <Route path="/circuits" element={<CircuitsPage />} />
+            <Route
+              path="/circuits/:circuitId"
+              element={<CircuitDetailPage />}
+            />
+          </Routes>
+        </main>
+      </div>
     </div>
   );
 }

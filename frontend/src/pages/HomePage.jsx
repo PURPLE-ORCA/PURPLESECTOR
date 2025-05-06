@@ -48,25 +48,38 @@ function HomePage() {
     fetchData();
   }, []); // Empty dependency array means this runs once
 
-  // --- Render Logic for Next Session ---
   const renderNextSessionInfo = () => {
+    // Use consistent card styling
     if (isLoadingNextSession)
-      return <p className="text-gray-400">Loading next session...</p>;
+      return (
+        <div className="bg-gray-900 p-6 rounded-lg shadow-md mb-6">
+          <p className="text-gray-400">Loading next session...</p>
+        </div>
+      );
     if (errorNextSession)
-      return <p className="text-red-500">Error: {errorNextSession}</p>;
+      return (
+        <div className="bg-gray-900 p-6 rounded-lg shadow-md mb-6">
+          <p className="text-red-500">Error: {errorNextSession}</p>
+        </div>
+      );
     if (!nextSession)
       return (
-        <p className="text-gray-400">No upcoming session data available.</p>
+        <div className="bg-gray-900 p-6 rounded-lg shadow-md mb-6">
+          <p className="text-gray-400">No upcoming session data available.</p>
+        </div>
       );
 
     return (
-      <div className="bg-gray-800 p-4 rounded-lg shadow-md mb-6">
+      // Darker card background
+      <div className="bg-gray-900 p-6 rounded-lg shadow-lg mb-6">
         {" "}
-        {/* Added mb-6 */}
+        {/* Use shadow-lg maybe? */}
+        {/* Use purple title */}
         <h3 className="text-xl font-semibold text-purple-brand mb-2">
           Next Up:
         </h3>
-        <p className="text-lg">
+        {/* Standard light text, red accent for session name */}
+        <p className="text-lg text-gray-100 mb-3">
           {nextSession.raceName} -{" "}
           <span className="font-medium text-red-accent">
             {nextSession.sessionName}
@@ -77,61 +90,73 @@ function HomePage() {
     );
   };
 
-const renderLatestResultInfo = () => {
-  if (isLoadingLatestResult)
-    return <p className="text-gray-400">Loading latest result...</p>;
-  if (errorLatestResult)
-    return <p className="text-red-500">Error: {errorLatestResult}</p>;
-  if (!latestResult || !latestResult.races?.results) {
+  const renderLatestResultInfo = () => {
+    // Use consistent card styling
+    if (isLoadingLatestResult)
+      return (
+        <div className="bg-gray-900 p-6 rounded-lg shadow-md">
+          <p className="text-gray-400">Loading latest result...</p>
+        </div>
+      );
+    if (errorLatestResult)
+      return (
+        <div className="bg-gray-900 p-6 rounded-lg shadow-md">
+          <p className="text-red-500">Error: {errorLatestResult}</p>
+        </div>
+      );
+    if (!latestResult || !latestResult.races?.results) {
+      return (
+        <div className="bg-gray-900 p-6 rounded-lg shadow-md">
+          <p className="text-gray-400">
+            Latest race result data not available yet.
+          </p>
+        </div>
+      );
+    }
+
+    const raceInfo = latestResult.races;
+    const top3 = raceInfo.results.slice(0, 3);
+
     return (
-      <p className="text-gray-400">
-        Latest race result data not available yet.
-      </p>
+      // Darker card background
+      <div className="bg-gray-900 p-6 rounded-lg shadow-lg">
+        {/* Use purple title */}
+        <h3 className="text-xl font-semibold text-purple-brand mb-2">
+          Latest Result: {raceInfo.raceName} (Round {raceInfo.round})
+        </h3>
+        <ol className="list-decimal list-inside space-y-1.5 mt-3 mb-1">
+          {top3.map((result) => (
+            <li key={result.driver.driverId} className="text-gray-200">
+              {/* Red accent for winner */}
+              <span
+                className={`font-medium ${result.position === 1 ? "text-red-accent" : ""}`}
+              >
+                {result.driver.name} {result.driver.surname}
+              </span>
+              {/* Muted team name */}
+              <span className="text-sm text-gray-400 ml-2">
+                ({result.team.teamName})
+              </span>
+              {/* Muted time */}
+              <span className="text-xs text-gray-500 ml-3">{result.time}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
     );
-  }
-
-  const raceInfo = latestResult.races;
-  const results = raceInfo.results;
-  // Get top 3 - Assuming results are already sorted by position from API
-  const top3 = results.slice(0, 3);
-
-  return (
-    <div className="bg-gray-800 p-4 rounded-lg shadow-md">
-      <h3 className="text-xl font-semibold text-purple-brand mb-2">
-        Latest Result: {raceInfo.raceName} (Round {raceInfo.round})
-      </h3>
-      {/* Display Top 3 */}
-      <ol className="list-decimal list-inside space-y-1 mt-2 mb-4">
-        {top3.map((result) => (
-          <li key={result.driver.driverId} className="text-gray-200">
-            <span
-              className={`font-medium ${result.position === 1 ? "text-red-accent" : ""}`}
-            >
-              {result.driver.name} {result.driver.surname}
-            </span>
-            <span className="text-sm text-gray-400 ml-2">
-              ({result.team.teamName})
-            </span>
-            {/* Optional: Add Time/Gap */}
-            <span className="text-xs text-gray-500 ml-2">{result.time}</span>
-          </li>
-        ))}
-      </ol>
-
-    </div>
-  );
-};
-
+  };
   return (
     <div>
+      {/* Use purple for main page title? */}
       <h2 className="text-3xl font-semibold mb-4 text-purple-brand">
         Home Page
       </h2>
+      {/* Use standard text color */}
       <p className="text-gray-300 mb-6">Welcome to Purple Sector!</p>
-      {renderNextSessionInfo()} {/* Render next session section */}
-      {renderLatestResultInfo()} {/* Render latest result section */}
+
+      {renderNextSessionInfo()}
+      {renderLatestResultInfo()}
     </div>
   );
 }
-
 export default HomePage;

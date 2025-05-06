@@ -86,38 +86,50 @@ function Countdown({ targetTimeUTC }) {
   const formatTime = (value) => String(value).padStart(2, "0");
 
   return (
-    <div className="text-center p-4 bg-gray-700 rounded-lg shadow-inner mt-4">
+    // Use a mid-dark gray background
+    <div className="text-center p-4 bg-purple-brand rounded-lg shadow-inner mt-4">
+      {" "}
+      {/* Changed from 700 to 800 */}
       {isPassed ? (
+        // Use red accent for passed state
         <span className="text-2xl font-bold text-red-accent animate-pulse">
           Session Live / Passed!
         </span>
       ) : (
-        <div className="flex justify-center space-x-4 text-gray-100">
-          <div>
-            <span className="text-4xl font-mono font-bold">
+        // Use standard light text for numbers, muted for labels
+        <div className="flex justify-center space-x-4 sm:space-x-6 text-gray-100">
+          {/* Days */}
+          <div className="text-center">
+            <span className="text-3xl sm:text-4xl font-mono font-bold">
               {formatTime(timeLeft.days)}
             </span>
-            <span className="block text-xs uppercase text-gray-400">Days</span>
+            <span className="block text-xs uppercase text-gray-400 tracking-wider">
+              Days
+            </span>
           </div>
-          <div>
-            <span className="text-4xl font-mono font-bold">
+          {/* Hours */}
+          <div className="text-center">
+            <span className="text-3xl sm:text-4xl font-mono font-bold">
               {formatTime(timeLeft.hours)}
             </span>
-            <span className="block text-xs uppercase text-gray-400">Hours</span>
+            <span className="block text-xs uppercase text-gray-400 tracking-wider">
+              Hours
+            </span>
           </div>
-          <div>
-            <span className="text-4xl font-mono font-bold">
+          {/* Etc... */}
+          <div className="text-center">
+            <span className="text-3xl sm:text-4xl font-mono font-bold">
               {formatTime(timeLeft.minutes)}
             </span>
-            <span className="block text-xs uppercase text-gray-400">
+            <span className="block text-xs uppercase text-gray-400 tracking-wider">
               Minutes
             </span>
           </div>
-          <div>
-            <span className="text-4xl font-mono font-bold">
+          <div className="text-center">
+            <span className="text-3xl sm:text-4xl font-mono font-bold">
               {formatTime(timeLeft.seconds)}
             </span>
-            <span className="block text-xs uppercase text-gray-400">
+            <span className="block text-xs uppercase text-gray-400 tracking-wider">
               Seconds
             </span>
           </div>

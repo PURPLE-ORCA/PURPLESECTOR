@@ -1,14 +1,15 @@
+// tailwind.config.js
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}", 
+    /* ... */
   ],
   theme: {
     extend: {
       colors: {
-        "purple-brand": "#37045F", 
-        "red-accent": "#950505", 
+        "purple-brand": "#37045F",
+        "red-accent": "#950505",
+        // "true-black": "#000000", // Optional alias if you prefer
       },
     },
   },
