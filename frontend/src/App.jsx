@@ -6,7 +6,8 @@ import SchedulePage from "./pages/SchedulePage";
 import ConstructorStandingsPage from "./pages/ConstructorStandingsPage"; // Import Constructors Page
 import DriverStandingsPage from "./pages/DriverStandingsPage";
 import RaceResultsPage from "./pages/RaceResultsPage";
-// Import other pages later
+import CircuitsPage from "./pages/CircuitsPage";
+import CircuitDetailPage from "./pages/CircuitDetailPage";
 
 function App() {
   return (
@@ -61,12 +62,13 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/schedule" element={<SchedulePage />} />
           <Route path="/standings/drivers" element={<DriverStandingsPage />} />
-          {/* Add Constructor Standings Route */}
           <Route
             path="/standings/constructors"
             element={<ConstructorStandingsPage />}
           />
           <Route path="/results/:year/:round" element={<RaceResultsPage />} />
+          <Route path="/circuits" element={<CircuitsPage />} />
+          <Route path="/circuits/:circuitId" element={<CircuitDetailPage />} />
         </Routes>
       </main>
     </div>

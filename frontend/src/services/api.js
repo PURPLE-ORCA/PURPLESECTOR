@@ -167,3 +167,37 @@ export const getRaceResults = async (year, round) => {
     return null;
   }
 };
+
+/**
+ * Fetches the list of circuits for a given year (or current).
+ * @param {string|number} year The season year or 'current'. Defaults to 'current'.
+ * @returns {Promise<Array|null>} Array of circuit objects or null on error.
+ */
+export const getCircuits = async (year = 'current') => {
+  try {
+    // Backend uses /api/circuits or /api/circuits/:year
+    const endpoint = year === 'current' ? '/circuits' : `/circuits/${year}`;
+    const response = await axios.get(`${API_BASE_URL}${endpoint}`);
+    return response.data; // Backend sends the array of circuits
+  } catch (error) {
+    console.error(`Error fetching circuits for ${year}:`, error.response?.data?.message || error.message);
+    return null;
+  }
+};
+
+/**
+ * Fetches details for a specific circuit by its ID.
+ * @param {string} circuitId The Ergast circuit ID.
+ * @returns {Promise<object|null>} Circuit object or null on error.
+ */
+export const getSpecificCircuitDetails = async (circuitId) => {
+    if (!circuitId) return null;
+    try {
+        // Backend uses /api/circuits/details/:circuitId
+        const response = await axios.get(`${API_BASE_URL}/circuits/details/${circuitId}`);
+        return response.data; // Backend sends the single circuit object
+    } catch (error) {
+        console.error(`Error fetching details for circuit ${circuitId}:`, error.response?.data?.message || error.message);
+        return null;
+    }
+};
