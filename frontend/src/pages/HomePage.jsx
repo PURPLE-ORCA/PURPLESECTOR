@@ -1,61 +1,68 @@
 // src/pages/HomePage.jsx
 import React, { useState, useEffect } from "react";
-import { getNextSession } from "../services/api"; // Import the service function
+// Import BOTH API functions needed
+import { getNextSession, getLatestRaceResult } from "../services/api";
 import Countdown from "../components/Countdown";
 
 function HomePage() {
+  // State for Next Session
   const [nextSession, setNextSession] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [isLoadingNextSession, setIsLoadingNextSession] = useState(true);
+  const [errorNextSession, setErrorNextSession] = useState(null);
 
+  // State for Latest Result
+  const [latestResult, setLatestResult] = useState(null);
+  const [isLoadingLatestResult, setIsLoadingLatestResult] = useState(true);
+  const [errorLatestResult, setErrorLatestResult] = useState(null);
+
+  // Fetch both pieces of data on mount
   useEffect(() => {
-    // Define an async function inside useEffect to call the API
-    const fetchNextSessionData = async () => {
-      setIsLoading(true);
-      setError(null); // Reset error state on new fetch
+    const fetchData = async () => {
+      // Fetch Next Session
+      setIsLoadingNextSession(true);
+      setErrorNextSession(null);
       try {
-        const data = await getNextSession();
-        setNextSession(data); // Set the fetched data (or null if none found)
+        const nextSessionData = await getNextSession();
+        setNextSession(nextSessionData);
       } catch (err) {
-        // This catch is more for unexpected errors during the async call itself,
-        // the service function handles API errors mostly.
-        console.error("Unexpected error fetching session:", err);
-        setError("Failed to load session data."); // Set a generic error message
+        console.error("Unexpected error fetching next session:", err);
+        setErrorNextSession("Failed to load next session data.");
       } finally {
-        setIsLoading(false); // Set loading to false once fetch is complete (success or fail)
+        setIsLoadingNextSession(false);
+      }
+
+      // Fetch Latest Result
+      setIsLoadingLatestResult(true);
+      setErrorLatestResult(null);
+      try {
+        const latestResultData = await getLatestRaceResult();
+        setLatestResult(latestResultData);
+      } catch (err) {
+        console.error("Unexpected error fetching latest result:", err);
+        setErrorLatestResult("Failed to load latest result data.");
+      } finally {
+        setIsLoadingLatestResult(false);
       }
     };
 
-    fetchNextSessionData(); // Call the async function
+    fetchData();
+  }, []); // Empty dependency array means this runs once
 
-    // Optional: Set up polling or refresh mechanism later if needed
-    // const intervalId = setInterval(fetchNextSessionData, 60000); // e.g., refresh every minute
-    // return () => clearInterval(intervalId); // Cleanup interval on component unmount
-  }, []); // Empty dependency array means this runs once when the component mounts
-
-  // --- Render Logic ---
-  const renderSessionInfo = () => {
-    if (isLoading) {
+  // --- Render Logic for Next Session ---
+  const renderNextSessionInfo = () => {
+    if (isLoadingNextSession)
       return <p className="text-gray-400">Loading next session...</p>;
-    }
-
-    if (error) {
-      return <p className="text-red-500">Error: {error}</p>;
-    }
-
-    if (!nextSession) {
-      // This handles both the case where the API returned null (404)
-      // or if there was another error preventing data from being set.
+    if (errorNextSession)
+      return <p className="text-red-500">Error: {errorNextSession}</p>;
+    if (!nextSession)
       return (
-        <p className="text-gray-400">
-          No upcoming session data available currently.
-        </p>
+        <p className="text-gray-400">No upcoming session data available.</p>
       );
-    }
 
-    // If we have data, display it!
     return (
-      <div className="bg-gray-800 p-4 rounded-lg shadow-md">
+      <div className="bg-gray-800 p-4 rounded-lg shadow-md mb-6">
+        {" "}
+        {/* Added mb-6 */}
         <h3 className="text-xl font-semibold text-purple-brand mb-2">
           Next Up:
         </h3>
@@ -65,13 +72,55 @@ function HomePage() {
             {nextSession.sessionName}
           </span>
         </p>
-        <p className="text-sm text-gray-400">
-          UTC Time: {nextSession.dateTimeUTC}
-        </p>
         <Countdown targetTimeUTC={nextSession.dateTimeUTC} />
       </div>
     );
   };
+
+const renderLatestResultInfo = () => {
+  if (isLoadingLatestResult)
+    return <p className="text-gray-400">Loading latest result...</p>;
+  if (errorLatestResult)
+    return <p className="text-red-500">Error: {errorLatestResult}</p>;
+  if (!latestResult || !latestResult.races?.results) {
+    return (
+      <p className="text-gray-400">
+        Latest race result data not available yet.
+      </p>
+    );
+  }
+
+  const raceInfo = latestResult.races;
+  const results = raceInfo.results;
+  // Get top 3 - Assuming results are already sorted by position from API
+  const top3 = results.slice(0, 3);
+
+  return (
+    <div className="bg-gray-800 p-4 rounded-lg shadow-md">
+      <h3 className="text-xl font-semibold text-purple-brand mb-2">
+        Latest Result: {raceInfo.raceName} (Round {raceInfo.round})
+      </h3>
+      {/* Display Top 3 */}
+      <ol className="list-decimal list-inside space-y-1 mt-2 mb-4">
+        {top3.map((result) => (
+          <li key={result.driver.driverId} className="text-gray-200">
+            <span
+              className={`font-medium ${result.position === 1 ? "text-red-accent" : ""}`}
+            >
+              {result.driver.name} {result.driver.surname}
+            </span>
+            <span className="text-sm text-gray-400 ml-2">
+              ({result.team.teamName})
+            </span>
+            {/* Optional: Add Time/Gap */}
+            <span className="text-xs text-gray-500 ml-2">{result.time}</span>
+          </li>
+        ))}
+      </ol>
+
+    </div>
+  );
+};
 
   return (
     <div>
@@ -79,7 +128,8 @@ function HomePage() {
         Home Page
       </h2>
       <p className="text-gray-300 mb-6">Welcome to Purple Sector!</p>
-      {renderSessionInfo()} {/* Call the render function */}
+      {renderNextSessionInfo()} {/* Render next session section */}
+      {renderLatestResultInfo()} {/* Render latest result section */}
     </div>
   );
 }

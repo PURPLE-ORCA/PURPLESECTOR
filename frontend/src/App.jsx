@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage";
 import SchedulePage from "./pages/SchedulePage";
 import ConstructorStandingsPage from "./pages/ConstructorStandingsPage"; // Import Constructors Page
 import DriverStandingsPage from "./pages/DriverStandingsPage";
+import RaceResultsPage from "./pages/RaceResultsPage";
 // Import other pages later
 
 function App() {
@@ -65,7 +66,7 @@ function App() {
             path="/standings/constructors"
             element={<ConstructorStandingsPage />}
           />
-          {/* Add other routes later */}
+          <Route path="/results/:year/:round" element={<RaceResultsPage />} />
         </Routes>
       </main>
     </div>

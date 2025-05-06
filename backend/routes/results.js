@@ -1,10 +1,25 @@
 import express from "express";
-import {
-  getRaceResults,
-  getSpecificRaceInfo,
-} from "../services/ergastService.js"; // Import both functions
+import { getRaceResults as getRaceResultsErgast, getSpecificRaceInfo } from '../services/ergastService.js';
+import { getLatestRaceResultF1Api } from '../services/f1ApiService.js'; // Import the new function
 
 const router = express.Router();
+
+
+// GET /api/results/latest
+router.get('/latest', async (req, res) => {
+    try {
+        const latestResultData = await getLatestRaceResultF1Api();
+        if (latestResultData) {
+            res.json(latestResultData);
+        } else {
+            res.status(404).json({ message: 'Latest race results not available.' });
+        }
+    } catch (error) {
+        // Catch errors from the service function if it re-throws unexpected ones
+        console.error(`Error in GET /api/results/latest:`, error);
+        res.status(500).json({ message: 'Failed to retrieve latest race results' });
+    }
+});
 
 // Route for specific Race Results
 // GET /api/results/2023/1 -> gets results for 2023 season, round 1

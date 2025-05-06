@@ -80,6 +80,30 @@ export const getConstructorStandings = async (/* year = 'current' - Removed year
   }
 };
 
+/**
+ * Fetches the LATEST race results from the backend.
+ * @returns {Promise<object|null>} Object containing latest race data (incl. results) or null.
+ */
+export const getLatestRaceResult = async () => {
+    try {
+        // Hits GET /api/results/latest on the backend
+        const response = await axios.get(`${API_BASE_URL}/results/latest`);
+        // The backend should return the object fetched from f1api.dev/current/last/race
+        // which contains season, round, races object { results: [...] }
+        if (response.data && response.data.races && response.data.races.results) {
+             return response.data; // Return the whole structure
+        } else {
+            console.warn("Latest race result endpoint returned unexpected data:", response.data);
+            return null;
+        }
+    } catch (error) {
+        console.error(`Error fetching latest race results:`, error.response?.data?.message || error.message);
+        if (error.response && error.response.status === 404) {
+            console.log('Backend reported no latest race results available.');
+        }
+        return null;
+    }
+};
 
 // --- Function for HISTORICAL Driver Standings (using Ergast via backend) ---
 /**
@@ -119,6 +143,27 @@ export const getHistoricalConstructorStandings = async (year) => { // Renamed to
     return response.data;
   } catch (error) {
     console.error(`Error fetching constructor standings for ${year}:`, error.response?.data?.message || error.message);
+    return null;
+  }
+};
+
+/**
+ * Fetches combined Race Info and Results for a specific race via backend (using Ergast).
+ * @param {string|number} year The season year.
+ * @param {string|number} round The round number.
+ * @returns {Promise<object|null>} Object containing race info and results array, or null on error.
+ */
+export const getRaceResults = async (year, round) => {
+  if (!year || !round) {
+      console.error("Year and round are required to fetch race results.");
+      return null;
+  }
+  try {
+    // Hits GET /api/results/:year/:round on the backend
+    const response = await axios.get(`${API_BASE_URL}/results/${year}/${round}`);
+    return response.data; // Backend sends the combined object
+  } catch (error) {
+    console.error(`Error fetching race results for ${year} R${round}:`, error.response?.data?.message || error.message);
     return null;
   }
 };
