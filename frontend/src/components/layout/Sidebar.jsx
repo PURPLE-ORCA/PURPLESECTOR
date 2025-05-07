@@ -4,8 +4,8 @@ import { NavLink } from "react-router-dom";
 
 function Sidebar() {
   const sidebarClasses = `
-     w-64 bg-purple-brand opacity-80 p-4 flex-shrink-0 overflow-y-auto flex flex-col h-full
-    border-r border-red-accent
+     w-42 bg-[#950505] p-4 flex-shrink-0 overflow-y-auto flex flex-col h-full
+    border-r border-red-800
     md:flex
   `;
 

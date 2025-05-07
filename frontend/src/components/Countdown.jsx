@@ -87,7 +87,7 @@ function Countdown({ targetTimeUTC }) {
 
   return (
     // Use a mid-dark gray background
-    <div className="text-center p-4 bg-purple-brand rounded-lg shadow-inner mt-4">
+    <div className="text-center p-4 bg-black rounded-lg shadow-inner mt-4">
       {" "}
       {/* Changed from 700 to 800 */}
       {isPassed ? (

@@ -71,7 +71,7 @@ function HomePage() {
 
     return (
       // Darker card background
-      <div className="bg-gray-900 p-6 rounded-lg shadow-lg mb-6">
+      <div className="bg-red-800 p-6 rounded-lg shadow-lg mb-6">
         {" "}
         {/* Use shadow-lg maybe? */}
         {/* Use purple title */}
@@ -119,7 +119,7 @@ function HomePage() {
 
     return (
       // Darker card background
-      <div className="bg-gray-900 p-6 rounded-lg shadow-lg">
+      <div className="bg-red-800 p-6 rounded-lg shadow-lg">
         {/* Use purple title */}
         <h3 className="text-xl font-semibold text-purple-brand mb-2">
           Latest Result: {raceInfo.raceName} (Round {raceInfo.round})
@@ -152,7 +152,7 @@ function HomePage() {
         Home Page
       </h2>
       {/* Use standard text color */}
-      <p className="text-gray-300 mb-6">Welcome to Purple Sector!</p>
+      <p className="text-purple-600 mb-6">Welcome to Purple Sector!</p>
 
       {renderNextSessionInfo()}
       {renderLatestResultInfo()}

@@ -1,4 +1,3 @@
-// src/pages/RaceResultsPage.jsx
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom"; // Import useParams to get URL params
 import { getRaceResults } from "../services/api";

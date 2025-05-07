@@ -1,21 +1,18 @@
-// vite.config.js
+// frontend/vite.config.js
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-
-// REMOVE the postcss imports
-// import tailwindcss from '@tailwindcss/postcss'
-// import autoprefixer from 'autoprefixer'
+import path from "path"; // Import path
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  // REMOVE the explicit css.postcss section
-  // css: {
-  //   postcss: {
-  //     plugins: [
-  //       tailwindcss,
-  //       autoprefixer,
-  //     ],
-  //   },
-  // },
+  // REMOVED explicit css section from previous attempt
+
+  // --- ADD ALIAS CONFIGURATION ---
+  resolve: {
+    alias: {
+      // Set up '@' alias to point to the 'src' directory
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
 });
