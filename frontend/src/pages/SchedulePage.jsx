@@ -1,8 +1,12 @@
 // src/pages/SchedulePage.jsx
-import React, { useState, useEffect } from "react";
-import { getSchedule } from "../services/api"; // Service function remains the same
+import React, { useState, useEffect, useRef } from "react";
+import { getSchedule } from "../services/api";
+import { motion, AnimatePresence } from "framer-motion";
+import { useKeenSlider } from "keen-slider/react";
+import "keen-slider/keen-slider.min.css";
+import { Icon } from "@iconify/react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"; // Assuming ShadCN Tabs
 
-// Define expected session keys in rough chronological order for sorting display
 const sessionOrder = [
   "fp1",
   "fp2",
@@ -13,158 +17,590 @@ const sessionOrder = [
   "race",
 ];
 
-function SchedulePage() {
+const sessionColors = {
+  fp1: "bg-blue-600 dark:bg-blue-700",
+  fp2: "bg-blue-700 dark:bg-blue-800",
+  fp3: "bg-blue-800 dark:bg-blue-900",
+  sprintQualy: "bg-amber-500 dark:bg-amber-600",
+  sprintRace: "bg-amber-600 dark:bg-amber-700",
+  qualy: "bg-purple-600 dark:bg-purple-700",
+  race: "bg-red-600 dark:bg-red-700",
+};
+
+export default function SchedulePage() {
   const [schedule, setSchedule] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [activeMonth, setActiveMonth] = useState(null);
+  const [viewMode, setViewMode] = useState("calendar");
+  const monthsRef = useRef([]);
+
+  const [sliderRef, instanceRef] = useKeenSlider({
+    slides: { perView: 1, spacing: 16 },
+    slideChanged(slider) {
+      if (
+        monthsRef.current &&
+        monthsRef.current.length > slider.track.details.abs
+      ) {
+        setActiveMonth(monthsRef.current[slider.track.details.abs]);
+      }
+    },
+  });
 
   useEffect(() => {
     const fetchScheduleData = async () => {
       setIsLoading(true);
       setError(null);
       try {
-        const data = await getSchedule(); // Fetches the cached data
+        const data = await getSchedule();
         if (data && Array.isArray(data)) {
           setSchedule(data);
+
+          const grouped = {};
+          data.forEach((race) => {
+            if (race.schedule?.race?.date) {
+              const monthYear = getMonthAndYear(race.schedule.race.date);
+              if (monthYear) {
+                if (!grouped[monthYear]) grouped[monthYear] = [];
+                grouped[monthYear].push(race);
+              }
+            }
+          });
+
+          const monthsList = Object.keys(grouped);
+          monthsRef.current = monthsList;
+
+          const now = new Date();
+          const upcomingRaces = data.filter(
+            (race) =>
+              race.schedule?.race?.date &&
+              new Date(
+                `${race.schedule.race.date}T${race.schedule.race.time || "00:00:00Z"}`
+              ) >= now
+          );
+
+          let initialMonth = monthsList.length > 0 ? monthsList[0] : null;
+          if (upcomingRaces.length > 0) {
+            const nextRaceDate = new Date(
+              `${upcomingRaces[0].schedule.race.date}T${upcomingRaces[0].schedule.race.time || "00:00:00Z"}`
+            );
+            initialMonth = `${nextRaceDate.toLocaleString("default", { month: "long" })} ${nextRaceDate.getFullYear()}`;
+          }
+
+          if (initialMonth) {
+            setActiveMonth(initialMonth);
+            const initialIndex = monthsList.indexOf(initialMonth);
+            if (instanceRef.current && initialIndex !== -1) {
+              // Wrap moveToIdx in a check for slider readiness
+              const checkAndMove = () => {
+                if (instanceRef.current?.track?.details) {
+                  // Check if slider details are available
+                  instanceRef.current.moveToIdx(initialIndex, true, {
+                    duration: 0,
+                  }); // Move instantly
+                } else {
+                  setTimeout(checkAndMove, 50); // Retry shortly
+                }
+              };
+              setTimeout(checkAndMove, 100); // Initial delay
+            }
+          } else if (monthsList.length > 0) {
+            setActiveMonth(monthsList[0]); // Fallback if no upcoming
+          }
         } else {
-          setError("Could not load schedule data from cache.");
+          setError("Could not load schedule data.");
           setSchedule([]);
         }
       } catch (err) {
-        console.error("Unexpected error fetching schedule:", err);
-        setError("An error occurred while loading the schedule.");
+        console.error("Error fetching schedule:", err);
+        setError("An error occurred loading schedule.");
         setSchedule([]);
       } finally {
         setIsLoading(false);
       }
     };
-
     fetchScheduleData();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Removed instanceRef from deps for now to avoid loop, consider specific trigger if needed
 
-  // Updated helper to format session times from the new structure
   const formatSessionTime = (session) => {
-    // Check if session exists and has date + time
-    if (!session || !session.date || !session.time) return "N/A";
+    if (!session?.date || !session?.time) return "N/A";
     try {
-      const dateTimeString = `${session.date}T${session.time}`; // Combine date and time
-      const date = new Date(dateTimeString); // Use Date constructor directly for ISO strings
-      // Format: e.g., "14 Mar 2025, 01:30" (adjust formatting as desired)
-      return date.toLocaleString("en-GB", {
+      const utcDate = new Date(`${session.date}T${session.time}`);
+      const gmt1Date = new Date(utcDate.getTime() + 60 * 60 * 1000);
+      return gmt1Date.toLocaleString("en-GB", {
         day: "numeric",
         month: "short",
-        year: "numeric",
-        hour: "2-digit",
+        /* year: "numeric", */ hour: "2-digit",
         minute: "2-digit",
-        timeZone: "UTC", // Explicitly state it's UTC
       });
     } catch (e) {
-      console.error("Error formatting date:", session, e);
       return "Invalid Date";
     }
   };
 
-  // Helper to get a user-friendly name for session keys
-  const getSessionDisplayName = (key) => {
-    switch (key) {
-      case "fp1":
-        return "FP1";
-      case "fp2":
-        return "FP2";
-      case "fp3":
-        return "FP3";
-      case "qualy":
-        return "Qualifying";
-      case "race":
-        return "Race";
-      case "sprintQualy":
-        return "Sprint Qualifying";
-      case "sprintRace":
-        return "Sprint";
-      default:
-        return key; // Fallback
+  const formatDateOnly = (dateString) => {
+    if (!dateString) return "N/A";
+    try {
+      const utcDate = new Date(dateString + "T00:00:00Z");
+      const gmt1Date = new Date(utcDate.getTime() + 60 * 60 * 1000);
+      return gmt1Date.toLocaleString("en-GB", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      });
+    } catch (e) {
+      return "Invalid Date";
     }
   };
 
+  const formatTimeOnly = (dateString, timeString) => {
+    if (!dateString || !timeString) return "N/A";
+    try {
+      const utcDate = new Date(`${dateString}T${timeString}`);
+      const gmt1Date = new Date(utcDate.getTime() + 60 * 60 * 1000);
+      return gmt1Date.toLocaleString("en-GB", {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    } catch (e) {
+      return "Invalid Time";
+    }
+  };
+
+  const getSessionDisplayName = (key) => {
+    const names = {
+      fp1: "Practice 1",
+      fp2: "Practice 2",
+      fp3: "Practice 3",
+      qualy: "Qualifying",
+      race: "Race",
+      sprintQualy: "Sprint Qualifying",
+      sprintRace: "Sprint Race",
+    };
+    return names[key] || key;
+  };
+
+  const getMonthAndYear = (dateString) => {
+    if (!dateString) return null;
+    try {
+      const date = new Date(dateString + "T00:00:00Z"); // Ensure consistent parsing by adding time
+      return `${date.toLocaleString("default", { month: "long" })} ${date.getFullYear()}`;
+    } catch (e) {
+      return null;
+    }
+  };
+
+  const groupedRaces = schedule.reduce((acc, race) => {
+    if (race.schedule?.race?.date) {
+      const monthYear = getMonthAndYear(race.schedule.race.date);
+      if (monthYear) {
+        if (!acc[monthYear]) acc[monthYear] = [];
+        acc[monthYear].push(race);
+      }
+    }
+    return acc;
+  }, {});
+
+  const getCountryFlag = (country) => {
+    const flags = {
+      /* ... your flags object ... */
+    };
+    return flags[country] || "🏁";
+  };
+
+  const handleTabChange = (value) => setViewMode(value);
+
   if (isLoading) {
     return (
-      <p className="text-center text-gray-400 mt-10">Loading schedule...</p>
+      <div className="flex justify-center items-center min-h-[calc(100vh-8rem)] bg-gray-50 dark:bg-gray-950">
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+          className="w-16 h-16 border-4 border-t-red-600 border-r-purple-700 border-b-red-600 border-l-purple-700 rounded-full"
+        />
+      </div>
     );
   }
 
   if (error) {
-    return <p className="text-center text-red-500 mt-10">Error: {error}</p>;
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[calc(100vh-8rem)] p-6 bg-gray-50 dark:bg-gray-950">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white dark:bg-gray-900 p-6 rounded-lg border border-red-600 text-center max-w-md shadow-lg"
+        >
+          <h3 className="text-xl font-bold text-red-500 mb-3">
+            Schedule Unavailable
+          </h3>
+          <p className="text-gray-700 dark:text-gray-300">{error}</p>
+          <button
+            className="mt-4 bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-md transition-colors duration-300"
+            onClick={() => window.location.reload()}
+          >
+            {" "}
+            Retry{" "}
+          </button>
+        </motion.div>
+      </div>
+    );
   }
 
   return (
-    <div>
-      {/* Title could potentially show the season year if available */}
-      <h2 className="text-3xl font-semibold mb-6 text-purple-brand">
-        F1 Schedule
-      </h2>
-      <div className="space-y-6">
-        {schedule.length > 0 ? (
-          schedule.map(
-            (
-              race // Use race.raceId for a more stable key if possible
-            ) => (
-              <div
-                key={race.raceId || race.round}
-                className="bg-gray-800 p-4 rounded-lg shadow-md hover:bg-gray-700 transition-colors duration-200"
-              >
-                {/* Use race.raceName */}
-                <h3 className="text-xl font-semibold text-red-accent mb-3">
-                  Round {race.round}: {race.raceName}
-                </h3>
-                {/* Display Circuit info if available */}
-                {race.circuit && (
-                  <p className="text-sm text-gray-400 mb-3">
-                    {race.circuit.circuitName} - {race.circuit.city},{" "}
-                    {race.circuit.country}
-                  </p>
-                )}
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="max-w-7xl mx-auto px-2 sm:px-4 py-8 text-gray-900 dark:text-white" // Changed max-width and padding
+    >
+      <motion.div
+        initial={{ y: -30, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.1 }}
+        className="text-center mb-10"
+      >
+        <h1 className="text-4xl md:text-5xl font-extrabold mb-2 bg-gradient-to-r from-red-600 via-[#37045F] to-red-700 text-transparent bg-clip-text">
+          {" "}
+          {/* Used purple-brand hex */}
+          2025 FORMULA 1 SEASON
+        </h1>
+        <div className="h-1.5 w-40 mx-auto mb-3 bg-gradient-to-r from-red-600 via-[#37045F] to-red-700"></div>
+        <p className="text-gray-600 dark:text-gray-400">
+          Official Race Calendar{" "}
+          <span className="text-xs">(Times shown in GMT+1 Fixed Offset)</span>
+        </p>
+      </motion.div>
 
-                {/* Iterate through race.schedule object */}
-                {race.schedule && typeof race.schedule === "object" ? (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 text-sm">
-                    {/* Sort session keys based on predefined order */}
-                    {Object.entries(race.schedule)
-                      .filter(
-                        ([key, session]) =>
-                          session && session.date && session.time
-                      ) // Only show sessions with data
-                      .sort(
-                        ([keyA], [keyB]) =>
-                          sessionOrder.indexOf(keyA) -
-                          sessionOrder.indexOf(keyB)
-                      ) // Sort by predefined order
-                      .map(([key, session]) => (
-                        <div key={key} className="bg-gray-700 p-2 rounded">
-                          {/* Use helper for display name */}
-                          <p className="font-medium text-gray-200">
-                            {getSessionDisplayName(key)}
-                          </p>
-                          <p className="text-gray-400">
-                            {formatSessionTime(session)}{" "}
-                            <span className="text-xs">(UTC)</span>
-                          </p>
-                        </div>
-                      ))}
-                  </div>
-                ) : (
-                  <p className="text-sm text-gray-500">
-                    Session details not available.
-                  </p>
-                )}
+      <div className="mb-8">
+        <Tabs
+          defaultValue="calendar"
+          className="w-full"
+          onValueChange={handleTabChange}
+        >
+          <TabsList className="grid w-full max-w-xs mx-auto grid-cols-2 mb-8 bg-gray-200 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg p-1">
+            <TabsTrigger
+              value="calendar"
+              className="data-[state=active]:bg-red-600 data-[state=active]:text-white text-gray-600 dark:text-gray-400 rounded-md text-sm font-medium py-1.5"
+            >
+              <Icon
+                icon="mdi:calendar-month-outline"
+                className="w-5 h-5 mr-2"
+              />
+              Calendar
+            </TabsTrigger>
+            <TabsTrigger
+              value="list"
+              className="data-[state=active]:bg-red-600 data-[state=active]:text-white text-gray-600 dark:text-gray-400 rounded-md text-sm font-medium py-1.5"
+            >
+              <Icon icon="mdi:format-list-bulleted" className="w-5 h-5 mr-2" />
+              Race List
+            </TabsTrigger>
+          </TabsList>
+
+          {/* === Calendar View === */}
+          <TabsContent value="calendar" className="mt-0">
+            {Object.keys(groupedRaces).length > 0 ? (
+              <div className="space-y-6">
+                <div className="flex items-center justify-between mb-6 px-2">
+                  <button
+                    onClick={() => instanceRef.current?.prev()}
+                    className="p-2 rounded-full bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors"
+                    aria-label="Previous month"
+                  >
+                    {" "}
+                    <Icon
+                      icon="mdi:chevron-left"
+                      className="w-6 h-6 text-red-500"
+                    />{" "}
+                  </button>
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                    {activeMonth ||
+                      (monthsRef.current.length > 0
+                        ? monthsRef.current[0]
+                        : "Loading Month...")}
+                  </h2>
+                  <button
+                    onClick={() => instanceRef.current?.next()}
+                    className="p-2 rounded-full bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors"
+                    aria-label="Next month"
+                  >
+                    {" "}
+                    <Icon
+                      icon="mdi:chevron-right"
+                      className="w-6 h-6 text-red-500"
+                    />{" "}
+                  </button>
+                </div>
+
+                <div ref={sliderRef} className="keen-slider -mx-2 sm:-mx-0">
+                  {Object.entries(groupedRaces).map(([monthYear, races]) => (
+                    <div
+                      key={monthYear}
+                      className="keen-slider__slide px-2 sm:px-0"
+                    >
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {races.map((race) => (
+                          <motion.div
+                            key={race.raceId || race.round}
+                            whileHover={{
+                              y: -5,
+                              boxShadow:
+                                "0 10px 15px -3px rgba(220, 38, 38, 0.3), 0 4px 6px -2px rgba(220, 38, 38, 0.2)",
+                            }}
+                            transition={{
+                              type: "spring",
+                              stiffness: 200,
+                              damping: 15,
+                            }}
+                            // REMOVED onClick for expansion from the card
+                            className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden shadow-lg transition-all duration-300"
+                          >
+                            {/* Race Header (Round, Flag, Name, Circuit) */}
+                            <div className="bg-gradient-to-br from-red-600 via-[#950505] to-[#37045F] p-4">
+                              <div className="flex justify-between items-center">
+                                <span className="bg-black/50 dark:bg-white/10 px-3 py-1 rounded-full text-xs font-bold text-white">
+                                  ROUND {race.round}
+                                </span>
+                                {race.circuit?.country && (
+                                  <span
+                                    className="text-3xl"
+                                    aria-label={race.circuit.country}
+                                  >
+                                    {getCountryFlag(race.circuit.country)}
+                                  </span>
+                                )}
+                              </div>
+                              <h3 className="text-xl font-bold text-white mt-2 truncate">
+                                {race.raceName}
+                              </h3>
+                              {race.circuit && (
+                                <div className="flex items-center mt-1 text-xs text-gray-200">
+                                  <Icon
+                                    icon="mdi:map-marker-outline"
+                                    className="w-4 h-4 mr-1.5 flex-shrink-0"
+                                  />
+                                  <span className="truncate">
+                                    {race.circuit.circuitName}
+                                  </span>
+                                </div>
+                              )}
+                            </div>
+
+                            {/* Race Date and Time (Main Race) */}
+                            <div className="p-4 bg-gray-50 dark:bg-gray-900">
+                              {race.schedule?.race ? (
+                                <div className="flex justify-between items-center text-sm">
+                                  <div className="flex items-center text-gray-700 dark:text-gray-300">
+                                    <Icon
+                                      icon="mdi:calendar-check-outline"
+                                      className="w-5 h-5 mr-2 text-red-500"
+                                    />
+                                    {formatDateOnly(race.schedule.race.date)}
+                                  </div>
+                                  <div className="flex items-center text-gray-700 dark:text-gray-300">
+                                    <Icon
+                                      icon="mdi:flag-checkered"
+                                      className="w-5 h-5 mr-2 text-red-500"
+                                    />
+                                    <span>
+                                      {formatTimeOnly(
+                                        race.schedule.race.date,
+                                        race.schedule.race.time
+                                      )}
+                                    </span>
+                                  </div>
+                                </div>
+                              ) : (
+                                <p className="text-gray-600 dark:text-gray-400">
+                                  Race date N/A
+                                </p>
+                              )}
+                            </div>
+
+                            {/* Session Details - ALWAYS VISIBLE NOW */}
+                            {race.schedule && ( // Check if race.schedule exists
+                              <div className="bg-gray-100 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+                                <div className="p-4 space-y-2">
+                                  {Object.entries(race.schedule)
+                                    .filter(
+                                      ([, session]) =>
+                                        session?.date && session?.time
+                                    )
+                                    .sort(
+                                      ([keyA], [keyB]) =>
+                                        sessionOrder.indexOf(keyA) -
+                                        sessionOrder.indexOf(keyB)
+                                    )
+                                    .map(([key, session]) => (
+                                      <div
+                                        key={key}
+                                        className={`p-3 rounded-md flex justify-between items-center text-white ${sessionColors[key] || "bg-gray-600 dark:bg-gray-700"}`}
+                                      >
+                                        <span className="font-semibold text-sm">
+                                          {getSessionDisplayName(key)}
+                                        </span>
+                                        <span className="text-sm font-mono">
+                                          {formatTimeOnly(
+                                            session.date,
+                                            session.time
+                                          )}{" "}
+                                          <span className="text-xs opacity-80">
+                                            (GMT+1)
+                                          </span>
+                                        </span>
+                                      </div>
+                                    ))}
+                                </div>
+                              </div>
+                            )}
+                          </motion.div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-            )
-          )
-        ) : (
-          <p className="text-center text-gray-500">No schedule data found.</p>
-        )}
+            ) : (
+              <div className="text-center p-10 bg-gray-100 dark:bg-gray-900 rounded-lg">
+                <p className="text-gray-600 dark:text-gray-400">
+                  No schedule data available.
+                </p>
+              </div>
+            )}
+          </TabsContent>
+
+          {/* === List View === */}
+          <TabsContent value="list" className="mt-0">
+            <div className="space-y-4">
+              {schedule.length > 0 ? (
+                schedule.map((race) => (
+                  <motion.div
+                    key={race.raceId || race.round}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="bg-white dark:bg-black border-l-4 border-red-600 rounded-r-lg overflow-hidden shadow-lg hover:shadow-red-900/30"
+                  >
+                    <div className="p-5">
+                      <div className="flex flex-col md:flex-row justify-between md:items-center mb-4">
+                        <div>
+                          <div className="flex items-center mb-1">
+                            <span className="bg-red-600 px-3 py-1 rounded-full text-xs font-bold text-white mr-3">
+                              ROUND {race.round}
+                            </span>
+                            {race.circuit?.country && (
+                              <span
+                                className="text-2xl mr-2"
+                                aria-label={race.circuit.country}
+                              >
+                                {getCountryFlag(race.circuit.country)}
+                              </span>
+                            )}
+                          </div>
+                          <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mt-1 truncate">
+                            {race.raceName}
+                          </h3>
+                          {race.circuit && (
+                            <p className="text-sm text-gray-600 dark:text-gray-400 truncate">
+                              {race.circuit.circuitName}
+                            </p>
+                          )}
+                        </div>
+                        {race.schedule?.race && (
+                          <div className="bg-gray-100 dark:bg-gray-900 px-4 py-2 rounded-lg mt-3 md:mt-0 text-center md:text-left">
+                            <p className="text-sm text-gray-700 dark:text-gray-300 flex items-center justify-center md:justify-start">
+                              <Icon
+                                icon="mdi:calendar-check-outline"
+                                className="w-4 h-4 mr-2 text-red-500"
+                              />
+                              {formatDateOnly(race.schedule.race.date)}
+                            </p>
+                            <p className="text-sm text-gray-700 dark:text-gray-300 flex items-center justify-center md:justify-start mt-1">
+                              <Icon
+                                icon="mdi:flag-checkered"
+                                className="w-4 h-4 mr-2 text-red-500"
+                              />
+                              Race:{" "}
+                              {formatTimeOnly(
+                                race.schedule.race.date,
+                                race.schedule.race.time
+                              )}{" "}
+                              <span className="text-xs">(GMT+1)</span>
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                      {race.schedule && typeof race.schedule === "object" && (
+                        <div className="mt-6">
+                          <h4 className="text-sm font-semibold uppercase text-gray-500 dark:text-gray-400 mb-3">
+                            Session Timeline
+                          </h4>
+                          <div className="relative border-l-2 border-gray-200 dark:border-gray-700 pl-6 space-y-3 py-1">
+                            {Object.entries(race.schedule)
+                              .filter(
+                                ([, session]) => session?.date && session?.time
+                              )
+                              .sort(
+                                ([keyA], [keyB]) =>
+                                  sessionOrder.indexOf(keyA) -
+                                  sessionOrder.indexOf(keyB)
+                              )
+                              .map(([key, session], index) => (
+                                <motion.div
+                                  key={key}
+                                  initial={{ opacity: 0, x: -10 }}
+                                  animate={{ opacity: 1, x: 0 }}
+                                  transition={{ delay: index * 0.05 }}
+                                  className="relative flex items-center"
+                                >
+                                  <span className="absolute -left-[29px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-2 dark:border-black darK:bg-red-600 border-white bg-red-600"></span>
+                                  <div
+                                    className={`flex-1 flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 rounded-md ${sessionColors[key] || "dark:bg-gray-800 bg-gray-200"} text-white`}
+                                  >
+                                    <div className="mb-1 sm:mb-0">
+                                      <span className="px-2 py-0.5 rounded text-xs font-semibold dark:bg-black/30 bg-white/30">
+                                        {getSessionDisplayName(key)}
+                                      </span>
+                                      <p className="text-xs opacity-80 mt-0.5">
+                                        {formatDateOnly(session.date)}
+                                      </p>
+                                    </div>
+                                    <div className="flex items-center font-mono text-sm">
+                                      <Icon
+                                        icon="mdi:clock-outline"
+                                        className="w-4 h-4 mr-1.5 opacity-80"
+                                      />
+                                      <span>
+                                        {formatTimeOnly(
+                                          session.date,
+                                          session.time
+                                        )}{" "}
+                                        <span className="text-xs opacity-80">
+                                          (GMT+1)
+                                        </span>
+                                      </span>
+                                    </div>
+                                  </div>
+                                </motion.div>
+                              ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </motion.div>
+                ))
+              ) : (
+                <div className="text-center p-10 bg-gray-100 dark:bg-gray-900 rounded-lg">
+                  <p className="text-gray-600 dark:text-gray-400">
+                    No schedule data available.
+                  </p>
+                </div>
+              )}
+            </div>
+          </TabsContent>
+        </Tabs>
       </div>
-    </div>
+    </motion.div>
   );
 }
-
-export default SchedulePage;

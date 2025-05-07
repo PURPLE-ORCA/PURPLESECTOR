@@ -1,7 +1,7 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom"; 
+import React, { useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import Sidebar from "./components/layout/Sidebar";
-import TopBar from "./components/layout/TopBar"; 
+import TopBar from "./components/layout/TopBar";
 import HomePage from "./pages/HomePage";
 import SchedulePage from "./pages/SchedulePage";
 import DriverStandingsPage from "./pages/DriverStandingsPage";
@@ -11,18 +11,16 @@ import CircuitsPage from "./pages/CircuitsPage";
 import CircuitDetailPage from "./pages/CircuitDetailPage";
 
 function App() {
-  return (
-    <div className="flex h-screen bg-black text-gray-100">
-      {" "}
-      {/* Was bg-gray-900 */}
-      <Sidebar />
-      <div className="flex flex-col flex-1 overflow-hidden">
-        <TopBar />
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
-        {/* Page Content Area - Let's make this our PURPLE BRAND */}
+  const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
+
+  return (
+    <div className="flex h-screen bg-white dark:bg-black text-black dark:text-white">
+      <Sidebar isOpen={isSidebarOpen} />
+      <div className="flex flex-col flex-1 overflow-hidden">
+        <TopBar toggleSidebar={toggleSidebar} />
         <main className="flex-1 p-6 overflow-y-auto bg-purple-brand">
-          {" "}
-          {/* Was bg-gray-800 */}
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/schedule" element={<SchedulePage />} />

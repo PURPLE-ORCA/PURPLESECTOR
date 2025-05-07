@@ -71,7 +71,7 @@ function HomePage() {
 
     return (
       // Darker card background
-      <div className="bg-red-800 p-6 rounded-lg shadow-lg mb-6">
+      <div className="bg-[#950505] p-6 rounded-lg shadow-lg mb-6">
         {" "}
         {/* Use shadow-lg maybe? */}
         {/* Use purple title */}
@@ -90,24 +90,43 @@ function HomePage() {
     );
   };
 
+  // src/pages/HomePage.jsx
+  // ... (imports and other parts of the component)
+
   const renderLatestResultInfo = () => {
-    // Use consistent card styling
+    const cardBaseClasses =
+      "bg-[#950505] dark:bg-gray-800 p-4 sm:p-6 rounded-lg shadow-lg"; // Responsive padding
+    const loadingErrorClasses = "text-white dark:text-gray-400";
+    const titleClasses =
+      "text-lg sm:text-xl font-semibold text-white dark:text-[#37045F] mb-3 sm:mb-4 text-center sm:text-left";
+    const driverNameClasses =
+      "block font-bold text-sm sm:text-md text-white dark:text-gray-100";
+    const teamNameClasses = "block text-xs text-gray-200 dark:text-gray-400";
+    const positionClasses =
+      "absolute -top-2 -left-2 bg-black text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center border-2 border-[#950505] dark:border-gray-800"; // For podium position numbers
+
     if (isLoadingLatestResult)
       return (
-        <div className="bg-gray-900 p-6 rounded-lg shadow-md">
-          <p className="text-gray-400">Loading latest result...</p>
+        <div className={cardBaseClasses}>
+          <p className={loadingErrorClasses}>Loading latest result...</p>
         </div>
       );
     if (errorLatestResult)
       return (
-        <div className="bg-gray-900 p-6 rounded-lg shadow-md">
-          <p className="text-red-500">Error: {errorLatestResult}</p>
+        <div className={cardBaseClasses}>
+          <p className="text-yellow-300 dark:text-red-500">
+            Error: {errorLatestResult}
+          </p>
         </div>
       );
-    if (!latestResult || !latestResult.races?.results) {
+    if (
+      !latestResult ||
+      !latestResult.races?.results ||
+      latestResult.races.results.length === 0
+    ) {
       return (
-        <div className="bg-gray-900 p-6 rounded-lg shadow-md">
-          <p className="text-gray-400">
+        <div className={cardBaseClasses}>
+          <p className={loadingErrorClasses}>
             Latest race result data not available yet.
           </p>
         </div>
@@ -115,45 +134,53 @@ function HomePage() {
     }
 
     const raceInfo = latestResult.races;
-    const top3 = raceInfo.results.slice(0, 3);
+    // Results are already sorted by finishing position from the API
+    const top3Finishers = raceInfo.results.slice(0, 3);
 
     return (
-      // Darker card background
-      <div className="bg-red-800 p-6 rounded-lg shadow-lg">
-        {/* Use purple title */}
-        <h3 className="text-xl font-semibold text-purple-brand mb-2">
-          Latest Result: {raceInfo.raceName} (Round {raceInfo.round})
-        </h3>
-        <ol className="list-decimal list-inside space-y-1.5 mt-3 mb-1">
-          {top3.map((result) => (
-            <li key={result.driver.driverId} className="text-gray-200">
-              {/* Red accent for winner */}
-              <span
-                className={`font-medium ${result.position === 1 ? "text-red-accent" : ""}`}
-              >
-                {result.driver.name} {result.driver.surname}
-              </span>
-              {/* Muted team name */}
-              <span className="text-sm text-gray-400 ml-2">
-                ({result.team.teamName})
-              </span>
-              {/* Muted time */}
-              <span className="text-xs text-gray-500 ml-3">{result.time}</span>
-            </li>
+      <div className={cardBaseClasses}>
+        <h3 className={titleClasses}>Latest Result: {raceInfo.raceName}</h3>
+        {/* Attempting a horizontal-ish layout for top 3 */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-2">
+          {top3Finishers.map((result) => (
+            <div
+              key={result.driver.driverId}
+              className="bg-black dark:bg-gray-900 p-3 rounded-md relative text-center sm:text-left shadow-md"
+            >
+              {" "}
+              {/* Individual card for each of top 3 */}
+              {/* Position Badge */}
+              <span className={positionClasses}>{result.position}</span>
+              {/* Driver and Team Info */}
+              <div className="mt-3 sm:mt-0">
+                {" "}
+                {/* Adjust margin for badge */}
+                <span className={driverNameClasses}>
+                  {result.driver.name} {result.driver.surname}
+                </span>
+                <span className={teamNameClasses}>{result.team.teamName}</span>
+              </div>
+              {/* Image placeholder for later */}
+              {/* <div className="h-24 bg-gray-700 dark:bg-gray-600 mt-2 rounded flex items-center justify-center text-gray-500">IMG</div> */}
+            </div>
           ))}
-        </ol>
+        </div>
+        {/* Small note for finishing order */}
+        <p className="text-xs text-gray-200 dark:text-gray-500 mt-3 text-center sm:text-right">
+          (Top 3 finishers)
+        </p>
       </div>
     );
   };
+
+  // ... (rest of the component)
+
   return (
     <div>
       {/* Use purple for main page title? */}
-      <h2 className="text-3xl font-semibold mb-4 text-purple-brand">
+      <h2 className="text-4xl font-semibold mb-4 text-black dark:text-white">
         Home Page
       </h2>
-      {/* Use standard text color */}
-      <p className="text-purple-600 mb-6">Welcome to Purple Sector!</p>
-
       {renderNextSessionInfo()}
       {renderLatestResultInfo()}
     </div>
