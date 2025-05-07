@@ -4,5 +4,10 @@
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.3",
     "tailwindcss": "^4.1.5"
+  },
+  "dependencies": {
+    "framer-motion": "^12.10.0",
+    "keen-slider": "^6.8.6",
+    "lucide-react": "^0.507.0"
   }
 }

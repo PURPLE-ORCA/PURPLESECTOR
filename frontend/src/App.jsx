@@ -1,7 +1,7 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom"; 
+import React, { useEffect, useState } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Sidebar from "./components/layout/Sidebar";
-import TopBar from "./components/layout/TopBar"; 
+import TopBar from "./components/layout/TopBar";
 import HomePage from "./pages/HomePage";
 import SchedulePage from "./pages/SchedulePage";
 import DriverStandingsPage from "./pages/DriverStandingsPage";
@@ -11,18 +11,38 @@ import CircuitsPage from "./pages/CircuitsPage";
 import CircuitDetailPage from "./pages/CircuitDetailPage";
 
 function App() {
-  return (
-    <div className="flex h-screen bg-black text-gray-100">
-      {" "}
-      {/* Was bg-gray-900 */}
-      <Sidebar />
-      <div className="flex flex-col flex-1 overflow-hidden">
-        <TopBar />
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
+  const [pageTitle, setPageTitle] = useState("Home"); // Add state for title
+  const location = useLocation();
 
-        {/* Page Content Area - Let's make this our PURPLE BRAND */}
+  useEffect(() => {
+    const path = location.pathname;
+    // Basic title mapping based on path start
+    if (path === "/") setPageTitle("Home");
+    else if (path.startsWith("/schedule")) setPageTitle("Schedule");
+    else if (path.startsWith("/standings/drivers"))
+      setPageTitle("Driver Standings");
+    else if (path.startsWith("/standings/constructors"))
+      setPageTitle("Constructor Standings");
+    else if (path.startsWith("/circuits")) setPageTitle("Circuits");
+    else if (path.startsWith("/results"))
+      setPageTitle("Race Results"); // Could be more specific later
+    else setPageTitle("Purple Sector"); // Default
+  }, [location.pathname]); 
+
+  return (
+    <div className="flex min-h-screen bg-white dark:bg-black text-black dark:text-white">
+      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+      <div
+        className={`flex flex-col flex-1 transition-all overflow-hidden duration-300 ease-in-out `}
+      >
+        <TopBar
+          toggleSidebar={toggleSidebar}
+          isSidebarOpen={isSidebarOpen}
+          title={pageTitle}
+        />
         <main className="flex-1 p-6 overflow-y-auto bg-purple-brand">
-          {" "}
-          {/* Was bg-gray-800 */}
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/schedule" element={<SchedulePage />} />

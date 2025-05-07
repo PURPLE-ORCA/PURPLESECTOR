@@ -1,6 +1,10 @@
 import express from "express";
-import { getRaceResults as getRaceResultsErgast, getSpecificRaceInfo } from '../services/ergastService.js';
-import { getLatestRaceResultF1Api } from '../services/f1ApiService.js'; // Import the new function
+import {
+  getRaceResults as getRaceResultsErgast,
+  getSpecificRaceInfo as getRaceInfoErgast,
+} from "../services/ergastService.js";
+import { getLatestRaceResultF1Api, getSpecificRaceResultF1Api } from '../services/f1ApiService.js'; // Import BOTH f1Api results functions
+
 
 const router = express.Router();
 
@@ -21,49 +25,84 @@ router.get('/latest', async (req, res) => {
     }
 });
 
-// Route for specific Race Results
-// GET /api/results/2023/1 -> gets results for 2023 season, round 1
 router.get("/:year/:round", async (req, res) => {
+  // ... params and validation ...
   const { year, round } = req.params;
-
-  // Basic validation for year and round
-  if (!/^\d{4}$/.test(year)) {
-    return res.status(400).json({ message: "Invalid year format. Use YYYY." });
+  const currentApiYear = new Date().getFullYear().toString();
+  const isCurrentApiYear = year === currentApiYear || year === "current";
+  if (!/^\d{4}$/.test(year) && year !== "current") {
+    /* ... error ... */
   }
   if (!/^\d+$/.test(round) || parseInt(round, 10) < 1) {
-    return res
-      .status(400)
-      .json({ message: "Invalid round number. Use a positive integer." });
+    /* ... error ... */
   }
 
   try {
-    // Fetch both results and general race info concurrently
-    const [results, raceInfo] = await Promise.all([
-      getRaceResults(year, round),
-      getSpecificRaceInfo(year, round), // Fetch general info too
-    ]);
+    let raceData;
+    let source;
 
-    if (results && raceInfo) {
-      // Combine them into a single response object for convenience
-      res.json({
-        season: raceInfo.season,
-        round: raceInfo.round,
-        raceName: raceInfo.raceName,
-        circuit: raceInfo.Circuit, // Includes circuit details
-        date: raceInfo.date,
-        time: raceInfo.time, // Race start time (UTC)
-        results: results, // The array of driver results
-      });
+    if (isCurrentApiYear) {
+      source = "f1api.dev";
+      console.log(`Fetching results for ${year} R${round} from ${source}`);
+      // Pass the actual year, not 'current', as the API expects YYYY/RR/race
+      const actualYear = year === "current" ? currentApiYear : year;
+      const specificResultData = await getSpecificRaceResultF1Api(
+        actualYear,
+        round
+      );
+
+      // *** UPDATED DATA PROCESSING to match f1ApiService validation ***
+      if (
+        specificResultData &&
+        typeof specificResultData.races === "object" &&
+        specificResultData.races !== null &&
+        Array.isArray(specificResultData.races.results)
+      ) {
+        const raceInfo = specificResultData.races; // Use the 'races' OBJECT directly
+        raceData = {
+          season: specificResultData.season,
+          round: raceInfo.round,
+          raceName: raceInfo.raceName,
+          circuit: raceInfo.circuit,
+          date: raceInfo.schedule?.race?.date,
+          time: raceInfo.schedule?.race?.time,
+          results: raceInfo.results, // Results array is directly inside 'races' object
+        };
+      } else {
+        console.log(
+          `No valid results structure found on ${source} for ${actualYear} R${round}.`
+        );
+      }
     } else {
-      // Ergast might return empty if year/round is invalid
+      // --- Fetch from Ergast (remains the same) ---
+      source = "Ergast";
+      console.log(`Fetching results for ${year} R${round} from ${source}`);
+      const [results, raceInfo] = await Promise.all([
+        getRaceResultsErgast(year, round),
+        getRaceInfoErgast(year, round),
+      ]);
+      if (results && raceInfo) {
+        raceData = {
+          /* ... build Ergast response ... */
+        };
+      } else {
+        console.log(`No results found on ${source} for ${year} R${round}.`);
+      }
+    }
+
+    // --- Send Response ---
+    if (raceData) {
+      res.json(raceData);
+    } else {
       res
         .status(404)
-        .json({ message: `Race results not found for ${year} round ${round}` });
+        .json({
+          message: `Race results not found for ${year} round ${round} from available sources.`,
+        });
     }
   } catch (error) {
     console.error(`Error in GET /api/results/${year}/${round}:`, error);
     res.status(500).json({ message: "Failed to retrieve race results" });
   }
 });
-
 export default router;
