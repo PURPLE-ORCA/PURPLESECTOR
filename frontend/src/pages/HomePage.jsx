@@ -12,6 +12,8 @@ import {
   ChevronRight,
   MapPin,
 } from "lucide-react";
+import { Link } from "react-router-dom"; // *** IMPORT LINK ***
+
 
 function HomePage() {
   // State for Next Session
@@ -248,6 +250,8 @@ function HomePage() {
 
     const raceInfo = latestResult.races;
     const top3Finishers = raceInfo.results.slice(0, 3);
+     const season = latestResult.season; // Get season from the response
+     const round = raceInfo.round; 
 
     // Define podium medal colors
     const medalColors = [
@@ -329,11 +333,22 @@ function HomePage() {
             ))}
           </div>
 
-          <div className="mt-4 pt-4 border-t border-black dark:border-black flex items-center justify-center">
-            <button className="flex items-center text-[#950505] dark:text-[#ff6b6b] font-medium hover:underline">
-              <span>View Full Results</span>
-              <ChevronRight className="ml-1 h-4 w-4" />
-            </button>
+          {/* --- Link to Full Results --- */}
+          <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 flex items-center justify-center">
+            {/* Make sure season and round are available before creating link */}
+            {season && round ? (
+              <Link
+                to={`/results/${season}/${round}`} // Construct the dynamic URL
+                className="flex items-center text-[#950505] dark:text-[#ff6b6b] font-medium hover:underline"
+              >
+                <span>View Full Results</span>
+                <ChevronRight className="ml-1 h-4 w-4" />
+              </Link>
+            ) : (
+              <span className="text-sm text-gray-500">
+                Full results link unavailable
+              </span>
+            )}
           </div>
         </div>
       </motion.div>
@@ -341,7 +356,7 @@ function HomePage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+    <div className="px-2 py-2 sm:px-6 lg:px-8">
       <motion.div
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -349,9 +364,7 @@ function HomePage() {
         className="flex flex-col md:flex-row md:items-end md:justify-between mb-8 pb-4 border-b border-black dark:border-black"
       >
         <div>
-          <h1 className="text-3xl font-bold text-black dark:text-white">
-            F1 Dashboard
-          </h1>
+          <h1 className="text-3xl font-bold text-red-600 mb-1">F1 Dashboard</h1>
           <p className="text-black dark:text-white mt-1">
             Stay updated with the latest Formula 1 events and results
           </p>

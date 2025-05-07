@@ -190,7 +190,7 @@ function ConstructorStandingsPage() {
         {/* 2nd Place */}
         <motion.div
           variants={itemVariants}
-          className="w-1/5 relative bg-gray-100 dark:bg-gray-800 rounded-t-lg flex flex-col items-center pt-4 pb-12 shadow-lg"
+          className="w-1/5 relative bg-gray-100 dark:bg-transparent rounded-t-lg flex flex-col items-center pt-4 pb-12 shadow-lg"
           style={{ height: "170px" }}
         >
           <div
@@ -211,7 +211,7 @@ function ConstructorStandingsPage() {
         {/* 1st Place */}
         <motion.div
           variants={itemVariants}
-          className="w-1/4 relative bg-gray-100 dark:bg-gray-800 rounded-t-lg flex flex-col items-center pt-6 pb-16 shadow-xl z-10"
+          className="w-1/4 relative bg-gray-100 dark:bg-transparent rounded-t-lg flex flex-col items-center pt-6 pb-16 shadow-xl z-10"
           style={{ height: "220px" }}
         >
           <div
@@ -235,7 +235,7 @@ function ConstructorStandingsPage() {
         {/* 3rd Place */}
         <motion.div
           variants={itemVariants}
-          className="w-1/5 relative bg-gray-100 dark:bg-gray-800 rounded-t-lg flex flex-col items-center pt-4 pb-12 shadow-lg"
+          className="w-1/5 relative bg-gray-100 dark:bg-transparent rounded-t-lg flex flex-col items-center pt-4 pb-12 shadow-lg"
           style={{ height: "150px" }}
         >
           <div
@@ -263,7 +263,7 @@ function ConstructorStandingsPage() {
         {constructorStandings.map((standing) => (
           <div
             key={standing.team?.teamId || standing.position}
-            className="keen-slider__slide bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden group transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+            className="keen-slider__slide bg-white dark:bg-transparent rounded-xl shadow-lg overflow-hidden group transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
           >
             <div
               className={`h-2 w-full ${getTeamColorClass(standing.team?.teamName)}`}
@@ -376,11 +376,9 @@ function ConstructorStandingsPage() {
 
   return (
     <div className="transition-color text-gray-900 dark:text-white px-4 py-8 rounded-xl shadow-lg">
-      <div
-        className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 gap-4"
-      >
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 gap-4">
         <div>
-          <h2 className="text-3xl font-bold text-[#950505] mb-1">
+          <h2 className="text-3xl font-bold text-red-600 mb-1">
             Constructor Standings
           </h2>
           <div className="flex items-center text-sm">
@@ -401,20 +399,11 @@ function ConstructorStandingsPage() {
 
       {renderPodium()}
 
-      <div className="bg-gray-50 dark:bg-gray-900 rounded-xl shadow-lg overflow-hidden">
+      <div className="bg-gray-50 dark:bg-transparent rounded-xl shadow-lg overflow-hidden">
         <AnimatePresence mode="wait">
           {viewMode === "table" ? renderTable() : renderCards()}
         </AnimatePresence>
       </div>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1 }}
-        className="mt-6 text-sm text-center text-gray-500"
-      >
-        Data provided by F1 API
-      </motion.div>
     </div>
   );
 }

@@ -4,14 +4,16 @@ import { Icon } from "@iconify/react";
 
 function Sidebar({ isOpen }) {
 const sidebarClasses = `
-  transition-all duration-300
-  ${isOpen ? "w-60 p-4" : "w-0 p-0 sm:w-16 sm:p-2"}
-  bg-[#950505] dark:bg-[#950505]
-    rounded-t-2xl mx-2 mt-2 mb-4 overflow-hidden h-full flex-shrink-0 flex flex-col z-50 dark:bg-[linear-gradient(to_bottom_right,_rgba(149,5,5,0.25),_rgba(55,4,95,0.2),_rgba(0,0,0,0.7))]
+    transition-all duration-300 ease-in-out 
+   ${isOpen ? "w-60 p-4" : "w-0 p-0 sm:w-16 sm:p-2"}
+    bg-[#950505] dark:bg-[#950505]
+    overflow-hidden flex-shrink-0 
+    flex flex-col z-10  rounded-t-2xl ml-2 mt-2
+    h-screen sticky top-0
+    dark:bg-[linear-gradient(to_bottom_right,_rgba(149,5,5,0.25),_rgba(55,4,95,0.2),_rgba(0,0,0,0.7))]
     dark:border-[#950505]/40
     dark:shadow-[0_0_20px_rgba(55,4,95,0.5)]
 `;
-
 
   const linkBaseClasses = `
     flex items-center gap-3 py-2 px-3 rounded-lg transition-all duration-150

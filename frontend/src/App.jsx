@@ -32,9 +32,11 @@ function App() {
   }, [location.pathname]); 
 
   return (
-    <div className="flex h-screen bg-white dark:bg-black text-black dark:text-white">
+    <div className="flex min-h-screen bg-white dark:bg-black text-black dark:text-white">
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-      <div className="flex flex-col flex-1 overflow-hidden">
+      <div
+        className={`flex flex-col flex-1 transition-all overflow-hidden duration-300 ease-in-out ${isSidebarOpen ? "md:ml-64" : "md:ml-0"}`}
+      >
         <TopBar
           toggleSidebar={toggleSidebar}
           isSidebarOpen={isSidebarOpen}

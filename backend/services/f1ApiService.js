@@ -136,28 +136,57 @@ export async function getCurrentConstructorStandingsF1Api() {
   }
 }
 
+// **** ADD THIS FUNCTION BACK ****
 /**
  * Fetches the LATEST Race Results from f1api.dev. Fetches live.
  * @returns {Promise<object|null>} Object containing latest race result data or null on error.
  */
-export async function getLatestRaceResultF1Api() {
+export async function getLatestRaceResultF1Api() { // Ensure this function exists and is exported
     const url = `${F1_API_BASE_URL}/current/last/race`;
     try {
         console.log(`Fetching latest race result from ${url}`);
         const response = await axios.get(url);
-
-        // *** UPDATED VALIDATION ***
-        // Check if the main data object exists, if 'races' key exists and is an object,
-        // and if the nested 'results' array exists and is not empty.
+        // Using the validation matching the specific results one below now
         if (response.data && typeof response.data.races === 'object' && response.data.races !== null && Array.isArray(response.data.races.results) && response.data.races.results.length > 0) {
-            // Return the whole response object, the route handler can parse it
             return response.data;
         } else {
             console.warn('Unexpected or empty response structure from f1api.dev latest race:', response.data);
-            return null; // Return null if structure is wrong or no results yet
+            return null;
         }
     } catch (error) {
         console.error(`Error fetching latest race result from f1api.dev:`, error.response?.statusText || error.message);
+        return null;
+    }
+}
+/**
+ * Fetches results for a SPECIFIC race from f1api.dev.
+ * @param {string|number} year The season year.
+ * @param {string|number} round The round number.
+ * @returns {Promise<object|null>} Object containing data for the specific race or null on error.
+ */
+export async function getSpecificRaceResultF1Api(year, round) {
+    const url = `${F1_API_BASE_URL}/${year}/${round}/race`;
+    try {
+        console.log(`Fetching specific race result from ${url}`);
+        const response = await axios.get(url);
+
+        // *** UPDATED VALIDATION TO MATCH LATEST RESULT STRUCTURE ***
+        // Check if the main data object exists, if 'races' key exists and is an object,
+        // and if the nested 'results' array exists and is not empty.
+        if (response.data && typeof response.data.races === 'object' && response.data.races !== null && Array.isArray(response.data.races.results) && response.data.races.results.length > 0) {
+             // Return the whole response object
+             return response.data;
+        } else {
+            // Log the actual structure if it's unexpected
+            console.warn(`Unexpected or empty response structure from ${url}:`, JSON.stringify(response.data, null, 2)); // Log full structure
+            return null; // Structure is wrong or no results
+        }
+    } catch (error) {
+        // If axios throws (e.g., network error, or maybe f1api returns 404 directly?)
+        console.error(`Error fetching specific race result (${year} R${round}) from f1api.dev:`, error.response?.statusText || error.message);
+         if (error.response?.data) { // Log response data on error if available
+            console.error("API Response Data on Error:", error.response.data);
+         }
         return null; // Return null on error
     }
 }

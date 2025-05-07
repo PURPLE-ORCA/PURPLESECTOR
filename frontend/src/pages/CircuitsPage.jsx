@@ -5,7 +5,6 @@ import { getCircuits } from "../services/api";
 import { motion } from "framer-motion";
 import {
   MapPin,
-  Calendar,
   Info,
   ChevronRight,
   AlertCircle,
@@ -122,21 +121,11 @@ function CircuitsPage() {
   }
 
   return (
-    <div className="px-4 py-8 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      <motion.div
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="flex items-center mb-8 border-b border-black dark:border-black pb-4"
-      >
-        <div className="w-12 h-12 flex-shrink-0 bg-[#950505] dark:bg-[#b30000] rounded-full flex items-center justify-center mr-4">
-          <Calendar className="w-6 h-6 text-white" />
-        </div>
+    <div className="px-2 py-2 sm:px-6 lg:px-8 ">
+      <div className="flex items-center mb-8 border-b border-black dark:border-black pb-4">
         <div>
-          <h1 className="text-3xl font-bold text-black dark:text-white">
-            F1 Circuits
-          </h1>
-          <p className="text-black dark:text-black mt-1 flex items-center">
+          <h1 className="text-3xl font-bold text-red-600 mb-1">F1 Circuits</h1>
+          <p className="text-black dark:text-white mt-1 flex items-center">
             <span className="font-medium">
               {yearToFetch === "current" ? "Current Season" : yearToFetch}
             </span>
@@ -144,7 +133,7 @@ function CircuitsPage() {
             <span>{circuits.length} tracks</span>
           </p>
         </div>
-      </motion.div>
+      </div>
 
       {circuits.length > 0 ? (
         <motion.div
@@ -177,7 +166,7 @@ function CircuitsPage() {
                     {circuit.circuitName}
                   </h3>
 
-                  <div className="flex items-center text-sm text-black dark:text-black mb-3">
+                  <div className="flex items-center text-sm text-black dark:text-white mb-3">
                     <span className="font-medium">
                       {circuit.Location?.locality}
                     </span>
@@ -185,7 +174,7 @@ function CircuitsPage() {
                     <span>{circuit.Location?.country}</span>
                   </div>
 
-                  <div className="text-xs text-white dark:text-black bg-black dark:bg-black/50 rounded-lg p-2 mb-4">
+                  <div className="text-xs text-white dark:text-white bg-black dark:bg-black/50 rounded-lg p-2 mb-4">
                     <div className="flex items-center justify-between">
                       <span>Latitude</span>
                       <span className="font-mono">{circuit.Location?.lat}</span>
@@ -198,7 +187,7 @@ function CircuitsPage() {
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between mt-auto pt-2 border-t border-black dark:border-black">
+                  <div className="flex items-center justify-between mt-auto pt-">
                     <span className="text-sm font-medium text-[#950505] dark:text-[#ff6b6b]">
                       View Details
                     </span>
