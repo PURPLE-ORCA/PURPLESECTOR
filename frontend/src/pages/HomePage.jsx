@@ -1,8 +1,17 @@
 // src/pages/HomePage.jsx
 import React, { useState, useEffect } from "react";
-// Import BOTH API functions needed
 import { getNextSession, getLatestRaceResult } from "../services/api";
 import Countdown from "../components/Countdown";
+import { motion } from "framer-motion";
+import {
+  Flag,
+  Calendar,
+  Trophy,
+  AlertCircle,
+  Loader2,
+  ChevronRight,
+  MapPin,
+} from "lucide-react";
 
 function HomePage() {
   // State for Next Session
@@ -14,6 +23,31 @@ function HomePage() {
   const [latestResult, setLatestResult] = useState(null);
   const [isLoadingLatestResult, setIsLoadingLatestResult] = useState(true);
   const [errorLatestResult, setErrorLatestResult] = useState(null);
+
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        when: "beforeChildren",
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        damping: 12,
+        stiffness: 100,
+      },
+    },
+  };
 
   // Fetch both pieces of data on mount
   useEffect(() => {
@@ -46,144 +80,300 @@ function HomePage() {
     };
 
     fetchData();
-  }, []); // Empty dependency array means this runs once
+  }, []);
 
   const renderNextSessionInfo = () => {
-    // Use consistent card styling
-    if (isLoadingNextSession)
+    if (isLoadingNextSession) {
       return (
-        <div className="bg-gray-900 p-6 rounded-lg shadow-md mb-6">
-          <p className="text-gray-400">Loading next session...</p>
-        </div>
+        <motion.div
+          variants={itemVariants}
+          className="bg-white dark:bg-black rounded-xl shadow-md overflow-hidden"
+        >
+          <div className="p-6 flex items-center justify-center">
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+              className="mr-3"
+            >
+              <Loader2 className="h-6 w-6 text-[#950505] dark:text-[#ff6b6b]" />
+            </motion.div>
+            <p className="text-black dark:text-white">
+              Loading next session...
+            </p>
+          </div>
+        </motion.div>
       );
-    if (errorNextSession)
+    }
+
+    if (errorNextSession) {
       return (
-        <div className="bg-gray-900 p-6 rounded-lg shadow-md mb-6">
-          <p className="text-red-500">Error: {errorNextSession}</p>
-        </div>
+        <motion.div
+          variants={itemVariants}
+          className="bg-white dark:bg-black rounded-xl shadow-md overflow-hidden border-l-4 border-red-500"
+        >
+          <div className="p-6">
+            <div className="flex items-center">
+              <AlertCircle className="h-6 w-6 text-red-500 mr-3" />
+              <h3 className="text-lg font-semibold text-black dark:text-white">
+                Error Loading Next Session
+              </h3>
+            </div>
+            <p className="mt-2 text-black dark:text-white">
+              {errorNextSession}
+            </p>
+          </div>
+        </motion.div>
       );
-    if (!nextSession)
+    }
+
+    if (!nextSession) {
       return (
-        <div className="bg-gray-900 p-6 rounded-lg shadow-md mb-6">
-          <p className="text-gray-400">No upcoming session data available.</p>
-        </div>
+        <motion.div
+          variants={itemVariants}
+          className="bg-white dark:bg-black rounded-xl shadow-md overflow-hidden"
+        >
+          <div className="p-6 text-center">
+            <Calendar className="h-10 w-10 text-black mx-auto mb-3" />
+            <p className="text-black dark:text-white">
+              No upcoming sessions scheduled.
+            </p>
+          </div>
+        </motion.div>
       );
+    }
 
     return (
-      // Darker card background
-      <div className="bg-[#950505] p-6 rounded-lg shadow-lg mb-6">
-        {" "}
-        {/* Use shadow-lg maybe? */}
-        {/* Use purple title */}
-        <h3 className="text-xl font-semibold text-purple-brand mb-2">
-          Next Up:
-        </h3>
-        {/* Standard light text, red accent for session name */}
-        <p className="text-lg text-gray-100 mb-3">
-          {nextSession.raceName} -{" "}
-          <span className="font-medium text-red-accent">
-            {nextSession.sessionName}
-          </span>
-        </p>
-        <Countdown targetTimeUTC={nextSession.dateTimeUTC} />
-      </div>
+      <motion.div
+        variants={itemVariants}
+        className="bg-white dark:bg-black rounded-xl shadow-md overflow-hidden"
+      >
+        <div className="h-2 bg-gradient-to-r from-[#950505] to-[#37045F]"></div>
+        <div className="p-6">
+          <div className="flex items-center mb-4">
+            <div className="w-12 h-12 bg-[#950505] dark:bg-[#b30000] rounded-full flex items-center justify-center mr-4">
+              <Flag className="h-6 w-6 text-white" />
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold text-black dark:text-white">
+                Next Race
+              </h3>
+              <p className="text-[#950505] dark:text-[#ff6b6b] font-medium">
+                {nextSession.sessionName}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+            <div className="mb-4 md:mb-0">
+              <div className="text-black dark:text-white text-sm mb-1">
+                Grand Prix
+              </div>
+              <div className="text-2xl font-bold text-black dark:text-white flex items-center">
+                {nextSession.raceName}
+              </div>
+            </div>
+
+            <div className="flex items-center  rounded-lg px-4 py-2">
+              <Countdown targetTimeUTC={nextSession.dateTimeUTC} />
+            </div>
+          </div>
+        </div>
+      </motion.div>
     );
   };
 
-  // src/pages/HomePage.jsx
-  // ... (imports and other parts of the component)
-
   const renderLatestResultInfo = () => {
-    const cardBaseClasses =
-      "bg-[#950505] dark:bg-gray-800 p-4 sm:p-6 rounded-lg shadow-lg"; // Responsive padding
-    const loadingErrorClasses = "text-white dark:text-gray-400";
-    const titleClasses =
-      "text-lg sm:text-xl font-semibold text-white dark:text-[#37045F] mb-3 sm:mb-4 text-center sm:text-left";
-    const driverNameClasses =
-      "block font-bold text-sm sm:text-md text-white dark:text-gray-100";
-    const teamNameClasses = "block text-xs text-gray-200 dark:text-gray-400";
-    const positionClasses =
-      "absolute -top-2 -left-2 bg-black text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center border-2 border-[#950505] dark:border-gray-800"; // For podium position numbers
+    if (isLoadingLatestResult) {
+      return (
+        <motion.div
+          variants={itemVariants}
+          className="bg-white dark:bg-black rounded-xl shadow-md overflow-hidden"
+        >
+          <div className="p-6 flex items-center justify-center">
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+              className="mr-3"
+            >
+              <Loader2 className="h-6 w-6 text-[#950505] dark:text-[#ff6b6b]" />
+            </motion.div>
+            <p className="text-black dark:text-white">
+              Loading latest result...
+            </p>
+          </div>
+        </motion.div>
+      );
+    }
 
-    if (isLoadingLatestResult)
+    if (errorLatestResult) {
       return (
-        <div className={cardBaseClasses}>
-          <p className={loadingErrorClasses}>Loading latest result...</p>
-        </div>
+        <motion.div
+          variants={itemVariants}
+          className="bg-white dark:bg-black rounded-xl shadow-md overflow-hidden border-l-4 border-red-500"
+        >
+          <div className="p-6">
+            <div className="flex items-center">
+              <AlertCircle className="h-6 w-6 text-red-500 mr-3" />
+              <h3 className="text-lg font-semibold text-black dark:text-white">
+                Error Loading Latest Result
+              </h3>
+            </div>
+            <p className="mt-2 text-black dark:text-white">
+              {errorLatestResult}
+            </p>
+          </div>
+        </motion.div>
       );
-    if (errorLatestResult)
-      return (
-        <div className={cardBaseClasses}>
-          <p className="text-yellow-300 dark:text-red-500">
-            Error: {errorLatestResult}
-          </p>
-        </div>
-      );
+    }
+
     if (
       !latestResult ||
       !latestResult.races?.results ||
       latestResult.races.results.length === 0
     ) {
       return (
-        <div className={cardBaseClasses}>
-          <p className={loadingErrorClasses}>
-            Latest race result data not available yet.
-          </p>
-        </div>
+        <motion.div
+          variants={itemVariants}
+          className="bg-white dark:bg-black rounded-xl shadow-md overflow-hidden"
+        >
+          <div className="p-6 text-center">
+            <Trophy className="h-10 w-10 text-black mx-auto mb-3" />
+            <p className="text-black dark:text-white">
+              No race results available yet.
+            </p>
+          </div>
+        </motion.div>
       );
     }
 
     const raceInfo = latestResult.races;
-    // Results are already sorted by finishing position from the API
     const top3Finishers = raceInfo.results.slice(0, 3);
 
+    // Define podium medal colors
+    const medalColors = [
+      {
+        bg: "bg-amber-400",
+        text: "text-amber-900",
+        border: "border-amber-500",
+      },
+      { bg: "bg-[#37045F]", text: "text-black", border: "border-black" },
+      {
+        bg: "bg-amber-700",
+        text: "text-amber-100",
+        border: "border-amber-800",
+      },
+    ];
+
     return (
-      <div className={cardBaseClasses}>
-        <h3 className={titleClasses}>Latest Result: {raceInfo.raceName}</h3>
-        {/* Attempting a horizontal-ish layout for top 3 */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-2">
-          {top3Finishers.map((result) => (
-            <div
-              key={result.driver.driverId}
-              className="bg-black dark:bg-gray-900 p-3 rounded-md relative text-center sm:text-left shadow-md"
-            >
-              {" "}
-              {/* Individual card for each of top 3 */}
-              {/* Position Badge */}
-              <span className={positionClasses}>{result.position}</span>
-              {/* Driver and Team Info */}
-              <div className="mt-3 sm:mt-0">
-                {" "}
-                {/* Adjust margin for badge */}
-                <span className={driverNameClasses}>
-                  {result.driver.name} {result.driver.surname}
-                </span>
-                <span className={teamNameClasses}>{result.team.teamName}</span>
-              </div>
-              {/* Image placeholder for later */}
-              {/* <div className="h-24 bg-gray-700 dark:bg-gray-600 mt-2 rounded flex items-center justify-center text-gray-500">IMG</div> */}
+      <motion.div
+        variants={itemVariants}
+        className="bg-white dark:bg-black rounded-xl shadow-md overflow-hidden"
+      >
+        <div className="h-2 bg-gradient-to-r from-[#37045F] to-[#950505]"></div>
+        <div className="p-6">
+          <div className="flex items-center mb-6">
+            <div className="w-12 h-12 bg-[#950505] dark:bg-[#b30000] rounded-full flex items-center justify-center mr-4">
+              <Trophy className="h-6 w-6 text-white" />
             </div>
-          ))}
+            <div>
+              <h3 className="text-xl font-bold text-black dark:text-white">
+                Latest Results
+              </h3>
+              <p className="text-[#950505] dark:text-[#ff6b6b] font-medium">
+                {raceInfo.raceName}
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {top3Finishers.map((result, index) => (
+              <motion.div
+                key={result.driver.driverId}
+                whileHover={{
+                  y: -5,
+                  transition: { type: "spring", stiffness: 300 },
+                }}
+                className="bg-white dark:bg-black/10 rounded-lg overflow-hidden shadow-sm relative"
+              >
+                <div
+                  className={`absolute top-0 left-0 w-full h-1 ${medalColors[index].bg}`}
+                ></div>
+                <div className="p-4">
+                  <div className="flex items-center justify-between mb-3">
+                    <div
+                      className={`flex items-center text-white dark:text-white justify-center w-8 h-8 rounded-full ${medalColors[index].bg} ${medalColors[index].text} font-bold text-lg`}
+                    >
+                      {result.position}
+                    </div>
+                    <div className="text-xs font-medium text-black dark:text-white">
+                      {result.time ? result.time : "DNF"}
+                    </div>
+                  </div>
+
+                  <div className="text-center">
+                    <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-gray-100 dark:bg-black flex items-center justify-center">
+                      <span className="text-2xl font-bold text-[#950505] dark:text-[#ff6b6b]">
+                        {result.driver.code ||
+                          result.driver.surname.substring(0, 3).toUpperCase()}
+                      </span>
+                    </div>
+                    <h4 className="font-bold text-black dark:text-white">
+                      {result.driver.name} {result.driver.surname}
+                    </h4>
+                    <p className="text-sm text-black dark:text-white">
+                      {result.team.teamName}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="mt-4 pt-4 border-t border-black dark:border-black flex items-center justify-center">
+            <button className="flex items-center text-[#950505] dark:text-[#ff6b6b] font-medium hover:underline">
+              <span>View Full Results</span>
+              <ChevronRight className="ml-1 h-4 w-4" />
+            </button>
+          </div>
         </div>
-        {/* Small note for finishing order */}
-        <p className="text-xs text-gray-200 dark:text-gray-500 mt-3 text-center sm:text-right">
-          (Top 3 finishers)
-        </p>
-      </div>
+      </motion.div>
     );
   };
 
-  // ... (rest of the component)
-
   return (
-    <div>
-      {/* Use purple for main page title? */}
-      <h2 className="text-4xl font-semibold mb-4 text-black dark:text-white">
-        Home Page
-      </h2>
-      {renderNextSessionInfo()}
-      {renderLatestResultInfo()}
+    <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+      <motion.div
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="flex flex-col md:flex-row md:items-end md:justify-between mb-8 pb-4 border-b border-black dark:border-black"
+      >
+        <div>
+          <h1 className="text-3xl font-bold text-black dark:text-white">
+            F1 Dashboard
+          </h1>
+          <p className="text-black dark:text-white mt-1">
+            Stay updated with the latest Formula 1 events and results
+          </p>
+        </div>
+        <div className="mt-4 md:mt-0 text-sm">
+          <span className="px-3 py-1 rounded-full bg-[#950505] dark:bg-[#b30000] text-white font-medium">
+            Season 2025
+          </span>
+        </div>
+      </motion.div>
+
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="grid grid-cols-1 gap-8"
+      >
+        {renderNextSessionInfo()}
+        {renderLatestResultInfo()}
+      </motion.div>
     </div>
   );
 }
+
 export default HomePage;

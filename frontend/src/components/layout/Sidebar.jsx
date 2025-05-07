@@ -1,91 +1,80 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { Icon } from "@iconify/react";
 
 function Sidebar({ isOpen }) {
-  const sidebarClasses = `
-    transition-all duration-300
-    ${isOpen ? "w-60" : "w-0"}
-    bg-[#950505] p-4 flex-shrink-0 overflow-y-auto flex flex-col h-full
-    border-r border-red-800
-  `;
+const sidebarClasses = `
+  transition-all duration-300
+  ${isOpen ? "w-60 p-4" : "w-0 p-0 sm:w-16 sm:p-2"}
+  bg-[#950505] dark:bg-[#950505]
+    rounded-t-2xl mx-2 mt-2 mb-4 overflow-hidden h-full flex-shrink-0 flex flex-col z-50 dark:bg-[linear-gradient(to_bottom_right,_rgba(149,5,5,0.25),_rgba(55,4,95,0.2),_rgba(0,0,0,0.7))]
+    dark:border-[#950505]/40
+    dark:shadow-[0_0_20px_rgba(55,4,95,0.5)]
+`;
 
-  const linkBaseClasses =
-    "block py-2 px-3 rounded transition-colors duration-150 font-medium whitespace-nowrap";
+
+  const linkBaseClasses = `
+    flex items-center gap-3 py-2 px-3 rounded-lg transition-all duration-150
+    font-medium text-sm tracking-wide
+  `;
   const linkInactiveClasses =
-    "text-gray-300 hover:bg-red-accent hover:text-white";
-  const linkActiveClass = "bg-red-accent text-white font-semibold";
+    "text-gray-300 hover:bg-[#37045F]/40 hover:text-white";
+  const linkActiveClass =
+    "bg-[#950505]/90 text-white font-semibold shadow-inner";
+
+  const navItems = [
+    { to: "/", label: "Home", icon: "mdi:home" },
+    { to: "/schedule", label: "Schedule", icon: "mdi:calendar-clock" },
+    { to: "/standings/drivers", label: "Drivers", icon: "mdi:car-sports" },
+    {
+      to: "/standings/constructors",
+      label: "Constructors",
+      icon: "mdi:factory",
+    },
+    { to: "/circuits", label: "Circuits", icon: "mdi:map-marker-path" },
+  ];
 
   return (
     <div className={sidebarClasses}>
-      {/* Hide content when collapsed */}
-      <div className={`${isOpen ? "block" : "hidden"}`}>
+      <div className="flex flex-col h-full">
         <div className="mb-10 pt-4">
-          <NavLink to="/" className="block">
-            <h1 className="text-3xl font-bold text-gray-100 text-center hover:text-red-accent transition-colors">
-              Purple Sector
-            </h1>
+          <NavLink to="/" className="block text-center">
+            {isOpen ? (
+              <h1 className="text-3xl font-bold text-gray-100 hover:text-[#950505] transition-colors">
+                Purple Sector
+              </h1>
+            ) : (
+              <Icon
+                icon="mdi:flag-checkered"
+                className="text-white text-3xl mx-auto"
+              />
+            )}
           </NavLink>
         </div>
 
         <nav className="flex-grow">
-          <ul className="space-y-1">
-            <li>
-              <NavLink
-                to="/"
-                className={({ isActive }) =>
-                  `${linkBaseClasses} ${isActive ? linkActiveClass : linkInactiveClasses}`
-                }
-              >
-                Home
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/schedule"
-                className={({ isActive }) =>
-                  `${linkBaseClasses} ${isActive ? linkActiveClass : linkInactiveClasses}`
-                }
-              >
-                Schedule
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/standings/drivers"
-                className={({ isActive }) =>
-                  `${linkBaseClasses} ${isActive ? linkActiveClass : linkInactiveClasses}`
-                }
-              >
-                Drivers
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/standings/constructors"
-                className={({ isActive }) =>
-                  `${linkBaseClasses} ${isActive ? linkActiveClass : linkInactiveClasses}`
-                }
-              >
-                Constructors
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/circuits"
-                className={({ isActive }) =>
-                  `${linkBaseClasses} ${isActive ? linkActiveClass : linkInactiveClasses}`
-                }
-              >
-                Circuits
-              </NavLink>
-            </li>
+          <ul className="space-y-2">
+            {navItems.map(({ to, label, icon }) => (
+              <li key={to}>
+                <NavLink
+                  to={to}
+                  className={({ isActive }) =>
+                    `${linkBaseClasses} ${
+                      isActive ? linkActiveClass : linkInactiveClasses
+                    }`
+                  }
+                  title={!isOpen ? label : ""}
+                >
+                  <Icon icon={icon} className="text-xl" />
+                  {isOpen && <span>{label}</span>}
+                </NavLink>
+              </li>
+            ))}
           </ul>
         </nav>
 
-        <div className="mt-auto pb-4">
-          {/* <button className="w-full text-left py-2 px-3 rounded text-sm text-gray-500 hover:bg-gray-700 hover:text-gray-300">
-            Settings (placeholder)
-          </button> */}
+        <div className="mt-auto pt-6">
+          {/* Add settings or logout icon here later */}
         </div>
       </div>
     </div>

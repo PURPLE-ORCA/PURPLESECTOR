@@ -1,7 +1,16 @@
 // src/pages/CircuitsPage.jsx
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom'; 
-import { getCircuits } from "../services/api"; // Import the service
+import { Link } from "react-router-dom";
+import { getCircuits } from "../services/api";
+import { motion } from "framer-motion";
+import {
+  MapPin,
+  Calendar,
+  Info,
+  ChevronRight,
+  AlertCircle,
+  Loader2,
+} from "lucide-react";
 
 function CircuitsPage() {
   const [circuits, setCircuits] = useState([]);
@@ -33,64 +42,187 @@ function CircuitsPage() {
       }
     };
     fetchCircuits();
-  }, [yearToFetch]); // Dependency array includes year
+  }, [yearToFetch]);
+
+  // Container animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  // Item animation variants
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 12,
+      },
+    },
+    hover: {
+      y: -5,
+      scale: 1.02,
+      boxShadow:
+        "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 20,
+      },
+    },
+  };
 
   if (isLoading) {
     return (
-      <p className="text-center text-gray-400 mt-10">Loading Circuits...</p>
+      <div className="flex flex-col items-center justify-center h-64">
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+          className="mb-4"
+        >
+          <Loader2 size={40} className="text-[#950505] dark:text-[#ff6b6b]" />
+        </motion.div>
+        <p className="text-black dark:text-black font-medium">
+          Loading Circuits...
+        </p>
+      </div>
     );
   }
 
   if (error) {
-    return <p className="text-center text-red-500 mt-10">Error: {error}</p>;
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="p-6 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 mx-auto max-w-2xl mt-10"
+      >
+        <div className="flex items-center">
+          <AlertCircle className="w-6 h-6 text-[#950505] dark:text-red-400 mr-3" />
+          <h3 className="text-lg font-semibold text-[#950505] dark:text-red-400">
+            Error Loading Circuits
+          </h3>
+        </div>
+        <p className="mt-2 text-black dark:text-black">{error}</p>
+        <button
+          onClick={() => window.location.reload()}
+          className="mt-4 px-4 py-2 bg-[#950505] hover:bg-[#b30000] dark:bg-red-700 dark:hover:bg-red-600 text-white rounded-md transition-colors duration-200 flex items-center"
+        >
+          <span>Try Again</span>
+        </button>
+      </motion.div>
+    );
   }
 
   return (
-    <div>
-      <h2 className="text-3xl font-semibold mb-6 text-purple-brand">
-        F1 Circuits (
-        {yearToFetch === "current" ? "Current Season" : yearToFetch})
-      </h2>
+    <div className="px-4 py-8 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <motion.div
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="flex items-center mb-8 border-b border-black dark:border-black pb-4"
+      >
+        <div className="w-12 h-12 flex-shrink-0 bg-[#950505] dark:bg-[#b30000] rounded-full flex items-center justify-center mr-4">
+          <Calendar className="w-6 h-6 text-white" />
+        </div>
+        <div>
+          <h1 className="text-3xl font-bold text-black dark:text-white">
+            F1 Circuits
+          </h1>
+          <p className="text-black dark:text-black mt-1 flex items-center">
+            <span className="font-medium">
+              {yearToFetch === "current" ? "Current Season" : yearToFetch}
+            </span>
+            <span className="inline-block w-2 h-2 rounded-full bg-[#950505] dark:bg-[#ff6b6b] mx-2"></span>
+            <span>{circuits.length} tracks</span>
+          </p>
+        </div>
+      </motion.div>
 
       {circuits.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
           {circuits.map((circuit) => (
-            // Wrap the card content in a Link component
-            <Link
-              to={`/circuits/${circuit.circuitId}`} // Link to the detail page route
+            <motion.div
               key={circuit.circuitId}
-              className="block bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg hover:bg-gray-700 transition-all duration-200" // Added 'block' and hover:bg
+              variants={itemVariants}
+              whileHover="hover"
+              className="h-full"
             >
-              <h3 className="text-lg font-semibold text-red-accent mb-2">
-                {circuit.circuitName}
-              </h3>
-              <p className="text-sm text-gray-300 mb-1">
-                {circuit.Location?.locality}, {circuit.Location?.country}
-              </p>
-              <p className="text-xs text-gray-500">
-                Lat: {circuit.Location?.lat}, Long: {circuit.Location?.long}
-              </p>
-              {circuit.url && (
-                <span // Changed to span to prevent nested 'a' tags (Link renders 'a')
-                  // Optional: Keep wiki link if desired, maybe style differently
-                  // href={circuit.url}
-                  // target="_blank"
-                  // rel="noopener noreferrer"
-                  className="text-xs text-blue-400 hover:underline mt-2 inline-block"
-                >
-                  {/* More Info (Wiki) */}
-                </span>
-              )}
-              <span className="text-xs text-blue-400 hover:underline mt-2 block">
-                View Details →
-              </span>
-            </Link> // End Link component
+              <Link
+                to={`/circuits/${circuit.circuitId}`}
+                className="block h-full bg-white dark:bg-black rounded-xl shadow-md overflow-hidden transition-all duration-300 border border-black dark:border-black"
+              >
+                <div className="h-16 bg-gradient-to-r from-[#950505] to-[#37045F] relative">
+                  <div className="absolute -bottom-6 left-4">
+                    <div className="w-12 h-12 rounded-full bg-white dark:bg-black shadow-lg flex items-center justify-center">
+                      <MapPin className="w-6 h-6 text-[#950505] dark:text-[#ff6b6b]" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-4 pt-8">
+                  <h3 className="text-xl font-bold text-black dark:text-white mb-2 line-clamp-1">
+                    {circuit.circuitName}
+                  </h3>
+
+                  <div className="flex items-center text-sm text-black dark:text-black mb-3">
+                    <span className="font-medium">
+                      {circuit.Location?.locality}
+                    </span>
+                    <span className="mx-1">•</span>
+                    <span>{circuit.Location?.country}</span>
+                  </div>
+
+                  <div className="text-xs text-white dark:text-black bg-black dark:bg-black/50 rounded-lg p-2 mb-4">
+                    <div className="flex items-center justify-between">
+                      <span>Latitude</span>
+                      <span className="font-mono">{circuit.Location?.lat}</span>
+                    </div>
+                    <div className="flex items-center justify-between mt-1">
+                      <span>Longitude</span>
+                      <span className="font-mono">
+                        {circuit.Location?.long}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between mt-auto pt-2 border-t border-black dark:border-black">
+                    <span className="text-sm font-medium text-[#950505] dark:text-[#ff6b6b]">
+                      View Details
+                    </span>
+                    <ChevronRight className="w-5 h-5 text-[#950505] dark:text-[#ff6b6b]" />
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       ) : (
-        <p className="text-center text-gray-500 mt-10">
-          No circuit data found for {yearToFetch}.
-        </p>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="bg-black dark:bg-black/50 rounded-xl p-8 text-center max-w-lg mx-auto"
+        >
+          <Info className="w-12 h-12 text-black dark:text-black mx-auto mb-4" />
+          <p className="text-black dark:text-black text-lg">
+            No circuit data found for {yearToFetch}.
+          </p>
+          <p className="text-black dark:text-black mt-2">
+            Try refreshing or check back later.
+          </p>
+        </motion.div>
       )}
     </div>
   );

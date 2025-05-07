@@ -71,7 +71,7 @@ const getCountryFlagIcon = (countryName) => {
     return (
       <Icon
         icon={`flagpack:${countryCode}`}
-        className="w-6 h-5 rounded-sm shadow-sm"
+        className="w-9 h-8 rounded-sm shadow-sm"
       />
     );
   } else {
@@ -175,22 +175,6 @@ export default function SchedulePage() {
     fetchScheduleData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Removed instanceRef from deps for now to avoid loop, consider specific trigger if needed
-
-  const formatSessionTime = (session) => {
-    if (!session?.date || !session?.time) return "N/A";
-    try {
-      const utcDate = new Date(`${session.date}T${session.time}`);
-      const gmt1Date = new Date(utcDate.getTime() + 60 * 60 * 1000);
-      return gmt1Date.toLocaleString("en-GB", {
-        day: "numeric",
-        month: "short",
-        /* year: "numeric", */ hour: "2-digit",
-        minute: "2-digit",
-      });
-    } catch (e) {
-      return "Invalid Date";
-    }
-  };
 
   const formatDateOnly = (dateString) => {
     if (!dateString) return "N/A";
@@ -331,7 +315,7 @@ export default function SchedulePage() {
           className="w-full"
           onValueChange={handleTabChange}
         >
-          <TabsList className="grid w-full max-w-xs mx-auto grid-cols-2 mb-8 bg-gray-200 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg p-1">
+          <TabsList className="grid w-full max-w-xs mx-auto grid-cols-2 mb-8 bg-gray-200 dark:bg-black border border-gray-300 dark:border-gray-700 rounded-lg p-1">
             <TabsTrigger
               value="calendar"
               className="data-[state=active]:bg-red-600 data-[state=active]:text-white text-gray-600 dark:text-gray-400 rounded-md text-sm font-medium py-1.5"
@@ -358,13 +342,13 @@ export default function SchedulePage() {
                 <div className="flex items-center justify-between mb-6 px-2">
                   <button
                     onClick={() => instanceRef.current?.prev()}
-                    className="p-2 rounded-full bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors"
+                    className="p-2 rounded-full bg-trasparent dark:bg-transparent transition-colors"
                     aria-label="Previous month"
                   >
                     {" "}
                     <Icon
                       icon="mdi:chevron-left"
-                      className="w-6 h-6 text-red-500"
+                      className="w-8 h-8 text-red-500"
                     />{" "}
                   </button>
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -375,13 +359,13 @@ export default function SchedulePage() {
                   </h2>
                   <button
                     onClick={() => instanceRef.current?.next()}
-                    className="p-2 rounded-full bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors"
+                    className="p-2 rounded-full bg-trasparent dark:bg-trasparent transition-colors"
                     aria-label="Next month"
                   >
                     {" "}
                     <Icon
                       icon="mdi:chevron-right"
-                      className="w-6 h-6 text-red-500"
+                      className="w-8 h-8 text-red-500"
                     />{" "}
                   </button>
                 </div>
@@ -438,7 +422,7 @@ export default function SchedulePage() {
                             </div>
 
                             {/* Race Date and Time (Main Race) */}
-                            <div className="p-4 bg-gray-50 dark:bg-gray-900">
+                            <div className="p-4 bg-gray-50 dark:bg-black">
                               {race.schedule?.race ? (
                                 <div className="flex justify-between items-center text-sm">
                                   <div className="flex items-center text-gray-700 dark:text-gray-300">
@@ -470,7 +454,7 @@ export default function SchedulePage() {
 
                             {/* Session Details - ALWAYS VISIBLE NOW */}
                             {race.schedule && ( // Check if race.schedule exists
-                              <div className="bg-gray-100 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+                              <div className="bg-gray-100 dark:bg-black border-t border-gray-200 dark:border-gray-700">
                                 <div className="p-4 space-y-2">
                                   {Object.entries(race.schedule)
                                     .filter(
