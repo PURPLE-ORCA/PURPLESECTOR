@@ -42,7 +42,7 @@ const sidebarClasses = `
         <div className="mb-10 pt-4">
           <NavLink to="/" className="block text-center">
             {isOpen ? (
-              <h1 className="text-3xl font-bold text-gray-100 hover:text-[#950505] transition-colors">
+              <h1 className="text-3xl font-bold text-gray-100 hover:text-[#37045F] transition-colors">
                 Purple Sector
               </h1>
             ) : (

@@ -81,17 +81,15 @@ function CircuitsPage() {
 
   if (isLoading) {
     return (
-      <div className="flex flex-col items-center justify-center h-64">
+      <div className="flex flex-col items-center justify-center min-h-[400px] bg-white dark:bg-black text-gray-900 dark:text-white">
         <motion.div
           animate={{ rotate: 360 }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+          transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
           className="mb-4"
         >
-          <Loader2 size={40} className="text-[#950505] dark:text-[#ff6b6b]" />
+          <Loader2 size={40} className="text-red-600" />
         </motion.div>
-        <p className="text-black dark:text-black font-medium">
-          Loading Circuits...
-        </p>
+        <p className="text-lg font-medium">Loading Driver Standings...</p>
       </div>
     );
   }

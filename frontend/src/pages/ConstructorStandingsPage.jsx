@@ -375,7 +375,7 @@ function ConstructorStandingsPage() {
   };
 
   return (
-    <div className="transition-color text-gray-900 dark:text-white px-4 py-8 rounded-xl shadow-lg">
+    <div className="transition-color text-gray-900 dark:text-white px-2 py-2 rounded-xl shadow-lg">
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 gap-4">
         <div>
           <h2 className="text-3xl font-bold text-red-600 mb-1">

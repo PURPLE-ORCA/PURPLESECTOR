@@ -5,6 +5,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import { Icon } from "@iconify/react";
+import {
+  Loader2,
+} from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"; // Assuming ShadCN Tabs
 
 
@@ -250,12 +253,15 @@ export default function SchedulePage() {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center min-h-[calc(100vh-8rem)] bg-gray-50 dark:bg-gray-950">
+      <div className="flex flex-col items-center justify-center min-h-[400px] bg-white dark:bg-black text-gray-900 dark:text-white">
         <motion.div
           animate={{ rotate: 360 }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-          className="w-16 h-16 border-4 border-t-red-600 border-r-purple-700 border-b-red-600 border-l-purple-700 rounded-full"
-        />
+          transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+          className="mb-4"
+        >
+          <Loader2 size={40} className="text-red-600" />
+        </motion.div>
+        <p className="text-lg font-medium">Loading Driver Standings...</p>
       </div>
     );
   }
@@ -289,7 +295,7 @@ export default function SchedulePage() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="max-w-7xl mx-auto px-2 sm:px-4 py-8 text-gray-900 dark:text-white" // Changed max-width and padding
+      className="max-w-7xl mx-auto  px-2 sm:px-2 py-2 text-gray-900 dark:text-white" 
     >
       <motion.div
         initial={{ y: -30, opacity: 0 }}
@@ -298,14 +304,11 @@ export default function SchedulePage() {
         className="text-center mb-10"
       >
         <h1 className="text-4xl md:text-5xl font-extrabold mb-2 bg-gradient-to-r from-red-600 via-[#37045F] to-red-700 text-transparent bg-clip-text">
-          {" "}
-          {/* Used purple-brand hex */}
           2025 FORMULA 1 SEASON
         </h1>
-        <div className="h-1.5 w-40 mx-auto mb-3 bg-gradient-to-r from-red-600 via-[#37045F] to-red-700"></div>
         <p className="text-gray-600 dark:text-gray-400">
           Official Race Calendar{" "}
-          <span className="text-xs">(Times shown in GMT+1 Fixed Offset)</span>
+          <span className="text-xs">(Times shown in GMT+1)</span>
         </p>
       </motion.div>
 
@@ -541,29 +544,6 @@ export default function SchedulePage() {
                             </p>
                           )}
                         </div>
-                        {race.schedule?.race && (
-                          <div className="bg-gray-100 dark:bg-gray-900 px-4 py-2 rounded-lg mt-3 md:mt-0 text-center md:text-left">
-                            <p className="text-sm text-gray-700 dark:text-gray-300 flex items-center justify-center md:justify-start">
-                              <Icon
-                                icon="mdi:calendar-check-outline"
-                                className="w-4 h-4 mr-2 text-red-500"
-                              />
-                              {formatDateOnly(race.schedule.race.date)}
-                            </p>
-                            <p className="text-sm text-gray-700 dark:text-gray-300 flex items-center justify-center md:justify-start mt-1">
-                              <Icon
-                                icon="mdi:flag-checkered"
-                                className="w-4 h-4 mr-2 text-red-500"
-                              />
-                              Race:{" "}
-                              {formatTimeOnly(
-                                race.schedule.race.date,
-                                race.schedule.race.time
-                              )}{" "}
-                              <span className="text-xs">(GMT+1)</span>
-                            </p>
-                          </div>
-                        )}
                       </div>
                       {race.schedule && typeof race.schedule === "object" && (
                         <div className="mt-6">
@@ -593,14 +573,14 @@ export default function SchedulePage() {
                                     className={`flex-1 flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 rounded-md ${sessionColors[key] || "dark:bg-gray-800 bg-gray-200"} text-white`}
                                   >
                                     <div className="mb-1 sm:mb-0">
-                                      <span className="px-2 py-0.5 rounded text-xs font-semibold dark:bg-black/30 bg-white/30">
+                                      <span className="px-2 py-0.5 rounded text-base font-semibold dark:bg-black/30 bg-white/30">
                                         {getSessionDisplayName(key)}
                                       </span>
-                                      <p className="text-xs opacity-80 mt-0.5">
+                                      <p className="text-sm opacity-80 mt-0.5">
                                         {formatDateOnly(session.date)}
                                       </p>
                                     </div>
-                                    <div className="flex items-center font-mono text-sm">
+                                    <div className="flex items-center font-mono text-lg">
                                       <Icon
                                         icon="mdi:clock-outline"
                                         className="w-4 h-4 mr-1.5 opacity-80"

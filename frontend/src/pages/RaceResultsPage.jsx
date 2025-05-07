@@ -10,6 +10,7 @@ import {
   Trophy,
   Flag,
   AlertTriangle,
+  Loader2,
 } from "lucide-react";
 
 function RaceResultsPage() {
@@ -55,32 +56,6 @@ function RaceResultsPage() {
     }
   }, [year, round]);
 
-  const formatRaceDateTime = (dateStr, timeStr) => {
-    if (!dateStr || !timeStr) return "N/A";
-    try {
-      const dateTimeString = `${dateStr}T${timeStr}`;
-      const date = new Date(dateTimeString);
-      return date.toLocaleString("en-GB", {
-        dateStyle: "full",
-        timeStyle: "short",
-        timeZone: "UTC",
-      });
-    } catch (e) {
-      return "Invalid Date";
-    }
-  };
-
-  if (isLoading) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-[400px]">
-        <div className="w-16 h-16 border-4 border-t-[#950505] border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
-        <p className="mt-4 text-lg font-medium text-gray-400 dark:text-gray-300">
-          Loading Race Results...
-        </p>
-      </div>
-    );
-  }
-
   if (error) {
     return (
       <motion.div
@@ -104,6 +79,21 @@ function RaceResultsPage() {
       </motion.div>
     );
   }
+
+    if (isLoading) {
+      return (
+        <div className="flex flex-col items-center justify-center min-h-[400px] bg-white dark:bg-black text-gray-900 dark:text-white">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+            className="mb-4"
+          >
+            <Loader2 size={40} className="text-red-600" />
+          </motion.div>
+          <p className="text-lg font-medium">Loading Driver Standings...</p>
+        </div>
+      );
+    }
 
   if (!raceData) {
     return (
@@ -180,10 +170,7 @@ function RaceResultsPage() {
 
   return (
     <div className="px-2 py-2 sm:px-6 lg:px-8">
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+      <div
         className="mb-8"
       >
         {/* Race Header */}
@@ -212,7 +199,7 @@ function RaceResultsPage() {
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Tabs */}
       <div className="mb-8 ">

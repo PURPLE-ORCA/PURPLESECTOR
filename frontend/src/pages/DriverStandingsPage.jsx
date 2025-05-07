@@ -379,7 +379,7 @@ function DriverStandingsPage() {
   };
 
   return (
-    <div className="transition-colors bg-white dark:bg-black text-gray-900 dark:text-white px-4 py-8 rounded-xl shadow-lg">
+    <div className="transition-colors bg-white dark:bg-black text-gray-900 dark:text-white px-2 py-2 rounded-xl shadow-lg">
       <div
         className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 gap-4"
       >
