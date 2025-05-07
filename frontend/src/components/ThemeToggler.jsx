@@ -31,12 +31,12 @@ const ThemeToggler = () => {
             {theme === "light" ? (
                 <Icon
                     icon="solar:moon-bold"
-                    className="w-5 h-5 text-black dark:text-white"
+                    className="w-18 h-18 text-white dark:text-white"
                 />
             ) : (
                 <Icon
                     icon="solar:sun-bold"
-                    className="w-6 h-6 text-black dark:text-white"
+                    className="w-18 h-18 text-white dark:text-white"
                 />
             )}
         </Button>

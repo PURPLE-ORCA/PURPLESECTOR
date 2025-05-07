@@ -83,9 +83,9 @@ function Sidebar({ isOpen }) {
         </nav>
 
         <div className="mt-auto pb-4">
-          <button className="w-full text-left py-2 px-3 rounded text-sm text-gray-500 hover:bg-gray-700 hover:text-gray-300">
+          {/* <button className="w-full text-left py-2 px-3 rounded text-sm text-gray-500 hover:bg-gray-700 hover:text-gray-300">
             Settings (placeholder)
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

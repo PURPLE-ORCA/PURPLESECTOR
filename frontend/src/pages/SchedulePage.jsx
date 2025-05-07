@@ -7,6 +7,38 @@ import "keen-slider/keen-slider.min.css";
 import { Icon } from "@iconify/react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"; // Assuming ShadCN Tabs
 
+
+// --- Country Name to ISO Code Mapping ---
+const countryCodeMap = {
+  "Australia": "au",
+  "China": "cn",
+  "Japan": "jp",
+  "Bahrain": "bh",
+  "Saudi Arabia": "sa",
+  "USA": "us", // Handle variations if API uses different terms
+  "United States": "us",
+  "Italy": "it",
+  "Monaco": "mc",
+  "Spain": "es",
+  "Canada": "ca",
+  "Austria": "at",
+  "UK": "gb", // Use 'gb' for United Kingdom
+  "Great Britain": "gb",
+  "Belgium": "be",
+  "Hungary": "hu",
+  "Netherlands": "nl",
+  "Azerbaijan": "az",
+  "Singapore": "sg",
+  "Mexico": "mx",
+  "Brazil": "br",
+  "Qatar": "qa",
+  "UAE": "ae", // Use 'ae' for United Arab Emirates
+  "United Arab Emirates": "ae",
+  "France": "fr",
+  "Germany": "de",
+  // Add any others if necessary
+};
+
 const sessionOrder = [
   "fp1",
   "fp2",
@@ -25,6 +57,27 @@ const sessionColors = {
   sprintRace: "bg-amber-600 dark:bg-amber-700",
   qualy: "bg-purple-600 dark:bg-purple-700",
   race: "bg-red-600 dark:bg-red-700",
+};
+
+const getCountryFlagIcon = (countryName) => {
+  if (!countryName) {
+    return (
+      <Icon icon="mdi:flag-variant-outline" className="w-5 h-5 text-gray-500" />
+    );
+  }
+  const countryCode = countryCodeMap[countryName.trim()];
+  if (countryCode) {
+    // Using flagpack: codes - adjust icon set if needed (e.g., 'circle-flags:', 'twemoji:')
+    return (
+      <Icon
+        icon={`flagpack:${countryCode}`}
+        className="w-6 h-5 rounded-sm shadow-sm"
+      />
+    );
+  } else {
+    console.warn(`Country code not found for: ${countryName}`);
+    return <Icon icon="mdi:flag-checkered" className="w-6 h-5 text-gray-400" />;
+  }
 };
 
 export default function SchedulePage() {
@@ -363,11 +416,8 @@ export default function SchedulePage() {
                                   ROUND {race.round}
                                 </span>
                                 {race.circuit?.country && (
-                                  <span
-                                    className="text-3xl"
-                                    aria-label={race.circuit.country}
-                                  >
-                                    {getCountryFlag(race.circuit.country)}
+                                  <span aria-label={race.circuit.country}>
+                                    {getCountryFlagIcon(race.circuit.country)}
                                   </span>
                                 )}
                               </div>
@@ -491,10 +541,10 @@ export default function SchedulePage() {
                             </span>
                             {race.circuit?.country && (
                               <span
-                                className="text-2xl mr-2"
+                                className="mr-2"
                                 aria-label={race.circuit.country}
                               >
-                                {getCountryFlag(race.circuit.country)}
+                                {getCountryFlagIcon(race.circuit.country)}
                               </span>
                             )}
                           </div>

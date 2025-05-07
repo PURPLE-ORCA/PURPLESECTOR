@@ -375,11 +375,8 @@ function ConstructorStandingsPage() {
   };
 
   return (
-    <div className="transition-colors bg-white dark:bg-black text-gray-900 dark:text-white px-4 py-8 rounded-xl shadow-lg">
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+    <div className="transition-color text-gray-900 dark:text-white px-4 py-8 rounded-xl shadow-lg">
+      <div
         className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 gap-4"
       >
         <div>
@@ -400,7 +397,7 @@ function ConstructorStandingsPage() {
             {viewMode === "table" ? "Card View" : "Table View"}
           </button>
         </div>
-      </motion.div>
+      </div>
 
       {renderPodium()}
 
