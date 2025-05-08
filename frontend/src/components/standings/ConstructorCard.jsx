@@ -2,56 +2,79 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { getTeamColorClass } from "../../utils/teamColors";
-import { Building2 } from "lucide-react";
-import { itemVariants } from "../../utils/animations"; // Import item variant
+import { itemVariants } from "../../utils/animations";
 
 function ConstructorCard({ standing }) {
   if (!standing || !standing.team) {
-    return <div className="keen-slider__slide">Invalid data</div>;
+    return (
+      <div className="keen-slider__slide p-4 text-xs text-red-500">
+        Invalid standing data
+      </div>
+    );
   }
+
   const team = standing.team;
+  const teamId = standing.teamId;
+  const defaultLogoPath = "/images/teams/default.svg";
+  const teamLogoUrl = teamId ? `/images/teams/${teamId}.svg` : defaultLogoPath;
+  const carImageUrl = teamId
+    ? `/images/cars/${teamId}.jpg`
+    : "/images/cars/default.jpg";
 
   return (
     <motion.div
-      variants={itemVariants} // Use imported variant (optional, could apply to carousel instead)
-      // initial="hidden" // Only needed if parent doesn't handle stagger
-      // animate="visible" // Only needed if parent doesn't handle stagger
-      className="bg-white dark:bg-gray-900/50 rounded-xl shadow-lg overflow-hidden group transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl border border-gray-200 dark:border-gray-800 h-full flex flex-col"
+      variants={itemVariants}
+      className="relative rounded-xl overflow-hidden shadow-lg h-full flex flex-col justify-between border border-gray-200 dark:border-gray-800 group transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
     >
+      {/* Background Image with blur */}
       <div
-        className={`h-2 w-full ${getTeamColorClass(team.teamName)} flex-shrink-0`}
+        className="absolute inset-0 bg-cover bg-center filter blur-md brightness-50 transition duration-300 group-hover:blur-none group-hover:brightness-75"
+        style={{ backgroundImage: `url(${carImageUrl})` }}
       ></div>
-      <div className="p-4 flex flex-col flex-grow ">
-        <div className="flex justify-between items-start mb-3">
+
+      {/* Overlay content */}
+      <div className="relative z-10 p-4 h-full flex flex-col justify-between text-white">
+        {/* Team color bar */}
+        <div
+          className={`h-2 w-full ${getTeamColorClass(team.teamName)} mb-4`}
+        />
+
+        {/* Position and Points */}
+        <div className="flex justify-between items-start">
           <div
-            className={`text-2xl font-bold ${standing.position <= 3 ? "text-red-600 dark:text-[#950505]" : "text-gray-800 dark:text-white"}`}
+            className={`text-2xl font-bold ${standing.position <= 3 ? "text-red-400" : "text-white"}`}
           >
             {standing.position}
           </div>
           <div className="text-right">
-            <div className="text-xl font-bold text-gray-900 dark:text-white">
-              {standing.points} pts
-            </div>
+            <div className="text-xl font-bold">{standing.points} pts</div>
             {standing.wins > 0 && (
-              <div className="text-xs text-gray-500 dark:text-gray-400">
-                {standing.wins} wins
-              </div>
+              <div className="text-xs text-gray-300">{standing.wins} wins</div>
             )}
           </div>
         </div>
-        <div className="text-center my-2 flex-grow flex flex-col justify-center items-center">
-          <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-            <Building2 className="w-8 h-8 text-gray-500 dark:text-gray-400" />
+
+        {/* Team Logo and Info */}
+        <div className="flex-grow flex flex-col justify-center items-center mt-4 mb-2">
+          <div className="w-20 h-16 mb-3">
+            <img
+              src={teamLogoUrl}
+              alt={`${team.teamName || "Team"} Logo`}
+              className="max-w-full max-h-full object-contain"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = defaultLogoPath;
+              }}
+            />
           </div>
-          <h4 className="font-semibold text-gray-900 dark:text-white text-base truncate">
+          <h4 className="font-semibold text-base truncate w-full text-center">
             {team.teamName}
           </h4>
-          <p className="text-xs text-gray-500 dark:text-gray-400">
-            {team.country}
-          </p>
+          <p className="text-xs text-gray-300">{team.country}</p>
         </div>
       </div>
     </motion.div>
   );
 }
+
 export default ConstructorCard;

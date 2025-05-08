@@ -1,6 +1,6 @@
 // src/pages/DriverStandingsPage.jsx
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import {AnimatePresence } from "framer-motion";
 import { Calendar } from "lucide-react"; // Only import icons used here
 import { getCurrentDriverStandingsF1Api } from "../services/api";
 import LoadingIndicator from "../components/ui/LoadingIndicator";
@@ -8,26 +8,6 @@ import ErrorDisplay from "../components/ui/ErrorDisplay";
 import PodiumDisplay from "../components/standings/PodiumDisplay"; // Import new components
 import DriverTable from "../components/standings/DriverTable";
 import DriverCardCarousel from "../components/standings/DriverCardCarousel";
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      when: "beforeChildren",
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: { type: "spring", stiffness: 100 },
-  },
-};
 
 function DriverStandingsPage() {
   const [standingsData, setStandingsData] = useState(null);

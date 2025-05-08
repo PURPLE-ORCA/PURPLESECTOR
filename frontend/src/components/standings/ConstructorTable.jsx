@@ -1,19 +1,20 @@
 // src/components/standings/ConstructorTable.jsx
 import React from "react";
 import { motion } from "framer-motion";
-import { ChevronUp, ChevronDown } from "lucide-react";
-import { getTeamColorClass } from "../../utils/teamColors";
-import { itemVariants } from "../../utils/animations"; // Import item variant
+// Removed Chevron imports as they were commented out
+// import { ChevronUp, ChevronDown } from 'lucide-react';
+import { getTeamColorClass } from "../../utils/teamColors"; // Keep color helper if needed elsewhere, or remove
+import { itemVariants } from "../../utils/animations";
 
 function ConstructorTable({ constructorStandings }) {
   if (!constructorStandings || constructorStandings.length === 0) {
     return <p className="p-4 text-center">No standings data for table.</p>;
   }
 
+  const defaultLogoPath = "/images/teams/default.svg"; // Define fallback path
+
   return (
     <div className="overflow-x-auto">
-      {" "}
-      {/* Removed outer motion.div if rows are animated */}
       <table className="w-full text-sm">
         <thead>
           <tr className="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
@@ -35,47 +36,70 @@ function ConstructorTable({ constructorStandings }) {
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
-          {constructorStandings.map((standing, index) => (
-            <motion.tr // Animate each table row
-              key={standing.team?.teamId || standing.position}
-              variants={itemVariants} // Use imported variant
-              initial="hidden"
-              animate="visible"
-              transition={{ delay: index * 0.03 }}
-              className="hover:bg-gray-100 dark:hover:bg-gray-900/40 transition-colors duration-150"
-            >
-              <td
-                className={`py-3 px-4 font-medium whitespace-nowrap text-gray-700 dark:text-gray-300 ${standing.position <= 3 ? "font-bold" : ""}`}
+          {constructorStandings.map((standing, index) => {
+            // Construct logo URL (using direct teamId)
+            const teamId = standing.teamId; // Access directly now we know it exists
+            const teamLogoUrl = teamId
+              ? `/images/teams/${teamId}.svg`
+              : defaultLogoPath;
+
+            return (
+              <motion.tr
+                key={teamId || standing.position} // Use teamId as key
+                variants={itemVariants}
+                initial="hidden"
+                animate="visible"
+                transition={{ delay: index * 0.03 }}
+                className="hover:bg-gray-100 dark:hover:bg-gray-900/40 transition-colors duration-150"
               >
-                <div className="flex items-center justify-center">
-                  {" "}
-                  {standing.position}{" "}
-                </div>
-              </td>
-              <td className="py-3 px-6 whitespace-nowrap">
-                <div className="flex items-center">
-                  <div
-                    className={`w-1 h-6 rounded-full mr-3 ${getTeamColorClass(standing.team?.teamName)}`}
-                  ></div>
-                  <div className="font-semibold text-gray-900 dark:text-white">
-                    {standing.team?.teamName || "N/A"}
+                {/* Position */}
+                <td
+                  className={`py-3 px-4 font-medium whitespace-nowrap text-gray-700 dark:text-gray-300 ${standing.position <= 3 ? "font-bold" : ""}`}
+                >
+                  <div className="flex items-center justify-center">
+                    {standing.position}
                   </div>
-                </div>
-              </td>
-              <td className="py-3 px-6 whitespace-nowrap text-gray-500 dark:text-gray-400">
-                {standing.team?.country || "N/A"}
-              </td>
-              <td className="py-3 px-4 font-bold text-right whitespace-nowrap text-red-600 dark:text-[#950505]">
-                {standing.points}
-              </td>
-              <td className="py-3 px-4 text-right whitespace-nowrap text-gray-500 dark:text-gray-400">
-                {standing.wins ?? "0"}
-              </td>
-            </motion.tr>
-          ))}
+                </td>
+                {/* Constructor Name + Logo */}
+                <td className="py-3 px-6 whitespace-nowrap">
+                  <div className="flex items-center">
+                    {/* Team Logo */}
+                    <img
+                      src={teamLogoUrl}
+                      alt={`${standing.team?.teamName || "Team"} Logo`}
+                      className="w-8 h-8 mr-3 object-contain flex-shrink-0" // Added size, margin, flex-shrink
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = defaultLogoPath;
+                      }}
+                    />
+                    {/* Team Name */}
+                    <span className="font-semibold text-gray-900 dark:text-white truncate">
+                      {" "}
+                      {/* Added truncate */}
+                      {standing.team?.teamName || "N/A"}
+                    </span>
+                  </div>
+                </td>
+                {/* Nationality */}
+                <td className="py-3 px-6 whitespace-nowrap text-gray-500 dark:text-gray-400">
+                  {standing.team?.country || "N/A"}
+                </td>
+                {/* Points */}
+                <td className="py-3 px-4 font-bold text-right whitespace-nowrap text-red-600 dark:text-[#950505]">
+                  {standing.points}
+                </td>
+                {/* Wins */}
+                <td className="py-3 px-4 text-right whitespace-nowrap text-gray-500 dark:text-gray-400">
+                  {standing.wins ?? "0"}
+                </td>
+              </motion.tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
   );
 }
+
 export default ConstructorTable;

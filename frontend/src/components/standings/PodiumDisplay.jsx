@@ -42,7 +42,7 @@ function PodiumDisplay({ top3 }) {
         <motion.div
           key={standing.driver?.driverId || positions[index]}
           variants={itemVariants}
-          className={`relative bg-gray-100 dark:bg-gray-900/50 rounded-t-lg flex flex-col items-center pt-4 pb-6 shadow-lg 
+          className={`relative bg-gray-100 dark:bg-black rounded-t-lg flex flex-col items-center pt-4 pb-6 shadow-lg 
                      ${index === 1 ? "w-1/4 z-10" : "w-1/5"} ${heights[index]}`} // P1 wider and higher z-index
         >
           {/* Team color bar */}

@@ -136,7 +136,6 @@ export async function getCurrentConstructorStandingsF1Api() {
   }
 }
 
-// **** ADD THIS FUNCTION BACK ****
 /**
  * Fetches the LATEST Race Results from f1api.dev. Fetches live.
  * @returns {Promise<object|null>} Object containing latest race result data or null on error.
