@@ -1,10 +1,10 @@
 // src/components/standings/PodiumDisplay.jsx
 import React from "react";
 import { motion } from "framer-motion";
-import { Trophy } from "lucide-react";
-import { getTeamColorClass } from "../../utils/teamColors"; // Import color helper
+import { Trophy } from "lucide-react"; // Keep Trophy for P1 indicator
+import { getTeamColorClass } from "../../utils/teamColors"; // Assuming this utility exists
 
-// Animation variants (can be defined here or passed as props)
+// Optional: Define animation variants here or import if defined elsewhere
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -18,74 +18,122 @@ const itemVariants = {
   visible: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 100 } },
 };
 
-function PodiumDisplay({ top3 }) {
-  // Ensure we have exactly 3 drivers before rendering
+// --- Podium Display Component ---
+function PodiumDisplay({ top3, driverInfoMap, isLoadingDrivers }) {
+  // Basic validation
   if (!top3 || top3.length < 3) {
-    console.warn("PodiumDisplay requires an array of 3 drivers.");
+    // Return null or a placeholder if data is insufficient
     return null;
+  }
+  if (!driverInfoMap || driverInfoMap.size === 0) {
+    console.warn("PodiumDisplay received empty or invalid driverInfoMap");
   }
 
   // Reorder for visual display: P2, P1, P3
   const podiumOrder = [top3[1], top3[0], top3[2]];
-  const heights = ["h-[170px]", "h-[220px]", "h-[150px]"]; // Corresponds to P2, P1, P3
+  const heights = ["h-[170px]", "h-[220px]", "h-[150px]"];
   const positions = [2, 1, 3];
-  const trophyColor = "text-yellow-500"; // For P1
+  const trophyColor = "text-yellow-500";
+  const defaultDriverImage = "/images/drivers/default.png"; // Define path to your fallback image
 
   return (
     <motion.div
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="mb-12 hidden md:flex justify-center items-end gap-4 pt-8" // Hide on mobile
+      className=" hidden md:flex justify-center items-end gap-4 pt-8" // Hidden on mobile by default
     >
-      {podiumOrder.map((standing, index) => (
-        <motion.div
-          key={standing.driver?.driverId || positions[index]}
-          variants={itemVariants}
-          className={`relative bg-gray-100 dark:bg-black rounded-t-lg flex flex-col items-center pt-4 pb-6 shadow-lg 
-                     ${index === 1 ? "w-1/4 z-10" : "w-1/5"} ${heights[index]}`} // P1 wider and higher z-index
-        >
-          {/* Team color bar */}
-          <div
-            className={`absolute top-0 left-0 right-0 ${index === 1 ? "h-2" : "h-1"} ${getTeamColorClass(standing.team?.teamName)}`}
-          ></div>
+      {podiumOrder.map((standing, index) => {
+        const teamName = standing.team?.teamName; // Get team name
+        const driverId = standing.driver?.driverId; // Get driver ID from standings data
+        const driverAcr = standing.driver?.shortName;
+        // Lookup will return undefined if map is empty or key not found
+        const driverInfo =
+          driverInfoMap && driverAcr ? driverInfoMap.get(driverAcr) : null;
+        // Use headshotUrl ONLY if driver info is loaded AND found
+        const headshotUrl =
+          !isLoadingDrivers && driverInfo?.headshot_url
+            ? driverInfo.headshot_url
+            : defaultDriverImage;
+        const driverFullName =
+          !isLoadingDrivers && driverInfo?.full_name
+            ? driverInfo.full_name
+            : `${standing.driver?.name || ""} ${standing.driver?.surname || ""}`.trim();
 
-          {/* Position Number */}
-          <div
-            className={`text-4xl font-bold mb-2 ${index === 1 ? trophyColor : "text-gray-400 dark:text-gray-500"}`}
+        return (
+          <motion.div
+            key={standing.driver?.driverId || positions[index]}
+            variants={itemVariants} // Apply item animation
+            className={`
+              relative bg-white dark:bg-black rounded-t-lg 
+              flex flex-col items-center pt-4 pb-18  shadow-lg 
+              ${index === 1 ? "w-1/4 z-10" : "w-1/5"} ${heights[index]}
+              transition-colors duration-200 h-full
+            `}
           >
-            {index === 1 && <Trophy size={24} className="inline mr-2" />}{" "}
-            {/* Trophy for P1 */}
-            {positions[index]}
-          </div>
-
-          {/* Driver Info */}
-          <div className="text-center px-2">
+            {/* Team color bar */}
             <div
-              className={`font-semibold ${index === 1 ? "text-lg" : ""} text-gray-900 dark:text-white truncate`}
+              className={`absolute top-0 left-0 right-0 ${index === 1 ? "h-2" : "h-1"} ${getTeamColorClass(teamName)}`}
+            ></div>
+
+            {/* Position Number */}
+            <div
+              className={`text-4xl font-bold mb-2 ${index === 1 ? trophyColor : "text-gray-400 dark:text-gray-500"}`}
             >
-              {standing.driver?.name} {standing.driver?.surname}
+              {index === 1 && <Trophy size={24} className="inline mr-1" />}{" "}
+              {/* Trophy Icon for P1 */}
+              {positions[index]}
             </div>
-            <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 truncate">
-              {standing.team?.teamName}
-            </div>
-          </div>
 
-          {/* Points */}
-          <div
-            className={`mt-auto px-3 py-1 rounded text-white font-mono text-sm font-medium ${index === 1 ? "bg-red-600 dark:bg-[#950505]" : "bg-gray-600 dark:bg-gray-700"}`}
-          >
-            {standing.points} PTS
-          </div>
-
-          {/* Wins (Optional, only for P1 for clarity?) */}
-          {index === 1 && standing.wins > 0 && (
-            <div className="text-xs mt-1 text-gray-500 dark:text-gray-400">
-              {standing.wins} Wins
+            {/* Driver Headshot */}
+            <div className="my-2 h-16 w-16 flex items-center justify-center rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700 flex-shrink-0">
+              {/* Conditionally render image or placeholder based on loading */}
+              {isLoadingDrivers ? (
+                <div className="h-full w-full bg-gray-300 dark:bg-gray-600 animate-pulse"></div> // Simple pulse placeholder
+              ) : (
+                <img
+                  src={headshotUrl}
+                  alt={driverFullName || "Driver"}
+                  className="h-full w-full object-cover"
+                  loading="lazy"
+                  onError={(e) => {
+                    /* ... fallback ... */
+                  }}
+                />
+              )}
             </div>
-          )}
-        </motion.div>
-      ))}
+
+            {/* Driver & Team Info */}
+            <div className="text-center px-2 mt-1 mb-4">
+              <div
+                className={`font-semibold ${index === 1 ? "text-base md:text-lg" : "text-sm md:text-base"} text-gray-900 dark:text-white truncate w-full`}
+              >
+                {isLoadingDrivers
+                  ? "Loading..."
+                  : driverFullName || "Driver Name"}
+              </div>
+            </div>
+
+            {/* Points */}
+            <div
+              className={`
+                 mt-auto px-3 py-1 rounded 
+                 text-white font-mono text-sm font-medium 
+                 ${index === 1 ? "bg-red-600 dark:bg-[#950505]" : "bg-gray-600 dark:bg-gray-700"}
+               `}
+            >
+              {standing.points} PTS
+            </div>
+
+            {/* Wins (Only shown for P1 for visual clarity) */}
+            {index === 1 && standing.wins > 0 && (
+              <div className="text-xs mt-1 text-gray-500 dark:text-gray-400">
+                {standing.wins} Wins
+              </div>
+            )}
+          </motion.div>
+        );
+      })}
     </motion.div>
   );
 }

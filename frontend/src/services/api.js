@@ -201,3 +201,27 @@ export const getSpecificCircuitDetails = async (circuitId) => {
         return null;
     }
 };
+
+/**
+ * Fetches the cached list of driver information from the backend.
+ * @returns {Promise<Array|null>} Array of driver info objects or null on error.
+ */
+export const getDriverInfo = async () => {
+    try {
+        // Hits GET /api/drivers/info on the backend
+        const response = await axios.get(`${API_BASE_URL}/drivers/info`);
+        // Backend should return the array from the cache
+        if (Array.isArray(response.data)) {
+            return response.data;
+        } else {
+            console.warn("Driver info endpoint returned non-array:", response.data);
+            return null;
+        }
+    } catch (error) {
+        console.error(`Error fetching driver info:`, error.response?.data?.message || error.message);
+         if (error.response && error.response.status === 404) {
+            console.error('Driver info cache seems empty on backend.');
+         }
+        return null;
+    }
+};

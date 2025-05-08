@@ -9,6 +9,7 @@ import nextSessionRouter from "./routes/nextSession.js";
 import standingsRouter from "./routes/standings.js";
 import resultsRouter from "./routes/results.js";
 import circuitsRouter from "./routes/circuits.js";
+import { fetchAndCacheDriverInfo, getCachedDriverInfo } from './services/f1ApiService.js'; 
 
 // Import the service function for caching
 import { fetchAndCacheSeasonSchedule } from "./services/f1ApiService.js";
@@ -58,6 +59,33 @@ app.get("/api/admin/refresh-schedule/:year", async (req, res) => {
         message: `Failed to refresh schedule cache for ${year}: ${error.message}`,
       });
   }
+});
+
+// --- NEW Driver Info Route ---
+app.get('/api/drivers/info', async (req, res) => {
+    // Serve data directly from cache
+    try {
+        const driverInfo = await getCachedDriverInfo();
+        if (driverInfo) {
+            res.json(driverInfo);
+        } else {
+            res.status(404).json({ message: 'Driver info cache is empty. Please refresh cache.' });
+        }
+    } catch (error) { // Should not happen if getCached handles errors
+        console.error("Error reading driver cache in route:", error);
+        res.status(500).json({ message: 'Failed to retrieve driver info' });
+    }
+});
+
+// --- NEW Driver Info Cache Refresh Trigger ---
+app.get('/api/admin/refresh-drivers', async (req, res) => {
+    console.log(`Received request to refresh driver info cache`);
+    try {
+        await fetchAndCacheDriverInfo(); // Call the caching function
+        res.status(200).json({ message: `Successfully refreshed driver info cache.` });
+    } catch (error) {
+        res.status(500).json({ message: `Failed to refresh driver info cache: ${error.message}` });
+    }
 });
 
 app.listen(PORT, () => {

@@ -189,3 +189,93 @@ export async function getSpecificRaceResultF1Api(year, round) {
         return null; // Return null on error
     }
 }
+
+const OPENF1_API_BASE_URL = "https://api.openf1.org/v1"; // Base URL for OpenF1
+const DRIVER_INFO_CACHE_FILE = path.join(
+  __dirname,
+  "..",
+  "driver-info-cache.json"
+); // Cache file path
+
+/**
+ * @param {object} options - Optional query parameters for OpenF1 (e.g., { session_key: 'latest' })
+ * @returns {Promise<Array|null>} Array of driver objects or null on error.
+ */
+export async function fetchAndCacheDriverInfo(options = {}) {
+  // Construct URL - Check OpenF1 docs for best way to get current/relevant drivers
+  // Using /drivers endpoint without params might give ALL historical drivers?
+  // Let's assume /drivers?session_key=latest gives current drivers (NEED TO VERIFY THIS)
+  const queryParams = new URLSearchParams({
+    session_key: "latest",
+    ...options,
+  }).toString();
+  const url = `${OPENF1_API_BASE_URL}/drivers?${queryParams}`;
+
+  console.log(`Attempting to fetch driver info from OpenF1: ${url}`);
+
+  try {
+    const response = await axios.get(url);
+
+    // Validate response structure - OpenF1 usually returns an array directly
+    if (!Array.isArray(response.data)) {
+      throw new Error(
+        `Invalid data structure received from ${url}. Expected an array.`
+      );
+    }
+    if (response.data.length === 0) {
+      console.warn(`OpenF1 returned empty array for drivers at ${url}`);
+      // Still cache empty array? Or throw error? Caching empty seems okay.
+    }
+
+    const driverData = response.data;
+
+    // --- Cache the data ---
+    // Create a map for easier lookup by driver_number or name_acronym later?
+    // Or just cache the array? Let's cache the array for now.
+    await fs.writeFile(
+      DRIVER_INFO_CACHE_FILE,
+      JSON.stringify(driverData, null, 2),
+      "utf-8"
+    );
+    console.log(
+      `Successfully fetched and cached driver info to ${DRIVER_INFO_CACHE_FILE}`
+    );
+    return driverData;
+  } catch (error) {
+    console.error(
+      `Error fetching or caching driver info from ${url}:`,
+      error.response?.statusText || error.message
+    );
+    if (error.response?.data) {
+      console.error("API Response Data:", error.response.data);
+    }
+    // Don't crash server, maybe return null or rethrow if critical
+    throw error; // Rethrow for the refresh endpoint to report failure
+  }
+}
+
+/**
+ * Reads the cached driver info data from the local JSON file.
+ * @returns {Promise<Array|null>} The cached driver info array, or null if cache is empty/invalid.
+ */
+export async function getCachedDriverInfo() {
+  try {
+    await fs.access(DRIVER_INFO_CACHE_FILE);
+    const fileContent = await fs.readFile(DRIVER_INFO_CACHE_FILE, "utf-8");
+    const cachedData = JSON.parse(fileContent);
+    if (!Array.isArray(cachedData)) {
+      console.error("Cached driver info data is not a valid array.");
+      return null;
+    }
+    return cachedData;
+  } catch (error) {
+    if (error.code === "ENOENT") {
+      console.log("Driver info cache file not found.");
+    } else if (error instanceof SyntaxError) {
+      console.error("Error parsing driver info cache file JSON:", error);
+    } else {
+      console.error("Error reading driver info cache:", error.message);
+    }
+    return null;
+  }
+}

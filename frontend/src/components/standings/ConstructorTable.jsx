@@ -17,7 +17,7 @@ function ConstructorTable({ constructorStandings }) {
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
+          <tr className="border-b border-[#950505] dark:border-[#950505] bg-gray-50 dark:bg-black">
             <th className="py-3 px-4 text-left font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
               Pos
             </th>
@@ -35,7 +35,7 @@ function ConstructorTable({ constructorStandings }) {
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
+        <tbody className="divide-y divide-[#950505] dark:divide-[#950505]">
           {constructorStandings.map((standing, index) => {
             // Construct logo URL (using direct teamId)
             const teamId = standing.teamId; // Access directly now we know it exists
