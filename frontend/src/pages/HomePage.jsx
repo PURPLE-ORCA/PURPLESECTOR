@@ -4,13 +4,9 @@ import { getNextSession, getLatestRaceResult } from "../services/api";
 import NextSessionCard from "../components/home/NextSessionCard"; // Import new component
 import LatestResultCard from "../components/home/LatestResultCard"; // Import new component
 import { motion } from "framer-motion";
+import { containerVariants } from "@/utils/animations";
 
-// Animation variants can stay here or move to a shared file
-const containerVariants = {
-  /* ... */
-};
-
-function HomePage() {
+function HomePage({ driverInfoMap, isLoadingDrivers }) {
   const [nextSession, setNextSession] = useState(null);
   const [isLoadingNextSession, setIsLoadingNextSession] = useState(true);
   const [errorNextSession, setErrorNextSession] = useState(null);
@@ -46,8 +42,6 @@ function HomePage() {
     };
     fetchData();
   }, []);
-
-  // Remove renderNextSessionInfo and renderLatestResultInfo functions
 
   return (
     // Use max-w-7xl and consistent padding as before
@@ -86,8 +80,9 @@ function HomePage() {
         />
         <LatestResultCard
           resultData={latestResult}
-          isLoading={isLoadingLatestResult}
+          isLoading={isLoadingLatestResult || isLoadingDrivers} 
           error={errorLatestResult}
+          driverInfoMap={driverInfoMap}
         />
       </motion.div>
     </div>

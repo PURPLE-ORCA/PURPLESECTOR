@@ -71,7 +71,12 @@ function App() {
           <Routes>
             <Route
               path="/"
-              element={<HomePage driverInfoMap={driverInfoMap} />}
+              element={
+                <HomePage
+                  driverInfoMap={driverInfoMap}
+                  isLoadingDrivers={isLoadingDrivers}
+                />
+              }
             />
             <Route path="/schedule" element={<SchedulePage />} />
             <Route
@@ -87,7 +92,15 @@ function App() {
               path="/standings/constructors"
               element={<ConstructorStandingsPage />}
             />
-            <Route path="/results/:year/:round" element={<RaceResultsPage />} />
+            <Route
+              path="/results/:year/:round"
+              element={
+                <RaceResultsPage
+                  driverInfoMap={driverInfoMap}
+                  isLoadingDrivers={isLoadingDrivers}
+                />
+              }
+            />
             <Route path="/circuits" element={<CircuitsPage />} />
             <Route
               path="/circuits/:circuitId"
