@@ -11,7 +11,7 @@ import CircuitsPage from "./pages/CircuitsPage";
 import CircuitDetailPage from "./pages/CircuitDetailPage";
 
 function App() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
   const [pageTitle, setPageTitle] = useState("Home"); // Add state for title
   const location = useLocation();
