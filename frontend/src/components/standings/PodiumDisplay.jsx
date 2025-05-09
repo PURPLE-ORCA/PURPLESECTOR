@@ -59,6 +59,7 @@ function PodiumDisplay({ top3, driverInfoMap, isLoadingDrivers }) {
           !isLoadingDrivers && driverInfo?.full_name
             ? driverInfo.full_name
             : `${standing.driver?.name || ""} ${standing.driver?.surname || ""}`.trim();
+        const driverTrophyPath = "/images/drivers-trophy.png"; // Define path to your trophy image
 
         return (
           <motion.div
@@ -80,9 +81,15 @@ function PodiumDisplay({ top3, driverInfoMap, isLoadingDrivers }) {
             <div
               className={`text-4xl font-bold mb-2 ${index === 1 ? trophyColor : "text-gray-400 dark:text-gray-500"}`}
             >
-              {index === 1 && <Trophy size={24} className="inline mr-1" />}{" "}
-              {/* Trophy Icon for P1 */}
-              {positions[index]}
+              {index === 1 ?(
+                <img
+                  src={driverTrophyPath}
+                  alt="Driver Trophy"
+                  className="h-28 w-auto inline mb-1" // Adjust height (h-8) as needed
+                />
+              ) : (
+                positions[index] // Display number for P2/P3
+              )}
             </div>
 
             {/* Driver Headshot */}

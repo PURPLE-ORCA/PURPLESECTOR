@@ -10,6 +10,7 @@ import {
   AlertCircle,
   Loader2,
 } from "lucide-react";
+import { containerVariants, itemVariants } from "@/utils/animations";
 
 function CircuitsPage() {
   const [circuits, setCircuits] = useState([]);
@@ -43,41 +44,6 @@ function CircuitsPage() {
     fetchCircuits();
   }, [yearToFetch]);
 
-  // Container animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  // Item animation variants
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 12,
-      },
-    },
-    hover: {
-      y: -5,
-      scale: 1.02,
-      boxShadow:
-        "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
-      transition: {
-        type: "spring",
-        stiffness: 300,
-        damping: 20,
-      },
-    },
-  };
 
   if (isLoading) {
     return (
@@ -185,12 +151,13 @@ function CircuitsPage() {
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between mt-auto pt-">
+                  {/* this will be for future implementation of circuits details  */}
+                  {/* <div className="flex items-center justify-between mt-auto pt-">
                     <span className="text-sm font-medium text-[#950505] dark:text-[#ff6b6b]">
                       View Details
                     </span>
                     <ChevronRight className="w-5 h-5 text-[#950505] dark:text-[#ff6b6b]" />
-                  </div>
+                  </div> */}
                 </div>
               </Link>
             </motion.div>

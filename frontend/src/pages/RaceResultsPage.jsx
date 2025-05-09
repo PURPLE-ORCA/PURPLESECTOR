@@ -337,7 +337,6 @@ function RaceResultsPage({ driverInfoMap, isLoadingDrivers }) {
             </div>
           </motion.div>
         ) : (
-          // --- Podium Tab ---
           <motion.div
             key="podium"
             initial="hidden"
@@ -354,9 +353,7 @@ function RaceResultsPage({ driverInfoMap, isLoadingDrivers }) {
                 />{" "}
                 Race Podium
               </h3>
-              {/* Reuse PodiumDisplay if structure matches, otherwise implement here */}
               {podiumDrivers.length >= 3 ? (
-                // Pass the top3 extracted from results and the driverInfoMap
                 <PodiumDisplay
                   top3={podiumDrivers}
                   driverInfoMap={driverInfoMap}
