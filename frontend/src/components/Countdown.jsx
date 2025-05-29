@@ -55,10 +55,11 @@ function Countdown({ targetTimeUTC }) {
 
         // Determine status based on remaining time
         const totalHours = newTimeLeft.days * 24 + newTimeLeft.hours;
-        if (totalHours <= 1) {
-          status = "critical"; // Less than 1 hour
+        // Adjusted threshold for "Starting Soon" to 5 hours as per feedback
+        if (totalHours <= 5) {
+          status = "critical"; // Less than 5 hours (Starting Soon)
         } else if (totalHours <= 24) {
-          status = "soon"; // Less than 24 hours
+          status = "soon"; // Less than 24 hours (Coming Up)
         }
       } else {
         // Time is up or has passed

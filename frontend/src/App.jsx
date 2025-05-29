@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import Sidebar from "./components/layout/Sidebar";
 import TopBar from "./components/layout/TopBar";
 import HomePage from "./pages/HomePage";
+import LandingPage from "./pages/LandingPage";
 import SchedulePage from "./pages/SchedulePage";
 import DriverStandingsPage from "./pages/DriverStandingsPage";
 import ConstructorStandingsPage from "./pages/ConstructorStandingsPage";
@@ -32,7 +33,8 @@ function App() {
   useEffect(() => {
     const path = location.pathname;
     // Basic title mapping based on path start
-    if (path === "/") setPageTitle("Home");
+    if (path === "/") setPageTitle("Landing Page"); // New title for landing
+    else if (path.startsWith("/home")) setPageTitle("Home"); // Home is now /home
     else if (path.startsWith("/schedule")) setPageTitle("Schedule");
     else if (path.startsWith("/standings/drivers"))
       setPageTitle("Driver Standings");
@@ -56,21 +58,30 @@ function App() {
     return map;
   }, [driverInfoList]);
 
+  const isLandingPage = location.pathname === "/";
+
   return (
     <div className="flex min-h-screen bg-white dark:bg-black text-black dark:text-white">
-      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+      {!isLandingPage && (
+        <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+      )}
       <div
-        className={`flex flex-col flex-1 transition-all overflow-hidden duration-300 ease-in-out `}
+        className={`flex flex-col flex-1 transition-all overflow-hidden duration-300 ease-in-out ${
+          isLandingPage ? "" : "ml-0 md:ml-[250px]" // Adjust margin if sidebar is present
+        }`}
       >
-        <TopBar
-          toggleSidebar={toggleSidebar}
-          isSidebarOpen={isSidebarOpen}
-          title={pageTitle}
-        />
-        <main className="flex-1 p-6 overflow-y-auto bg-purple-brand">
+        {!isLandingPage && (
+          <TopBar
+            toggleSidebar={toggleSidebar}
+            isSidebarOpen={isSidebarOpen}
+            title={pageTitle}
+          />
+        )}
+        <main className={`flex-1 overflow-y-auto ${isLandingPage ? '' : 'p-6 bg-purple-brand'}`}>
           <Routes>
+            <Route path="/" element={<LandingPage />} /> {/* New default landing page */}
             <Route
-              path="/"
+              path="/home" // Home is now at /home
               element={
                 <HomePage
                   driverInfoMap={driverInfoMap}
