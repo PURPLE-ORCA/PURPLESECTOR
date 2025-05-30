@@ -29,9 +29,9 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden">
       <HeroSection />
+      <CountdownSection nextSessionData={nextSessionData} isLoadingNextSession={isLoadingNextSession} />
       <FeaturesSection />
       <DevAndTechSection />
-      <CountdownSection nextSessionData={nextSessionData} isLoadingNextSession={isLoadingNextSession} />
     </div>
   );
 }
