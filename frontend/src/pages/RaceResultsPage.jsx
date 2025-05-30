@@ -146,7 +146,7 @@ function RaceResultsPage({ driverInfoMap, isLoadingDrivers }) {
       <div className="mb-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between">
           <div>
-            <h1 className="text-3xl md:text-4xl font-bold text-red-600 dark:text-[#950505] mb-1">
+            <h1 className="text-3xl md:text-4xl font-bold text-[#2f024f] dark:text-[#4a037a] mb-1">
               {raceName || "Race Results"}
             </h1>
             <h2 className="text-lg md:text-xl font-semibold text-gray-700 dark:text-gray-300 mt-1">
@@ -170,28 +170,28 @@ function RaceResultsPage({ driverInfoMap, isLoadingDrivers }) {
 
       {/* Tabs */}
       <div className="mb-8 ">
-        <div className="flex space-x-4 border-b border-[#950505] dark:border-[#950505]">
+        <div className="flex space-x-4 border-b border-[#2f024f] dark:border-[#4a037a]">
           <button
             onClick={() => setSelectedTab("results")}
-            className={`py-2 px-4 font-medium transition-colors relative ${selectedTab === "results" ? "text-[#950505] dark:text-[#ff6b6b]" : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"}`}
+            className={`py-2 px-4 font-medium transition-colors relative ${selectedTab === "results" ? "text-[#2f024f] dark:text-[#4a037a]" : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"}`}
           >
             Results
             {selectedTab === "results" && (
               <motion.div
                 layoutId="tab-indicator"
-                className="absolute bottom-[-1px] left-0 right-0 h-0.5 bg-[#950505] dark:bg-[#ff6b6b]"
+                className="absolute bottom-[-1px] left-0 right-0 h-0.5 bg-[#2f024f] dark:bg-[#4a037a]"
               />
             )}
           </button>
           <button
             onClick={() => setSelectedTab("podium")}
-            className={`py-2 px-4 font-medium transition-colors relative ${selectedTab === "podium" ? "text-[#950505] dark:text-[#ff6b6b]" : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"}`}
+            className={`py-2 px-4 font-medium transition-colors relative ${selectedTab === "podium" ? "text-[#2f024f] dark:text-[#4a037a]" : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"}`}
           >
             Podium
             {selectedTab === "podium" && (
               <motion.div
                 layoutId="tab-indicator"
-                className="absolute bottom-[-1px] left-0 right-0 h-0.5 bg-[#950505] dark:bg-[#ff6b6b]"
+                className="absolute bottom-[-1px] left-0 right-0 h-0.5 bg-[#2f024f] dark:bg-[#4a037a]"
               />
             )}
           </button>
@@ -209,10 +209,10 @@ function RaceResultsPage({ driverInfoMap, isLoadingDrivers }) {
             variants={variants}
             transition={{ duration: 0.3 }}
           >
-            <div className="overflow-hidden rounded-lg shadow-md bg-white dark:bg-black border border-[#950505] dark:border-[#950505]">
+            <div className="overflow-hidden rounded-lg shadow-md bg-white dark:bg-black border border-[#2f024f] dark:border-[#4a037a]">
               <div className="overflow-x-auto">
                 <motion.table
-                  className="min-w-full divide-y divide-[#950505] dark:divide-[#950505]"
+                  className="min-w-full divide-y divide-[#2f024f] dark:divide-[#4a037a]"
                   variants={tableVariants}
                 >
                   <thead className="bg-gray-50 dark:bg-black">
@@ -234,7 +234,7 @@ function RaceResultsPage({ driverInfoMap, isLoadingDrivers }) {
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white dark:bg-black divide-y divide-[#950505] dark:divide-[#950505]">
+                  <tbody className="bg-white dark:bg-black divide-y divide-[#2f024f] dark:divide-[#4a037a]">
                     {results.map((result, index) => {
                       // Find driver info
                       const driverAcr =
@@ -323,7 +323,7 @@ function RaceResultsPage({ driverInfoMap, isLoadingDrivers }) {
                           </td>
                           <td className="px-4 py-4 whitespace-nowrap text-center">
                             <span
-                              className={`text-base font-bold ${parseInt(result.points) > 0 ? "text-[#950505] dark:text-[#ff6b6b]" : "text-gray-500 dark:text-gray-400"}`}
+                              className={`text-base font-bold ${parseInt(result.points) > 0 ? "text-[#2f024f] dark:text-[#4a037a]" : "text-gray-500 dark:text-gray-400"}`}
                             >
                               {result.points}
                             </span>
@@ -345,10 +345,10 @@ function RaceResultsPage({ driverInfoMap, isLoadingDrivers }) {
             variants={variants}
             transition={{ duration: 0.3 }}
           >
-            <div className="bg-white dark:bg-black rounded-xl overflow-hidden shadow-lg p-6 border border-[#950505] dark:border-[#950505]">
+            <div className="bg-white dark:bg-black rounded-xl overflow-hidden shadow-lg p-6 border border-[#2f024f] dark:border-[#4a037a]">
               <h3 className="text-2xl font-bold text-center mb-8 text-gray-800 dark:text-white flex items-center justify-center">
                 <Trophy
-                  className="text-[#950505] dark:text-[#ff6b6b] mr-2"
+                  className="text-[#2f024f] dark:text-[#4a037a] mr-2"
                   size={24}
                 />{" "}
                 Race Podium
@@ -367,7 +367,7 @@ function RaceResultsPage({ driverInfoMap, isLoadingDrivers }) {
               <div className="mt-8 flex justify-center">
                 <button
                   onClick={() => setSelectedTab("results")}
-                  className="px-4 py-2 bg-[#950505] hover:bg-[#7D0404] text-white rounded-md transition-colors duration-300 flex items-center text-sm"
+                  className="px-4 py-2 bg-[#2f024f] hover:bg-[#4a037a] text-white rounded-md transition-colors duration-300 flex items-center text-sm"
                 >
                   <ChevronRight
                     size={16}

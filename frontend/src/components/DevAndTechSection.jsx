@@ -55,14 +55,14 @@ function DevAndTechSection() {
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-3xl font-bold text-white mb-6 text-center md:text-left">
+            <h3 className="text-2xl md:text-3xl font-bold text-white mb-6 text-center md:text-left">
               Meet the <span className="text-[#950505]">Developer</span>
             </h3>
             <div className="bg-white/5 backdrop-blur-md border-white/10 p-8 rounded-lg h-full flex flex-col items-center md:items-start text-center md:text-left">
-              <h4 className="text-2xl font-semibold text-white mb-2">
+              <h4 className="text-xl md:text-2xl font-semibold text-white mb-2">
                 Purple Orca
               </h4>
-              <p className="text-gray-400 leading-relaxed mb-6">
+              <p className="text-base md:text-lg text-gray-400 leading-relaxed mb-6">
                 A passionate Formula 1 enthusiast, I crafted this project to
                 bring the thrill of F1 data closer to me. My goal is to create
                 intuitive and engaging experiences for the F1 fans.
@@ -102,7 +102,7 @@ function DevAndTechSection() {
             transition={{ duration: 0.8, delay: 0.4 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-3xl font-bold text-white mb-6 text-center md:text-left">
+            <h3 className="text-2xl md:text-3xl font-bold text-white mb-6 text-center md:text-left">
               Built <span className="text-[#37045F]">With</span>
             </h3>
             <div className="bg-white/5 backdrop-blur-md border-white/10 p-8 rounded-lg h-full">
@@ -115,7 +115,7 @@ function DevAndTechSection() {
                 "Icons",
               ].map((category) => (
                 <div key={category} className="mb-6 last:mb-0">
-                  <h4 className="text-xl font-semibold text-white mb-3 border-b border-white/10 pb-2">
+                  <h4 className="text-lg md:text-xl font-semibold text-white mb-3 border-b border-white/10 pb-2">
                     {category}
                   </h4>
                   <div className="flex flex-wrap gap-4">
@@ -124,7 +124,7 @@ function DevAndTechSection() {
                       .map((tech) => (
                         <div
                           key={tech.name}
-                          className="flex items-center gap-2 text-gray-300 text-lg"
+                          className="flex items-center gap-2 text-gray-300 text-base md:text-lg"
                         >
                           {getIconComponent(tech.icon)}
                           <span>{tech.name}</span>

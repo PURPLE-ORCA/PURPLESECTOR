@@ -53,13 +53,13 @@ function HomePage({ driverInfoMap, isLoadingDrivers }) {
         className="flex flex-col md:flex-row md:items-end md:justify-between mb-8 pb-4" // Adjusted border color
       >
         <div>
-          <h1 className="text-3xl font-bold text-red-600 mb-1">F1 Dashboard</h1>
+          <h1 className="text-3xl font-bold text-[#2f024f] mb-1">F1 Dashboard</h1>
           <p className="text-gray-600 dark:text-gray-400 mt-1">
             Stay updated with the latest Formula 1 events and results
           </p>
         </div>
         <div className="mt-4 md:mt-0 text-sm">
-          <span className="px-3 py-1 rounded-full bg-[#950505] dark:bg-[#b30000] text-white font-medium">
+          <span className="px-3 py-1 rounded-full bg-[#2f024f] dark:bg-[#4a037a] text-white font-medium">
             Season 2025
           </span>
         </div>

@@ -74,10 +74,10 @@ export default function SchedulePage() {
     >
       <motion.div /* ... Header ... */ className="text-center mb-10">
         {/* ... Title/Subtitle ... */}
-        <h1 className="text-4xl md:text-5xl font-extrabold mb-2 bg-gradient-to-r from-red-600 via-[#37045F] to-red-700 text-transparent bg-clip-text">
+        <h1 className="text-4xl md:text-5xl font-extrabold mb-2 bg-gradient-to-r from-[#2f024f] via-[#4a037a] to-[#2f024f] text-transparent bg-clip-text">
           2025 FORMULA 1 SEASON
         </h1>
-        <div className="h-1.5 w-40 mx-auto mb-3 bg-gradient-to-r from-red-600 via-[#37045F] to-red-700"></div>
+        <div className="h-1.5 w-40 mx-auto mb-3 bg-gradient-to-r from-[#2f024f] via-[#4a037a] to-[#2f024f]"></div>
         <p className="text-gray-600 dark:text-gray-400">
           Official Race Calendar{" "}
           <span className="text-xs">(Times shown in GMT+1)</span>

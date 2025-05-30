@@ -1,10 +1,13 @@
 // src/pages/CircuitDetailPage.jsx
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom"; // To get circuitId from URL
-import { getSpecificCircuitDetails } from "../services/api"; // API service function
+import { useParams } from "react-router-dom";
+import { getSpecificCircuitDetails } from "../services/api";
+import LoadingIndicator from "../components/ui/LoadingIndicator";
+import ErrorDisplay from "../components/ui/ErrorDisplay";
+import { motion } from "framer-motion";
 
 function CircuitDetailPage() {
-  const { circuitId } = useParams(); // Get the circuitId from the route parameters
+  const { circuitId } = useParams();
   const [circuit, setCircuit] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -37,55 +40,53 @@ function CircuitDetailPage() {
     };
 
     fetchCircuitData();
-  }, [circuitId]); // Re-fetch if circuitId changes
+  }, [circuitId]);
 
   if (isLoading) {
-    return (
-      <p className="text-center text-gray-400 mt-10">
-        Loading Circuit Details...
-      </p>
-    );
+    return <LoadingIndicator message="Loading Circuit Details..." />;
   }
 
   if (error) {
-    return <p className="text-center text-red-500 mt-10">Error: {error}</p>;
+    return <ErrorDisplay title="Circuit Details Unavailable" message={error} />;
   }
 
   if (!circuit) {
     return (
-      <p className="text-center text-gray-500 mt-10">
+      <div className="text-center p-10 text-gray-500 dark:text-gray-400">
         No details found for circuit ID: {circuitId}.
-      </p>
+      </div>
     );
   }
 
-  // Basic display of circuit details
   return (
-    <div>
-      <h2 className="text-3xl font-semibold mb-4 text-purple-brand">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-gray-900 dark:text-white"
+    >
+      <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#2f024f] dark:text-[#4a037a]">
         {circuit.circuitName}
       </h2>
-      <div className="bg-gray-800 p-6 rounded-lg shadow-md">
-        <p className="text-lg text-gray-300 mb-2">
+      <div className="bg-gray-50 dark:bg-black p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-700">
+        <p className="text-lg text-gray-700 dark:text-gray-300 mb-2">
           Location: {circuit.Location?.locality}, {circuit.Location?.country}
         </p>
-        <p className="text-md text-gray-400 mb-4">
+        <p className="text-md text-gray-600 dark:text-gray-400 mb-4">
           Coordinates: {circuit.Location?.lat}, {circuit.Location?.long}
         </p>
-        {/* TODO: Potentially add a map image or embedded map later */}
         {circuit.url && (
           <a
             href={circuit.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-400 hover:underline mt-2 inline-block"
+            className="text-[#2f024f] hover:underline mt-2 inline-block dark:text-[#4a037a]"
           >
             View on Wikipedia
           </a>
         )}
-        {/* Add more details here as available/needed */}
       </div>
-    </div>
+    </motion.div>
   );
 }
 

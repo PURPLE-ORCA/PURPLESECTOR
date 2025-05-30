@@ -10,64 +10,85 @@ import ConstructorStandingsPage from "./pages/ConstructorStandingsPage";
 import RaceResultsPage from "./pages/RaceResultsPage";
 import CircuitsPage from "./pages/CircuitsPage";
 import CircuitDetailPage from "./pages/CircuitDetailPage";
-import { getDriverInfo } from "./services/api"; // Import driver info fetcher
+import { getDriverInfo } from "./services/api";
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
-  const [pageTitle, setPageTitle] = useState("Home"); // Add state for title
+  const [pageTitle, setPageTitle] = useState("Home");
+  const [driverInfoList, setDriverInfoList] = useState([]);
+  const [isLoadingDrivers, setIsLoadingDrivers] = useState(true);
+
   const location = useLocation();
-  const [driverInfoList, setDriverInfoList] = useState([]); // State for driver info
-  const [isLoadingDrivers, setIsLoadingDrivers] = useState(true); // Loading state
+  const isLandingPage = location.pathname === "/";
 
-    useEffect(() => {
-      const fetchDrivers = async () => {
-        setIsLoadingDrivers(true);
-        const drivers = await getDriverInfo();
-        setDriverInfoList(drivers || []); // Store fetched list or empty array
-        setIsLoadingDrivers(false);
-      };
-      fetchDrivers();
-    }, []); 
+  // Toggle sidebar function
+  const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
 
+  // Fetch driver data
+  useEffect(() => {
+    const fetchDrivers = async () => {
+      setIsLoadingDrivers(true);
+      const drivers = await getDriverInfo();
+      setDriverInfoList(drivers || []);
+      setIsLoadingDrivers(false);
+    };
+    fetchDrivers();
+  }, []);
+
+  // Update page title based on route
   useEffect(() => {
     const path = location.pathname;
-    // Basic title mapping based on path start
-    if (path === "/") setPageTitle("Landing Page"); // New title for landing
-    else if (path.startsWith("/home")) setPageTitle("Home"); // Home is now /home
+    if (path === "/") setPageTitle("Landing Page");
+    else if (path.startsWith("/home")) setPageTitle("Home");
     else if (path.startsWith("/schedule")) setPageTitle("Schedule");
     else if (path.startsWith("/standings/drivers"))
       setPageTitle("Driver Standings");
     else if (path.startsWith("/standings/constructors"))
       setPageTitle("Constructor Standings");
     else if (path.startsWith("/circuits")) setPageTitle("Circuits");
-    else if (path.startsWith("/results"))
-      setPageTitle("Race Results"); // Could be more specific later
-    else setPageTitle("Purple Sector"); // Default
+    else if (path.startsWith("/results")) setPageTitle("Race Results");
+    else setPageTitle("Purple Sector");
   }, [location.pathname]);
 
+  // Close sidebar when route changes on mobile
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      setIsSidebarOpen(false);
+    }
+  }, [location.pathname]);
+
+  // Create driver info map
   const driverInfoMap = React.useMemo(() => {
     const map = new Map();
     driverInfoList.forEach((driver) => {
-      // Use name_acronym as the key
       if (driver.name_acronym) {
-        map.set(driver.name_acronym, driver); // Key: "VER", "NOR", "PIA" etc.
+        map.set(driver.name_acronym, driver);
       }
-      // Add fallbacks if needed (e.g., map by full_name if acronym missing?)
     });
     return map;
   }, [driverInfoList]);
 
-  const isLandingPage = location.pathname === "/";
+  // Handle window resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setIsSidebarOpen(false); // Reset to collapsed on desktop
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <div className="flex min-h-screen bg-white dark:bg-black text-black dark:text-white">
       {!isLandingPage && (
         <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
       )}
+
       <div
-        className={`flex flex-col flex-1 transition-all overflow-hidden duration-300 ease-in-out ${
-          isLandingPage ? "" : "ml-0 md:ml-[250px]" // Adjust margin if sidebar is present
+        className={`flex flex-col flex-1 transition-all duration-300 ease-in-out ${
+          isLandingPage ? "" : "md:ml-16" // Always account for collapsed sidebar on desktop
         }`}
       >
         {!isLandingPage && (
@@ -77,11 +98,16 @@ function App() {
             title={pageTitle}
           />
         )}
-        <main className={`flex-1 overflow-y-auto ${isLandingPage ? '' : 'p-6 bg-purple-brand'}`}>
+
+        <main
+          className={`flex-1 overflow-y-auto ${
+            isLandingPage ? "" : "p-4 md:p-6 bg-purple-brand"
+          }`}
+        >
           <Routes>
-            <Route path="/" element={<LandingPage />} /> {/* New default landing page */}
+            <Route path="/" element={<LandingPage />} />
             <Route
-              path="/home" // Home is now at /home
+              path="/home"
               element={
                 <HomePage
                   driverInfoMap={driverInfoMap}
@@ -97,7 +123,7 @@ function App() {
                   driverInfoMap={driverInfoMap}
                   isLoadingDrivers={isLoadingDrivers}
                 />
-              } // <<< PASS PROPS HERE
+              }
             />
             <Route
               path="/standings/constructors"

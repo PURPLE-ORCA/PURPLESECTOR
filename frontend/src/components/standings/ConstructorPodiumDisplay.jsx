@@ -15,19 +15,18 @@ function ConstructorPodiumDisplay({ top3 }) {
 
   return (
     <motion.div
-      variants={containerVariants} // Use imported variant
+      variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="mb-12 hidden md:flex justify-center items-end gap-4 pt-8"
+      className="mb-12 md:flex justify-center items-end gap-4 pt-8" // Removed 'hidden' class
     >
       {podiumOrder.map((standing, index) => {
-        // Construct logo URL based on teamId
         const teamId = standing.teamId;
 
         const teamLogoUrl = teamId
           ? `/images/teams/${teamId}.svg`
           : defaultLogoPath;
-        const constructorTrophyPath = "/images/trophy.png"; // Define path to your trophy image
+        const constructorTrophyPath = "/images/trophy.png";
 
         return (
           <motion.div

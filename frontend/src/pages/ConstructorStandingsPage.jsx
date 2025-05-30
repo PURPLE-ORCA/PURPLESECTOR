@@ -76,7 +76,7 @@ function ConstructorStandingsPage() {
       {/* Header */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 gap-4">
         <div>
-          <h2 className="text-3xl font-bold text-red-600 dark:text-[#950505] mb-1">
+          <h2 className="text-3xl font-bold text-[#2f024f] dark:text-[#4a037a] mb-1">
             Constructor Standings
           </h2>
           <div className="flex items-center text-sm text-gray-600 dark:text-gray-400">
