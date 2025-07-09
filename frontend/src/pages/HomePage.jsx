@@ -1,11 +1,9 @@
-// src/pages/HomePage.jsx
 import React, { useState, useEffect } from "react";
 import { getNextSession, getLatestRaceResult } from "../services/api";
-import NextSessionCard from "../components/home/NextSessionCard"; // Import new component
-import LatestResultCard from "../components/home/LatestResultCard"; // Import new component
+import NextSessionCard from "../components/home/NextSessionCard"; 
+import LatestResultCard from "../components/home/LatestResultCard"; 
 import { motion } from "framer-motion";
-import { containerVariants } from "@/utils/animations";
-
+import { podiumContainerVariants } from "@/utils/animations";
 function HomePage({ driverInfoMap, isLoadingDrivers }) {
   const [nextSession, setNextSession] = useState(null);
   const [isLoadingNextSession, setIsLoadingNextSession] = useState(true);
@@ -67,7 +65,7 @@ function HomePage({ driverInfoMap, isLoadingDrivers }) {
 
       {/* Use containerVariants for staggered animation */}
       <motion.div
-        variants={containerVariants}
+        variants={podiumContainerVariants}
         initial="hidden"
         animate="visible"
         className="grid grid-cols-1 gap-8"

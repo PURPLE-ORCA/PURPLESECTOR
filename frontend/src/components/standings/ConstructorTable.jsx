@@ -4,8 +4,7 @@ import { motion } from "framer-motion";
 // Removed Chevron imports as they were commented out
 // import { ChevronUp, ChevronDown } from 'lucide-react';
 import { getTeamColorClass } from "../../utils/teamColors"; // Keep color helper if needed elsewhere, or remove
-import { itemVariants } from "../../utils/animations";
-
+import { podiumItemVariants } from "../../utils/animations";
 function ConstructorTable({ constructorStandings }) {
   if (!constructorStandings || constructorStandings.length === 0) {
     return <p className="p-4 text-center">No standings data for table.</p>;
@@ -17,7 +16,7 @@ function ConstructorTable({ constructorStandings }) {
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-[#950505] dark:border-[#950505] bg-gray-50 dark:bg-black">
+          <tr className="border-b border-border bg-gray-50 dark:bg-black">
             <th className="py-3 px-4 text-left font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
               Pos
             </th>
@@ -35,7 +34,7 @@ function ConstructorTable({ constructorStandings }) {
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-[#950505] dark:divide-[#950505]">
+        <tbody className="divide-y divide-border">
           {constructorStandings.map((standing, index) => {
             // Construct logo URL (using direct teamId)
             const teamId = standing.teamId; // Access directly now we know it exists
@@ -46,11 +45,11 @@ function ConstructorTable({ constructorStandings }) {
             return (
               <motion.tr
                 key={teamId || standing.position} // Use teamId as key
-                variants={itemVariants}
+                variants={podiumItemVariants}
                 initial="hidden"
                 animate="visible"
                 transition={{ delay: index * 0.03 }}
-                className="hover:bg-gray-100 dark:hover:bg-gray-900/40 transition-colors duration-150"
+                className="transition-colors duration-200 hover:bg-muted cursor-pointer"
               >
                 {/* Position */}
                 <td

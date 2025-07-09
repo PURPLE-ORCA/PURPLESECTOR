@@ -10,8 +10,7 @@ import {
   AlertCircle,
   Loader2,
 } from "lucide-react";
-import { containerVariants, itemVariants } from "@/utils/animations";
-
+import { podiumContainerVariants, podiumItemVariants } from "@/utils/animations";
 function CircuitsPage() {
   const [circuits, setCircuits] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -101,7 +100,7 @@ function CircuitsPage() {
 
       {circuits.length > 0 ? (
         <motion.div
-          variants={containerVariants}
+          variants={podiumContainerVariants}
           initial="hidden"
           animate="visible"
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
@@ -109,7 +108,7 @@ function CircuitsPage() {
           {circuits.map((circuit) => (
             <motion.div
               key={circuit.circuitId}
-              variants={itemVariants}
+              variants={podiumItemVariants}
               whileHover="hover"
               className="h-full"
             >

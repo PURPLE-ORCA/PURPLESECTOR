@@ -1,9 +1,8 @@
 // src/components/standings/DriverTable.jsx
 import React from "react";
 import { motion } from "framer-motion";
-import { getTeamColorClass } from "../../utils/teamColors"; // Keep if using color bar
-import { itemVariants } from "../../utils/animations"; // Assuming variants are imported
-
+import { getTeamColorClass } from "../../utils/teamColors"; 
+import { podiumItemVariants } from "../../utils/animations";
 // Accept driverInfoMap prop
 function DriverTable({ driverStandings, driverInfoMap }) {
   if (!driverStandings || driverStandings.length === 0) {
@@ -25,7 +24,7 @@ function DriverTable({ driverStandings, driverInfoMap }) {
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border[#950505] dark:border-[#950505] bg-gray-100 dark:bg-black">
+          <tr className="border-b border-border bg-gray-100 dark:bg-black">
             <th className="py-3 px-4 text-center font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider w-12">
               Pos
             </th>
@@ -43,7 +42,7 @@ function DriverTable({ driverStandings, driverInfoMap }) {
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-[#950505] dark:divide-[#950505]">
+        <tbody className="divide-y divide-border">
           {driverStandings.map((standing, index) => {
             // --- Find driver info using Acronym ---
             const driverAcr = standing.driver?.shortName;
@@ -64,11 +63,11 @@ function DriverTable({ driverStandings, driverInfoMap }) {
             return (
               <motion.tr
                 key={standing.driver?.driverId || standing.position}
-                variants={itemVariants}
+                variants={podiumItemVariants}
                 initial="hidden"
                 animate="visible"
                 transition={{ delay: index * 0.03 }}
-                className="hover:bg-gray-100 dark:hover:bg-gray-900/40 transition-colors duration-150"
+                className="transition-colors duration-200 hover:bg-muted cursor-pointer"
               >
                 {/* Position */}
                 <td

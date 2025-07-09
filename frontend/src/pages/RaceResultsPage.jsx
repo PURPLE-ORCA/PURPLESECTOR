@@ -372,7 +372,7 @@ function RaceResultsPage({ driverInfoMap, isLoadingDrivers }) {
                   <ChevronRight
                     size={16}
                     className="mr-1 transform rotate-180"
-                  />{" "}
+                  />
                   View Full Results Table
                 </button>
               </div>

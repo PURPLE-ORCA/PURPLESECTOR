@@ -3,21 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Trophy } from "lucide-react"; // Keep Trophy for P1 indicator
 import { getTeamColorClass } from "../../utils/teamColors"; // Assuming this utility exists
-
-// Optional: Define animation variants here or import if defined elsewhere
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { when: "beforeChildren", staggerChildren: 0.1 },
-  },
-};
-
-const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 100 } },
-};
-
+import { podiumContainerVariants, podiumItemVariants } from "../../utils/animations";
 // --- Podium Display Component ---
 function PodiumDisplay({ top3, driverInfoMap, isLoadingDrivers }) {
   // Basic validation
@@ -38,10 +24,10 @@ function PodiumDisplay({ top3, driverInfoMap, isLoadingDrivers }) {
 
   return (
     <motion.div
-      variants={containerVariants}
+      variants={podiumContainerVariants}
       initial="hidden"
       animate="visible"
-      className="md:flex justify-center items-end gap-4 pt-8" // Removed 'hidden' class
+      className="md:flex justify-center items-end gap-4 pt-8"
     >
       {podiumOrder.map((standing, index) => {
         const teamName = standing.team?.teamName;
@@ -62,18 +48,21 @@ function PodiumDisplay({ top3, driverInfoMap, isLoadingDrivers }) {
         return (
           <motion.div
             key={standing.driver?.driverId || positions[index]}
-            variants={itemVariants}
+            variants={podiumItemVariants}
             className={`
-              relative bg-white dark:bg-black rounded-t-lg 
+              relative bg-card rounded-t-lg 
               flex flex-col items-center pt-4 pb-18  shadow-lg 
               ${index === 1 ? "w-1/4 z-10" : "w-1/5"} ${heights[index]}
               transition-colors duration-200 h-full
             `}
           >
             {/* Team color bar */}
-            <div
-              className={`absolute top-0 left-0 right-0 ${index === 1 ? "h-2" : "h-1"} ${getTeamColorClass(teamName)}`}
-            ></div>
+            <motion.div
+              className={`absolute top-0 left-0 right-0 ${index === 1 ? 'h-2' : 'h-1'} ${getTeamColorClass(teamName)}`}
+              initial={{ width: 0 }}
+              animate={{ width: '100%' }}
+              transition={{ duration: 0.8, ease: 'easeOut', delay: 0.4 }}
+            ></motion.div>
 
             {/* Position Number */}
             <div
@@ -123,7 +112,7 @@ function PodiumDisplay({ top3, driverInfoMap, isLoadingDrivers }) {
               className={`
                  mt-auto px-3 py-1 rounded 
                  text-white font-mono text-sm font-medium 
-                 ${index === 1 ? "bg-[#2f024f] dark:bg-[#4a037a]" : "bg-gray-600 dark:bg-gray-700"}
+                 ${index === 1 ? "bg-primary text-primary-foreground dark:bg-sidebar-primary dark:text-sidebar-primary-foreground" : "bg-muted text-muted-foreground"}
                `}
             >
               {standing.points} PTS
