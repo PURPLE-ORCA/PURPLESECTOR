@@ -31,7 +31,7 @@ function ConstructorPodiumDisplay({ top3 }) {
           <motion.div
             key={teamId || positions[index]}
             variants={podiumItemVariants}
-            className={`relative bg-card h-full rounded-t-lg flex flex-col items-center pt-4 pb-6 shadow-lg 
+            className={`relative bg-[var(--background)] h-full rounded-t-lg flex flex-col items-center pt-4 pb-6 shadow-lg 
                           ${index === 1 ? "w-1/4 z-10" : "w-1/5"} ${heights[index]}`}
           >
             {/* Team color bar */}

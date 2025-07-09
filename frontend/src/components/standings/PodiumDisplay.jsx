@@ -50,7 +50,7 @@ function PodiumDisplay({ top3, driverInfoMap, isLoadingDrivers }) {
             key={standing.driver?.driverId || positions[index]}
             variants={podiumItemVariants}
             className={`
-              relative bg-card rounded-t-lg 
+              relative bg-[var(--background)] rounded-t-lg 
               flex flex-col items-center pt-4 pb-18  shadow-lg 
               ${index === 1 ? "w-1/4 z-10" : "w-1/5"} ${heights[index]}
               transition-colors duration-200 h-full
