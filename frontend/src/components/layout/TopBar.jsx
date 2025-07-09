@@ -1,28 +1,26 @@
-import React from "react";
-import ThemeToggler from "../ThemeToggler";
-import { Icon } from "@iconify/react"; // Iconify import
+import React from 'react';
+import ThemeToggler from '../ThemeToggler'; // Assuming ThemeToggler is in components/
+import { PrimaryNav } from './PrimaryNav';
+import { NavLink } from 'react-router-dom';
+import { Icon } from '@iconify/react';
 
-function TopBar({ toggleSidebar, isSidebarOpen, title = "Purple Sector" }) {
-  const pageTitle = "Dashboard";
-
+function TopBar() {
   return (
-    <header className="  rounded-2xl mr-2 mt-2 bg-transparent ">
-      <div className="mx-auto px-2 sm:px-2 lg:px-2 py-0">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center space-x-3">
-            <button
-              onClick={toggleSidebar}
-              className="text-black dark:text-white hover:text-red-accent"
-            >
-              <Icon icon="mdi:menu" width="24" height="24" />
-            </button>
-            <h1 className="text-xl font-semibold text-black dark:text-white">
-              {title}
-            </h1>
-          </div>
-          <div className="flex items-center space-x-3">
-            <ThemeToggler />
-          </div>
+    <header className="sticky top-0 z-30 w-full p-2 bg-transparent">
+      <div className="container mx-auto flex items-center justify-between h-16">
+        <NavLink to="/home" className="group">
+           <Icon
+              icon="mdi:flag-checkered"
+              className="text-black dark:text-white text-3xl group-hover:text-purple-500 transition-colors duration-200"
+            />
+        </NavLink>
+
+        <div className="absolute left-1/2 -translate-x-1/2">
+          <PrimaryNav />
+        </div>
+
+        <div className="flex items-center">
+          <ThemeToggler />
         </div>
       </div>
     </header>

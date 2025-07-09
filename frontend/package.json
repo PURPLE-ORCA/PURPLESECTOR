@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@babel/preset-flow": "^7.27.1",
     "@iconify/react": "^6.0.0",
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-tabs": "^1.1.11",
@@ -22,6 +23,7 @@
     "framer-motion": "^12.10.0",
     "keen-slider": "^6.8.6",
     "lucide-react": "^0.507.0",
+    "motion": "^12.23.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.5.3",
