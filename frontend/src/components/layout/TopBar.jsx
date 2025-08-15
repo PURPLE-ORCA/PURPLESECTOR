@@ -9,7 +9,6 @@ function TopBar() {
     <header className="sticky top-0 z-30 w-full p-2 bg-transparent">
       <div className="container mx-auto flex items-center justify-between h-16">
         <div>
-          
         </div>
 
         <div className="absolute left-1/2 -translate-x-1/2">

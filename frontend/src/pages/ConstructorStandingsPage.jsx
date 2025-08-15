@@ -72,7 +72,7 @@ function ConstructorStandingsPage() {
   const top3 = constructorStandings.slice(0, 3);
 
   return (
-    <div className="transition-colors text-gray-900 dark:text-white px-2 py-2 rounded-xl">
+    <div className="transition-colors text-gray-900 dark:text-white px-8 py-2 rounded-xl">
       {/* Header */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 gap-4">
         <div>

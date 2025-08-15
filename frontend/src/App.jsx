@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import TopBar from "./components/layout/TopBar";
 import HomePage from "./pages/HomePage";
-import LandingPage from "./pages/LandingPage";
 import SchedulePage from "./pages/SchedulePage";
 import DriverStandingsPage from "./pages/DriverStandingsPage";
 import ConstructorStandingsPage from "./pages/ConstructorStandingsPage";
@@ -16,7 +15,6 @@ function App() {
   const [isLoadingDrivers, setIsLoadingDrivers] = useState(true);
 
   const location = useLocation();
-  const isLandingPage = location.pathname === "/";
 
   // Fetch driver data
   useEffect(() => {
@@ -42,13 +40,12 @@ function App() {
 
   return (
     <div className="flex min-h-screen flex-col bg-white dark:bg-black text-black dark:text-white">
-      {!isLandingPage && <TopBar />}
+      <TopBar />
 
       <main className="flex-1">
         <Routes>
-          <Route path="/" element={<LandingPage />} />
           <Route
-            path="/home"
+            path="/"
             element={
               <HomePage
                 driverInfoMap={driverInfoMap}
