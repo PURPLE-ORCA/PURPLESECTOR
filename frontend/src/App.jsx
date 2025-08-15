@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import TopBar from "./components/layout/TopBar";
 import HomePage from "./pages/HomePage";
 import SchedulePage from "./pages/SchedulePage";
@@ -14,7 +14,6 @@ function App() {
   const [driverInfoList, setDriverInfoList] = useState([]);
   const [isLoadingDrivers, setIsLoadingDrivers] = useState(true);
 
-  const location = useLocation();
 
   // Fetch driver data
   useEffect(() => {

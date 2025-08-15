@@ -48,7 +48,7 @@ function HomePage({ driverInfoMap, isLoadingDrivers }) {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="flex flex-col md:flex-row md:items-end md:justify-between mb-8 pb-4" // Adjusted border color
+        className="flex flex-col md:flex-row md:items-end md:justify-between mb-8 pb-4"
       >
         <div>
           <h1 className="text-4xl font-bold text-white mb-1">F1 Dashboard</h1>

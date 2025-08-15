@@ -4,16 +4,11 @@ import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
 
-const F1_API_BASE_URL = "https://f1api.dev/api";
+const F1_API_BASE_URL = process.env.F1_API_BASE_URL || "https://f1api.dev/api";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const CACHE_FILE_PATH = path.join(__dirname, "..", "schedule-cache.json");
 
-/**
- * Fetches the full schedule for a given year from f1api.dev (using /races endpoint)
- * and caches it to a local JSON file.
- * @param {string|number} year The year of the season to fetch ('current' or YYYY).
- */
 /**
  * Fetches the full schedule for a given year from f1api.dev
  * and caches it to a local JSON file.
@@ -56,7 +51,6 @@ export async function fetchAndCacheSeasonSchedule(year = 'current') {
  * Reads the cached schedule data from the local JSON file.
  */
 export async function getCachedSchedule() {
-  // ... (no changes needed here)
   try {
     await fs.access(CACHE_FILE_PATH);
     const fileContent = await fs.readFile(CACHE_FILE_PATH, "utf-8");
@@ -67,12 +61,9 @@ export async function getCachedSchedule() {
     }
     return cachedData;
   } catch (error) {
-    // ... error handling ...
     return null;
   }
 }
-
-// --- NEW: Current Standings Functions using f1api.dev ---
 
 /**
  * Fetches CURRENT Driver Standings from f1api.dev.
@@ -190,7 +181,7 @@ export async function getSpecificRaceResultF1Api(year, round) {
     }
 }
 
-const OPENF1_API_BASE_URL = "https://api.openf1.org/v1"; // Base URL for OpenF1
+const OPENF1_API_BASE_URL = process.env.OPENF1_API_BASE_URL || "https://api.openf1.org/v1"; // Base URL for OpenF1
 const DRIVER_INFO_CACHE_FILE = path.join(
   __dirname,
   "..",

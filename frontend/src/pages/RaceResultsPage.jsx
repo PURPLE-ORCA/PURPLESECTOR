@@ -1,13 +1,10 @@
-// src/pages/RaceResultsPage.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getRaceResults } from '../services/api';
 import { Trophy, MapPin, ChevronRight } from 'lucide-react';
-import LoadingIndicator from '../components/ui/LoadingIndicator';
-import ErrorDisplay from '../components/ui/ErrorDisplay';
 import PodiumDisplay from '@/components/standings/PodiumDisplay';
-import DataTable from '../components/ui/DataTable'; // Import our new component
+import DataTable from '../components/ui/DataTable';
 
 function RaceResultsPage({ driverInfoMap, isLoadingDrivers }) {
   const { year, round } = useParams();

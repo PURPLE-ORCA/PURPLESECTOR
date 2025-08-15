@@ -1,8 +1,7 @@
-// src/pages/ConstructorStandingsPage.jsx
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Calendar } from "lucide-react";
-import { getConstructorStandings } from "../services/api"; // Uses the correct API call
+import { getConstructorStandings } from "../services/api"; 
 import LoadingIndicator from "../components/ui/LoadingIndicator";
 import ErrorDisplay from "../components/ui/ErrorDisplay";
 import ConstructorPodiumDisplay from "../components/standings/ConstructorPodiumDisplay";

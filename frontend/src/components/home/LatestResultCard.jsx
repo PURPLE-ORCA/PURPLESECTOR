@@ -1,14 +1,10 @@
-// src/components/home/LatestResultCard.jsx
 import React from "react";
 import LoadingIndicator from "../ui/LoadingIndicator";
 import ErrorDisplay from "../ui/ErrorDisplay";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Trophy, ChevronRight } from "lucide-react";
-// Assuming itemVariants might be used or defined elsewhere, keeping import commented for now
-// import { itemVariants } from "@/utils/animations";
 
-// Define podium medal colors outside component
 const medalColors = [
   {
     bg: "bg-amber-400 dark:bg-yellow-500",
@@ -17,11 +13,11 @@ const medalColors = [
   {
     bg: "bg-slate-300 dark:bg-slate-500",
     text: "text-slate-900 dark:text-slate-100",
-  }, // Silver - Adjusted color
+  }, // Silver 
   {
     bg: "bg-yellow-600 dark:bg-yellow-700",
     text: "text-yellow-100 dark:text-yellow-100",
-  }, // Bronze - Adjusted color
+  }, // Bronze 
 ];
 
 function LatestResultCard({ resultData, isLoading, error, driverInfoMap }) {

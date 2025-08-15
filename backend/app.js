@@ -3,7 +3,6 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 
-// Routers
 import scheduleRouter from "./routes/schedule.js";
 import nextSessionRouter from "./routes/nextSession.js";
 import standingsRouter from "./routes/standings.js";
@@ -11,28 +10,32 @@ import resultsRouter from "./routes/results.js";
 import circuitsRouter from "./routes/circuits.js";
 import { fetchAndCacheDriverInfo, getCachedDriverInfo } from './services/f1ApiService.js'; 
 
-// Import the service function for caching
 import { fetchAndCacheSeasonSchedule } from "./services/f1ApiService.js";
 
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// --- Middleware ---
 app.use(cors());
-// app.use(express.json()); // If needed later
+// --- Security Middleware for Admin Routes ---
+const authenticateAdmin = (req, res, next) => {
+  const token = req.headers['x-admin-token'];
+  if (!token || token !== process.env.ADMIN_SECRET_TOKEN) {
+    return res.status(403).json({ message: 'Forbidden: Invalid or missing admin token.' });
+  }
+  next();
+};
+// app.use(express.json());
 
-// --- API Routes ---
-app.get("/api/ping", (req, res) => res.json({ message: "pong" })); // Simplified ping
+app.get("/api/ping", (req, res) => res.json({ message: "pong" })); // Ping endpoint
 app.use("/api/schedule", scheduleRouter);
 app.use("/api/next-session", nextSessionRouter);
 app.use("/api/standings", standingsRouter);
 app.use("/api/results", resultsRouter);
 app.use("/api/circuits", circuitsRouter);
 
-// --- ADD BACK: Manual Cache Refresh Endpoint ---
 // Handles both 'current' and specific year (e.g., 2025)
-app.get("/api/admin/refresh-schedule/:year", async (req, res) => {
+app.get("/api/admin/refresh-schedule/:year", authenticateAdmin, async (req, res) => {
   const year = req.params.year;
   // Allow 'current' or a 4-digit year
   if (year !== "current" && !/^\d{4}$/.test(year)) {
@@ -61,7 +64,6 @@ app.get("/api/admin/refresh-schedule/:year", async (req, res) => {
   }
 });
 
-// --- NEW Driver Info Route ---
 app.get('/api/drivers/info', async (req, res) => {
     // Serve data directly from cache
     try {
@@ -77,8 +79,7 @@ app.get('/api/drivers/info', async (req, res) => {
     }
 });
 
-// --- NEW Driver Info Cache Refresh Trigger ---
-app.get('/api/admin/refresh-drivers', async (req, res) => {
+app.get('/api/admin/refresh-drivers', authenticateAdmin, async (req, res) => {
     console.log(`Received request to refresh driver info cache`);
     try {
         await fetchAndCacheDriverInfo(); // Call the caching function
