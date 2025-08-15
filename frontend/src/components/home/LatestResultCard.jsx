@@ -58,22 +58,13 @@ function LatestResultCard({ resultData, isLoading, error, driverInfoMap }) {
 
     return (
       <>
-        {/* Gradient bar */}
-        <div className="h-2 bg-gradient-to-r from-[#37045F] to-[#950505] absolute top-0 left-0 right-0"></div>
-
         <div className="p-6 relative pt-8">
-          {" "}
-          {/* Padding top for gradient */}
-          {/* Card Header */}
           <div className="flex items-center mb-6">
-            <div className="w-12 h-12 bg-[#950505] dark:bg-[#b30000] rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-              <Trophy className="h-6 w-6 text-white" />
-            </div>
             <div>
-              <h3 className="text-lg font-semibold text-black dark:text-white">
+              <h3 className="text-lg font-semibold text-red-700">
                 Latest Results
               </h3>
-              <p className="text-[#950505] dark:text-[#ff6b6b] font-medium text-sm truncate">
+              <p className="text-black dark:text-white font-medium text-lg truncate">
                 {raceInfo.raceName}
               </p>
             </div>
@@ -98,12 +89,12 @@ function LatestResultCard({ resultData, isLoading, error, driverInfoMap }) {
 
               return (
                 <motion.div
-                  key={result.driver.driverId} // Use unique ID
+                  key={result.driver.driverId}
                   whileHover={{
                     y: -5,
                     transition: { type: "spring", stiffness: 300 },
                   }}
-                  className="bg-gray-50 dark:bg-black rounded-lg overflow-hidden shadow-sm relative" // Card styling
+                  className="bg-gray-50 dark:bg-neutral-950 rounded-lg overflow-hidden shadow-sm relative"
                 >
                   {/* Medal color bar */}
                   <div
@@ -120,7 +111,6 @@ function LatestResultCard({ resultData, isLoading, error, driverInfoMap }) {
                       </div>
                       <div className="text-xs font-medium text-gray-600 dark:text-gray-400">
                         {result.time || result.status || ""}{" "}
-                        {/* Show time/status */}
                       </div>
                     </div>
 
@@ -158,7 +148,7 @@ function LatestResultCard({ resultData, isLoading, error, driverInfoMap }) {
             {season && round ? (
               <Link
                 to={`/results/${season}/${round}`}
-                className="flex items-center text-[#950505] dark:text-[#ff6b6b] font-medium text-sm hover:underline"
+                className="flex items-center text-red-700 font-medium text-sm hover:underline"
               >
                 <span>View Full Results</span>
                 <ChevronRight className="ml-1 h-4 w-4" />

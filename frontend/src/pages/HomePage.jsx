@@ -51,7 +51,7 @@ function HomePage({ driverInfoMap, isLoadingDrivers }) {
         className="flex flex-col md:flex-row md:items-end md:justify-between mb-8 pb-4" // Adjusted border color
       >
         <div>
-          <h1 className="text-3xl font-bold text-[#2f024f] mb-1">F1 Dashboard</h1>
+          <h1 className="text-4xl font-bold text-white mb-1">F1 Dashboard</h1>
           <p className="text-gray-600 dark:text-gray-400 mt-1">
             Stay updated with the latest Formula 1 events and results
           </p>

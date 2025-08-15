@@ -8,12 +8,9 @@ function TopBar() {
   return (
     <header className="sticky top-0 z-30 w-full p-2 bg-transparent">
       <div className="container mx-auto flex items-center justify-between h-16">
-        <NavLink to="/home" className="group">
-           <Icon
-              icon="mdi:flag-checkered"
-              className="text-black dark:text-white text-3xl group-hover:text-purple-500 transition-colors duration-200"
-            />
-        </NavLink>
+        <div>
+          
+        </div>
 
         <div className="absolute left-1/2 -translate-x-1/2">
           <PrimaryNav />
