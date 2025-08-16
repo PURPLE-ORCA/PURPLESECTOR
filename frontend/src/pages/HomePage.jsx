@@ -1,11 +1,9 @@
-// src/pages/HomePage.jsx
 import React, { useState, useEffect } from "react";
 import { getNextSession, getLatestRaceResult } from "../services/api";
-import NextSessionCard from "../components/home/NextSessionCard"; // Import new component
-import LatestResultCard from "../components/home/LatestResultCard"; // Import new component
+import NextSessionCard from "../components/home/NextSessionCard"; 
+import LatestResultCard from "../components/home/LatestResultCard"; 
 import { motion } from "framer-motion";
-import { containerVariants } from "@/utils/animations";
-
+import { podiumContainerVariants } from "@/utils/animations";
 function HomePage({ driverInfoMap, isLoadingDrivers }) {
   const [nextSession, setNextSession] = useState(null);
   const [isLoadingNextSession, setIsLoadingNextSession] = useState(true);
@@ -50,16 +48,16 @@ function HomePage({ driverInfoMap, isLoadingDrivers }) {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="flex flex-col md:flex-row md:items-end md:justify-between mb-8 pb-4" // Adjusted border color
+        className="flex flex-col md:flex-row md:items-end md:justify-between mb-8 pb-4"
       >
         <div>
-          <h1 className="text-3xl font-bold text-red-600 mb-1">F1 Dashboard</h1>
+          <h1 className="text-4xl font-bold text-white mb-1">F1 Dashboard</h1>
           <p className="text-gray-600 dark:text-gray-400 mt-1">
             Stay updated with the latest Formula 1 events and results
           </p>
         </div>
         <div className="mt-4 md:mt-0 text-sm">
-          <span className="px-3 py-1 rounded-full bg-[#950505] dark:bg-[#b30000] text-white font-medium">
+          <span className="px-3 py-1 rounded-full bg-[#2f024f] dark:bg-[#4a037a] text-white font-medium">
             Season 2025
           </span>
         </div>
@@ -67,7 +65,7 @@ function HomePage({ driverInfoMap, isLoadingDrivers }) {
 
       {/* Use containerVariants for staggered animation */}
       <motion.div
-        variants={containerVariants}
+        variants={podiumContainerVariants}
         initial="hidden"
         animate="visible"
         className="grid grid-cols-1 gap-8"

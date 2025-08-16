@@ -1,8 +1,7 @@
-// src/pages/ConstructorStandingsPage.jsx
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Calendar } from "lucide-react";
-import { getConstructorStandings } from "../services/api"; // Uses the correct API call
+import { getConstructorStandings } from "../services/api"; 
 import LoadingIndicator from "../components/ui/LoadingIndicator";
 import ErrorDisplay from "../components/ui/ErrorDisplay";
 import ConstructorPodiumDisplay from "../components/standings/ConstructorPodiumDisplay";
@@ -72,11 +71,11 @@ function ConstructorStandingsPage() {
   const top3 = constructorStandings.slice(0, 3);
 
   return (
-    <div className="transition-colors text-gray-900 dark:text-white px-2 py-2 rounded-xl">
+    <div className="transition-colors text-gray-900 dark:text-white px-8 py-2 rounded-xl">
       {/* Header */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 gap-4">
         <div>
-          <h2 className="text-3xl font-bold text-red-600 dark:text-[#950505] mb-1">
+          <h2 className="text-3xl font-bold text-[#2f024f] dark:text-[#4a037a] mb-1">
             Constructor Standings
           </h2>
           <div className="flex items-center text-sm text-gray-600 dark:text-gray-400">

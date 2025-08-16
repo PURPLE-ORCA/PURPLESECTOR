@@ -3,21 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Trophy } from "lucide-react"; // Keep Trophy for P1 indicator
 import { getTeamColorClass } from "../../utils/teamColors"; // Assuming this utility exists
-
-// Optional: Define animation variants here or import if defined elsewhere
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { when: "beforeChildren", staggerChildren: 0.1 },
-  },
-};
-
-const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 100 } },
-};
-
+import { podiumContainerVariants, podiumItemVariants } from "../../utils/animations";
 // --- Podium Display Component ---
 function PodiumDisplay({ top3, driverInfoMap, isLoadingDrivers }) {
   // Basic validation
@@ -38,19 +24,17 @@ function PodiumDisplay({ top3, driverInfoMap, isLoadingDrivers }) {
 
   return (
     <motion.div
-      variants={containerVariants}
+      variants={podiumContainerVariants}
       initial="hidden"
       animate="visible"
-      className=" hidden md:flex justify-center items-end gap-4 pt-8" // Hidden on mobile by default
+      className="md:flex justify-center items-end gap-4 pt-8"
     >
       {podiumOrder.map((standing, index) => {
-        const teamName = standing.team?.teamName; // Get team name
-        const driverId = standing.driver?.driverId; // Get driver ID from standings data
+        const teamName = standing.team?.teamName;
+        const driverId = standing.driver?.driverId;
         const driverAcr = standing.driver?.shortName;
-        // Lookup will return undefined if map is empty or key not found
         const driverInfo =
           driverInfoMap && driverAcr ? driverInfoMap.get(driverAcr) : null;
-        // Use headshotUrl ONLY if driver info is loaded AND found
         const headshotUrl =
           !isLoadingDrivers && driverInfo?.headshot_url
             ? driverInfo.headshot_url
@@ -59,23 +43,26 @@ function PodiumDisplay({ top3, driverInfoMap, isLoadingDrivers }) {
           !isLoadingDrivers && driverInfo?.full_name
             ? driverInfo.full_name
             : `${standing.driver?.name || ""} ${standing.driver?.surname || ""}`.trim();
-        const driverTrophyPath = "/images/drivers-trophy.png"; // Define path to your trophy image
+        const driverTrophyPath = "/images/drivers-trophy.png";
 
         return (
           <motion.div
             key={standing.driver?.driverId || positions[index]}
-            variants={itemVariants} // Apply item animation
+            variants={podiumItemVariants}
             className={`
-              relative bg-white dark:bg-black rounded-t-lg 
+              relative bg-[var(--background)] rounded-t-lg 
               flex flex-col items-center pt-4 pb-18  shadow-lg 
               ${index === 1 ? "w-1/4 z-10" : "w-1/5"} ${heights[index]}
               transition-colors duration-200 h-full
             `}
           >
             {/* Team color bar */}
-            <div
-              className={`absolute top-0 left-0 right-0 ${index === 1 ? "h-2" : "h-1"} ${getTeamColorClass(teamName)}`}
-            ></div>
+            <motion.div
+              className={`absolute top-0 left-0 right-0 ${index === 1 ? 'h-2' : 'h-1'} ${getTeamColorClass(teamName)}`}
+              initial={{ width: 0 }}
+              animate={{ width: '100%' }}
+              transition={{ duration: 0.8, ease: 'easeOut', delay: 0.4 }}
+            ></motion.div>
 
             {/* Position Number */}
             <div
@@ -85,18 +72,17 @@ function PodiumDisplay({ top3, driverInfoMap, isLoadingDrivers }) {
                 <img
                   src={driverTrophyPath}
                   alt="Driver Trophy"
-                  className="h-28 w-auto inline mb-1" // Adjust height (h-8) as needed
+                  className="h-28 w-auto inline mb-1"
                 />
               ) : (
-                positions[index] // Display number for P2/P3
+                positions[index]
               )}
             </div>
 
             {/* Driver Headshot */}
             <div className="my-2 h-16 w-16 flex items-center justify-center rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700 flex-shrink-0">
-              {/* Conditionally render image or placeholder based on loading */}
               {isLoadingDrivers ? (
-                <div className="h-full w-full bg-gray-300 dark:bg-gray-600 animate-pulse"></div> // Simple pulse placeholder
+                <div className="h-full w-full bg-gray-300 dark:bg-gray-600 animate-pulse"></div>
               ) : (
                 <img
                   src={headshotUrl}
@@ -126,7 +112,7 @@ function PodiumDisplay({ top3, driverInfoMap, isLoadingDrivers }) {
               className={`
                  mt-auto px-3 py-1 rounded 
                  text-white font-mono text-sm font-medium 
-                 ${index === 1 ? "bg-red-600 dark:bg-[#950505]" : "bg-gray-600 dark:bg-gray-700"}
+                 ${index === 1 ? "bg-primary text-primary-foreground dark:bg-sidebar-primary dark:text-sidebar-primary-foreground" : "bg-muted text-muted-foreground"}
                `}
             >
               {standing.points} PTS

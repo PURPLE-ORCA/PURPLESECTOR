@@ -1,15 +1,13 @@
-// src/pages/SchedulePage.jsx
 import React, { useState, useEffect, useRef } from "react";
 import { getSchedule } from "../services/api";
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
-import { Loader2 } from "lucide-react"; // Assuming you use this or LoadingIndicator
-import LoadingIndicator from "../components/ui/LoadingIndicator"; // Use consistent loading
-import ErrorDisplay from "../components/ui/ErrorDisplay"; // Use consistent error
+import LoadingIndicator from "../components/ui/LoadingIndicator";
+import ErrorDisplay from "../components/ui/ErrorDisplay"; 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import CalendarView from "../components/schedule/CalendarView"; // Import new components
-import ListView from "../components/schedule/ListView"; // Import new components
-import { getMonthAndYear } from "../utils/helpers"; // Import helpers
+import CalendarView from "../components/schedule/CalendarView"; 
+import ListView from "../components/schedule/ListView"; 
+import { getMonthAndYear } from "../utils/helpers"; 
 
 export default function SchedulePage() {
   const [schedule, setSchedule] = useState([]);
@@ -17,7 +15,6 @@ export default function SchedulePage() {
   const [error, setError] = useState(null);
   const [viewMode, setViewMode] = useState("calendar");
 
-  // Grouped races state derived from schedule
   const [groupedRaces, setGroupedRaces] = useState({});
 
   useEffect(() => {
@@ -72,12 +69,11 @@ export default function SchedulePage() {
       transition={{ duration: 0.5 }}
       className="max-w-7xl mx-auto px-2 sm:px-4 py-8 text-gray-900 dark:text-white"
     >
-      <motion.div /* ... Header ... */ className="text-center mb-10">
-        {/* ... Title/Subtitle ... */}
-        <h1 className="text-4xl md:text-5xl font-extrabold mb-2 bg-gradient-to-r from-red-600 via-[#37045F] to-red-700 text-transparent bg-clip-text">
+      <motion.div className="text-center mb-10">
+        <h1 className="text-4xl md:text-5xl font-extrabold mb-2 bg-gradient-to-r from-[#2f024f] via-[#4a037a] to-[#2f024f] text-transparent bg-clip-text">
           2025 FORMULA 1 SEASON
         </h1>
-        <div className="h-1.5 w-40 mx-auto mb-3 bg-gradient-to-r from-red-600 via-[#37045F] to-red-700"></div>
+        <div className="h-1.5 w-40 mx-auto mb-3 bg-gradient-to-r from-[#2f024f] via-[#4a037a] to-[#2f024f]"></div>
         <p className="text-gray-600 dark:text-gray-400">
           Official Race Calendar{" "}
           <span className="text-xs">(Times shown in GMT+1)</span>
@@ -109,7 +105,6 @@ export default function SchedulePage() {
             </TabsTrigger>
           </TabsList>
 
-          {/* Pass grouped data to CalendarView */}
           <TabsContent value="calendar" className="mt-0">
             {Object.keys(groupedRaces).length > 0 ? (
               <CalendarView groupedRaces={groupedRaces} />
@@ -124,7 +119,6 @@ export default function SchedulePage() {
             )}
           </TabsContent>
 
-          {/* Pass full schedule to ListView */}
           <TabsContent value="list" className="mt-0">
             {schedule.length > 0 ? (
               <ListView schedule={schedule} />

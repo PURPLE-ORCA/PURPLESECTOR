@@ -2,8 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { getTeamColorClass } from "../../utils/teamColors";
-import { containerVariants, itemVariants } from "../../utils/animations"; // Import variants
-
+import { podiumContainerVariants, podiumItemVariants } from "../../utils/animations";
 function ConstructorPodiumDisplay({ top3 }) {
   if (!top3 || top3.length < 3) return null;
 
@@ -15,31 +14,33 @@ function ConstructorPodiumDisplay({ top3 }) {
 
   return (
     <motion.div
-      variants={containerVariants} // Use imported variant
+      variants={podiumContainerVariants}
       initial="hidden"
       animate="visible"
-      className="mb-12 hidden md:flex justify-center items-end gap-4 pt-8"
+      className="md:flex justify-center items-end gap-4 pt-8"
     >
       {podiumOrder.map((standing, index) => {
-        // Construct logo URL based on teamId
         const teamId = standing.teamId;
 
         const teamLogoUrl = teamId
           ? `/images/teams/${teamId}.svg`
           : defaultLogoPath;
-        const constructorTrophyPath = "/images/trophy.png"; // Define path to your trophy image
+        const constructorTrophyPath = "/images/trophy.png";
 
         return (
           <motion.div
             key={teamId || positions[index]}
-            variants={itemVariants}
-            className={`relative bg-white dark:bg-black h-full rounded-t-lg flex flex-col items-center pt-4 pb-6 shadow-lg 
-                          ${index === 1 ? "w-1/4 z-10" : "w-1/5"} ${heights[index]}`} // Adjusted dark bg slightly
+            variants={podiumItemVariants}
+            className={`relative bg-[var(--background)] h-full rounded-t-lg flex flex-col items-center pt-4 pb-6 shadow-lg 
+                          ${index === 1 ? "w-1/4 z-10" : "w-1/5"} ${heights[index]}`}
           >
             {/* Team color bar */}
-            <div
-              className={`absolute top-0 left-0 right-0 ${index === 1 ? "h-2" : "h-1"} ${getTeamColorClass(standing.team?.teamName)}`}
-            ></div>
+            <motion.div
+              className={`absolute top-0 left-0 right-0 ${index === 1 ? 'h-2' : 'h-1'} ${getTeamColorClass(standing.team?.teamName)}`}
+              initial={{ width: 0 }}
+              animate={{ width: '100%' }}
+              transition={{ duration: 0.8, ease: 'easeOut', delay: 0.4 }}
+            ></motion.div>
 
             <div
               className={`text-4xl font-bold mb-2 ${index !== 1 && "text-gray-400 dark:text-gray-500"}`}

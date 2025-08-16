@@ -1,9 +1,7 @@
-// src/components/standings/ConstructorCard.jsx
 import React from "react";
 import { motion } from "framer-motion";
 import { getTeamColorClass } from "../../utils/teamColors";
-import { itemVariants } from "../../utils/animations";
-
+import { podiumItemVariants } from "../../utils/animations";
 function ConstructorCard({ standing }) {
   if (!standing || !standing.team) {
     return (
@@ -23,7 +21,7 @@ function ConstructorCard({ standing }) {
 
   return (
     <motion.div
-      variants={itemVariants}
+      variants={podiumItemVariants}
       className="relative rounded-xl overflow-hidden shadow-lg h-full flex flex-col justify-between border border-gray-200 dark:border-gray-800 group transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
     >
       {/* Background Image with blur */}

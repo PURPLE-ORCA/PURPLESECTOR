@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const ERGAST_API_BASE_URL = "https://ergast.com/api/f1";
+const ERGAST_API_BASE_URL = process.env.ERGAST_API_BASE_URL || "https://ergast.com/api/f1";
 
 async function fetchFromErgast(
   endpoint,
@@ -8,7 +8,6 @@ async function fetchFromErgast(
 ) {
   const url = `${ERGAST_API_BASE_URL}/${endpoint}.json`;
   try {
-    // console.log(`Fetching from Ergast: ${url}`); // Debugging
     const response = await axios.get(url);
 
     // Navigate the response structure based on the provided path

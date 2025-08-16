@@ -39,22 +39,13 @@ function NextSessionCard({ session, isLoading, error }) {
 
     return (
       <>
-        <div className="h-2 bg-gradient-to-r from-[#950505] to-[#37045F] absolute top-0 left-0 right-0"></div>{" "}
-        {/* Top Gradient moved outside padding */}
+        <div className="h-2 dark:bg-neutral-950 absolute top-0 left-0 right-0"></div>
         <div className="p-6 relative pt-8">
-          {" "}
-          {/* Added pt-8 for gradient */}
           <div className="flex items-center mb-4">
-            <div className="w-12 h-12 bg-[#950505] dark:bg-[#b30000] rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-              <Flag className="h-6 w-6 text-white" />
-            </div>
             <div>
-              <h3 className="text-lg font-semibold text-black dark:text-white">
+              <h3 className="text-lg font-bold text-black dark:text-red-700">
                 Next Up
               </h3>
-              <p className="text-[#950505] dark:text-[#ff6b6b] font-medium text-sm">
-                {session.sessionName}
-              </p>
             </div>
           </div>
           <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between">
@@ -64,17 +55,14 @@ function NextSessionCard({ session, isLoading, error }) {
               <div className="text-gray-600 dark:text-gray-400 text-xs uppercase tracking-wider mb-1">
                 Grand Prix
               </div>
-              <div className="text-xl md:text-2xl font-bold text-black dark:text-white truncate">
+              <div className="text-xl md:text-4xl font-bold text-black dark:text-white">
                 {session.raceName}
               </div>
+              <p className="text-text-red-700 dark:text-red-700 font-medium text-md">
+                {session.sessionName}
+              </p>
             </div>
-
             <div className="flex-shrink-0">
-              {" "}
-              {/* Prevent countdown from shrinking */}
-              <div className="text-gray-600 dark:text-gray-400 text-xs uppercase tracking-wider mb-1 text-right">
-                Race Countdown
-              </div>
               <Countdown targetTimeUTC={session.dateTimeUTC} />
             </div>
           </div>
@@ -86,7 +74,7 @@ function NextSessionCard({ session, isLoading, error }) {
   return (
     <motion.div
       variants={itemVariants}
-      className="bg-white dark:bg-black rounded-xl shadow-lg overflow-hidden relative" // Use shadow-lg, add relative
+      className="bg-white dark:bg-neutral-950 rounded-xl shadow-lg overflow-hidden relative" 
     >
       {renderContent()}
     </motion.div>
